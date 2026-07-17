@@ -1,3 +1,5 @@
+ExifRead
 Pillow
 pillow-heif
 python-telegram-bot
+rawpy

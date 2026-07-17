@@ -13,6 +13,8 @@ from io import BytesIO
 from pathlib import Path
 from typing import Any
 
+import exifread
+import rawpy
 from PIL import ExifTags, Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 from pillow_heif import register_heif_opener
 from telegram import InputFile, Update
@@ -29,6 +31,46 @@ register_heif_opener()
 
 LOGGER = logging.getLogger(__name__)
 EXIF_IFD = 34665
+RAW_FILE_EXTENSIONS = frozenset(
+    {
+        "3fr",
+        "arw",
+        "cr2",
+        "cr3",
+        "crw",
+        "dcr",
+        "dng",
+        "erf",
+        "iiq",
+        "kdc",
+        "mos",
+        "mrw",
+        "nef",
+        "nrw",
+        "orf",
+        "pef",
+        "raf",
+        "raw",
+        "rwl",
+        "rw2",
+        "srw",
+        "x3f",
+    }
+)
+RAW_BRIGHTNESS = 1.35
+RAW_EXPOSURE_SHIFT = 1.35
+EXIFREAD_TAGS = {
+    "Image Make": "Make",
+    "Image Model": "Model",
+    "Image DateTime": "DateTime",
+    "EXIF DateTimeOriginal": "DateTimeOriginal",
+    "EXIF ExposureTime": "ExposureTime",
+    "EXIF FNumber": "FNumber",
+    "EXIF ISOSpeedRatings": "ISOSpeedRatings",
+    "EXIF PhotographicSensitivity": "PhotographicSensitivity",
+    "EXIF FocalLengthIn35mmFilm": "FocalLengthIn35mmFilm",
+    "EXIF LensModel": "LensModel",
+}
 PANEL_BACKGROUND = (247, 245, 240)
 PANEL_INK = (28, 29, 31)
 PANEL_MUTED = (119, 116, 110)
@@ -352,8 +394,12 @@ class Settings:
 
 def _as_float(value: Any) -> float | None:
     try:
+        if isinstance(value, list) and len(value) == 1:
+            return _as_float(value[0])
         if isinstance(value, tuple) and len(value) == 2:
             return float(Fraction(value[0], value[1]))
+        if hasattr(value, "num") and hasattr(value, "den"):
+            return float(Fraction(value.num, value.den))
         return float(value)
     except (TypeError, ValueError, ZeroDivisionError):
         return None
@@ -379,7 +425,40 @@ def _read_exif(image: Image.Image) -> dict[str, Any]:
     return values
 
 
+def _exifread_value(value: Any) -> Any:
+    tag_values = getattr(value, "values", None)
+    if isinstance(tag_values, list) and len(tag_values) == 1:
+        return tag_values[0]
+    if tag_values not in (None, ""):
+        return tag_values
+    return str(value)
+
+
+def _read_raw_exif(image_source: bytes | Path) -> dict[str, Any]:
+    try:
+        if isinstance(image_source, Path):
+            with image_source.open("rb") as handle:
+                tags = exifread.process_file(
+                    handle, details=False, extract_thumbnail=False
+                )
+        else:
+            tags = exifread.process_file(
+                BytesIO(image_source), details=False, extract_thumbnail=False
+            )
+    except Exception:
+        LOGGER.warning("Unable to read RAW EXIF metadata", exc_info=True)
+        return {}
+
+    return {
+        target: _exifread_value(tags[source])
+        for source, target in EXIFREAD_TAGS.items()
+        if source in tags
+    }
+
+
 def _clean_text(value: Any) -> str:
+    if isinstance(value, list) and len(value) == 1:
+        value = value[0]
     if isinstance(value, bytes):
         value = value.decode("utf-8", errors="replace")
     return " ".join(str(value).replace("\x00", "").split())
@@ -860,12 +939,12 @@ def _add_portrait_metadata_panel(
     signature_path: Path,
 ) -> Image.Image:
     width, height = photo.size
-    panel_height = max(PANEL_MIN_HEIGHT * 2, round(width * 0.17))
-    padding = max(20, round(width * 0.034))
-    label_font = _load_font(max(9, round(width * 0.0095)))
-    value_font = _load_font(max(15, round(width * 0.018)), bold=True)
-    detail_font = _load_font(max(11, round(width * 0.012)))
-    equipment_font = _load_font(max(13, round(width * 0.0145)), bold=True)
+    panel_height = max(round(PANEL_MIN_HEIGHT * 1.45), round(width * 0.125))
+    padding = max(18, round(width * 0.03))
+    label_font = _load_font(max(8, round(width * 0.0082)))
+    value_font = _load_font(max(14, round(width * 0.0155)), bold=True)
+    detail_font = _load_font(max(10, round(width * 0.0105)))
+    equipment_font = _load_font(max(12, round(width * 0.0128)), bold=True)
 
     panel = Image.new("RGB", (width, panel_height), PANEL_BACKGROUND)
     draw = ImageDraw.Draw(panel)
@@ -882,14 +961,24 @@ def _add_portrait_metadata_panel(
         _metadata_stats(metadata),
         padding,
         width - padding,
-        round(panel_height * 0.11),
-        round(panel_height * 0.26),
+        round(panel_height * 0.14),
+        round(panel_height * 0.36),
         label_font,
         value_font,
         round(width * 0.018),
     )
 
-    captured_y = round(panel_height * 0.49)
+    divider_color = (218, 214, 206)
+    row_top = round(panel_height * 0.58)
+    row_bottom = round(panel_height * 0.90)
+    section_divider_y = round(panel_height * 0.53)
+    draw.line(
+        (padding, section_divider_y, width - padding, section_divider_y),
+        fill=divider_color,
+        width=max(1, line_width // 2),
+    )
+
+    captured_y = round(panel_height * 0.70)
     draw.text(
         (padding, captured_y),
         "CAPTURED",
@@ -897,7 +986,7 @@ def _add_portrait_metadata_panel(
         fill=PANEL_ACCENT,
     )
     captured_x = padding + round(width * 0.15)
-    captured_width = max(1, width - captured_x - padding)
+    captured_width = max(1, round(width * 0.31) - captured_x)
     captured_text = _fit_text(
         draw, metadata.captured_at, label_font, captured_width
     )
@@ -908,20 +997,17 @@ def _add_portrait_metadata_panel(
         fill=PANEL_MUTED,
     )
 
-    row_top = round(panel_height * 0.62)
-    row_bottom = round(panel_height * 0.90)
-    divider_color = (218, 214, 206)
-    signature_right = round(width * 0.33)
-    badge_left = round(width * 0.38)
-    badge_right = round(width * 0.58)
-    equipment_left = round(width * 0.64)
+    signature_right = round(width * 0.31)
+    badge_left = round(width * 0.35)
+    badge_right = round(width * 0.54)
+    equipment_left = round(width * 0.60)
     draw.line(
-        (round(width * 0.355), row_top, round(width * 0.355), row_bottom),
+        (round(width * 0.325), row_top, round(width * 0.325), row_bottom),
         fill=divider_color,
         width=max(1, line_width // 2),
     )
     draw.line(
-        (round(width * 0.61), row_top, round(width * 0.61), row_bottom),
+        (round(width * 0.57), row_top, round(width * 0.57), row_bottom),
         fill=divider_color,
         width=max(1, line_width // 2),
     )
@@ -935,14 +1021,14 @@ def _add_portrait_metadata_panel(
     signature = _load_signature(
         signature_path,
         max_width=max(1, signature_right - padding),
-        max_height=max(1, round(panel_height * 0.17)),
+        max_height=max(1, round(panel_height * 0.19)),
     )
     if signature:
-        signature_y = round(row_top + panel_height * 0.12)
+        signature_y = round(panel_height * 0.72)
         panel.paste(signature, (padding, signature_y), signature)
     else:
         draw.text(
-            (padding, round(row_top + panel_height * 0.12)),
+            (padding, round(panel_height * 0.72)),
             "SIGNATURE",
             font=detail_font,
             fill=PANEL_INK,
@@ -953,7 +1039,7 @@ def _add_portrait_metadata_panel(
         LENS_BADGE_DIR,
         metadata.lens_badge_key,
         max_width=badge_area_width,
-        max_height=max(1, round(panel_height * 0.12)),
+        max_height=max(1, round(panel_height * 0.14)),
     )
     brand_icon = _load_brand_icon(
         BRAND_ICON_DIR,
@@ -962,10 +1048,10 @@ def _add_portrait_metadata_panel(
         max_width=max(1, round(badge_area_width * 0.94)),
         max_height=max(
             1,
-            round(panel_height * (0.11 if lens_badge else 0.16)),
+            round(panel_height * (0.13 if lens_badge else 0.18)),
         ),
     )
-    brand_center_y = round(panel_height * (0.69 if lens_badge else 0.76))
+    brand_center_y = round(panel_height * (0.68 if lens_badge else 0.75))
     if brand_icon:
         brand_x = round(badge_left + (badge_area_width - brand_icon.width) / 2)
         brand_y = round(brand_center_y - brand_icon.height / 2)
@@ -990,7 +1076,7 @@ def _add_portrait_metadata_panel(
         draw, metadata.camera_model, equipment_font, equipment_width
     )
     camera_y = _centered_text_y(
-        draw, camera_text, equipment_font, round(panel_height * 0.70)
+        draw, camera_text, equipment_font, round(panel_height * 0.68)
     )
     draw.text(
         (equipment_left, camera_y),
@@ -1001,7 +1087,7 @@ def _add_portrait_metadata_panel(
 
     lens_text = _fit_text(draw, metadata.lens, equipment_font, equipment_width)
     lens_y = _centered_text_y(
-        draw, lens_text, equipment_font, round(panel_height * 0.84)
+        draw, lens_text, equipment_font, round(panel_height * 0.83)
     )
     draw.text(
         (equipment_left, lens_y),
@@ -1190,21 +1276,87 @@ def _add_metadata_panel(
     return result
 
 
+def _source_extension(image_source: bytes | Path, original_name: str | None) -> str:
+    source_name = original_name
+    if not source_name and isinstance(image_source, Path):
+        source_name = image_source.name
+    return Path(source_name or "").suffix.lower().lstrip(".")
+
+
+def _is_raw_source(image_source: bytes | Path, original_name: str | None) -> bool:
+    return _source_extension(image_source, original_name) in RAW_FILE_EXTENSIONS
+
+
+def _raw_input(image_source: bytes | Path) -> str | BytesIO:
+    return str(image_source) if isinstance(image_source, Path) else BytesIO(image_source)
+
+
+def _extract_raw_preview(image_source: bytes | Path) -> Image.Image | None:
+    try:
+        with rawpy.imread(_raw_input(image_source)) as raw:
+            thumbnail = raw.extract_thumb()
+    except (rawpy.LibRawError, OSError, ValueError):
+        return None
+
+    try:
+        if thumbnail.format == rawpy.ThumbFormat.JPEG:
+            with Image.open(BytesIO(thumbnail.data)) as preview:
+                preview.load()
+                return ImageOps.exif_transpose(preview).convert("RGB")
+        if thumbnail.format == rawpy.ThumbFormat.BITMAP:
+            return Image.fromarray(thumbnail.data, "RGB")
+    except (UnidentifiedImageError, OSError, ValueError):
+        LOGGER.warning("Unable to load embedded RAW preview", exc_info=True)
+
+    return None
+
+
+def _decode_raw_image(image_source: bytes | Path) -> Image.Image:
+    preview = _extract_raw_preview(image_source)
+    if preview:
+        return preview
+
+    try:
+        with rawpy.imread(_raw_input(image_source)) as raw:
+            rgb = raw.postprocess(
+                use_camera_wb=True,
+                no_auto_bright=False,
+                auto_bright_thr=0.01,
+                bright=RAW_BRIGHTNESS,
+                exp_shift=RAW_EXPOSURE_SHIFT,
+                exp_preserve_highlights=0.75,
+                highlight_mode=rawpy.HighlightMode.Blend,
+                output_bps=8,
+            )
+    except (rawpy.LibRawError, OSError, ValueError) as exc:
+        raise UnidentifiedImageError("Unsupported or invalid RAW image") from exc
+
+    return Image.fromarray(rgb, "RGB")
+
+
 def process_image(
     image_source: bytes | Path,
     signature_path: Path,
     jpeg_quality: int,
+    original_name: str | None = None,
 ) -> tuple[BytesIO, bool]:
-    source_input = (
-        image_source if isinstance(image_source, Path) else BytesIO(image_source)
-    )
-    with Image.open(source_input) as source:
-        source.load()
-        exif_values = _read_exif(source)
-        image = ImageOps.exif_transpose(source)
-        exif_bytes = image.getexif().tobytes()
+    if _is_raw_source(image_source, original_name):
+        exif_values = _read_raw_exif(image_source)
+        image = _decode_raw_image(image_source)
+        exif_bytes = b""
         metadata = _format_metadata(exif_values)
         result = _add_metadata_panel(image, metadata, signature_path)
+    else:
+        source_input = (
+            image_source if isinstance(image_source, Path) else BytesIO(image_source)
+        )
+        with Image.open(source_input) as source:
+            source.load()
+            exif_values = _read_exif(source)
+            image = ImageOps.exif_transpose(source)
+            exif_bytes = image.getexif().tobytes()
+            metadata = _format_metadata(exif_values)
+            result = _add_metadata_panel(image, metadata, signature_path)
 
     output = BytesIO()
     save_options: dict[str, Any] = {
@@ -1224,6 +1376,13 @@ def _output_filename(original_name: str | None) -> str:
     stem = Path(original_name or "photo").stem
     safe_stem = re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._") or "photo"
     return f"{safe_stem}_watermarked.jpg"
+
+
+def _document_extension_filter(extensions: tuple[str, ...]) -> Any:
+    extension_filter = filters.Document.FileExtension(extensions[0])
+    for extension in extensions[1:]:
+        extension_filter |= filters.Document.FileExtension(extension)
+    return extension_filter
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -1286,6 +1445,7 @@ async def handle_image(
             image_source,
             settings.signature_image_path,
             settings.jpeg_quality,
+            document.file_name,
         )
         caption = (
             "Watermark and EXIF details added."
@@ -1324,10 +1484,10 @@ def main() -> None:
     )
     application.bot_data["settings"] = settings
     application.add_handler(CommandHandler("start", start))
+    extra_image_extensions = ("heic", "heif", *sorted(RAW_FILE_EXTENSIONS))
     image_document_filter = (
         filters.Document.IMAGE
-        | filters.Document.FileExtension("heic")
-        | filters.Document.FileExtension("heif")
+        | _document_extension_filter(extra_image_extensions)
     )
     application.add_handler(MessageHandler(image_document_filter, handle_image))
     application.add_handler(MessageHandler(filters.PHOTO, remind_file_upload))
