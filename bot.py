@@ -37,6 +37,9 @@ PANEL_HEIGHT_RATIO = 0.078
 PANEL_MIN_HEIGHT = 78
 BRAND_ICON_DIR = Path(__file__).resolve().parent / "assets" / "brands"
 LENS_BADGE_DIR = Path(__file__).resolve().parent / "assets" / "lenses"
+LENS_BADGE_HEIGHT_FACTORS = {
+    "sigma": 0.82,
+}
 BRAND_NAMES = {
     "sony": "SONY",
     "nikon": "NIKON",
@@ -138,49 +141,85 @@ LENS_NAME_ALIASES = (
     ("FE 600mm F4 GM OSS", "FE 600mm F4 GM"),
     )),
     *_lens_aliases("sigma", (
-    # Common SIGMA full-frame Sony E lenses
+    # Common SIGMA mirrorless and DSLR lenses
+    ("SIGMA 10-18mm F2.8 DC DN Contemporary", "SIGMA 10-18mm F2.8 C"),
+    ("SIGMA 12mm F1.4 DC Contemporary", "SIGMA 12mm F1.4 C"),
     ("SIGMA 14-24mm F2.8 DG DN Art", "SIGMA 14-24mm F2.8 Art"),
+    ("SIGMA 14mm F1.4 DG DN Art", "SIGMA 14mm F1.4 Art"),
+    ("SIGMA 14mm F1.4 DG Art", "SIGMA 14mm F1.4 Art"),
+    ("SIGMA 14mm F1.8 DG HSM Art", "SIGMA 14mm F1.8 Art"),
+    ("SIGMA 15mm F1.4 DC Contemporary", "SIGMA 15mm F1.4 C"),
+    ("SIGMA 15mm F1.4 DG DN Diagonal Fisheye Art", "SIGMA 15mm F1.4 Fisheye Art"),
+    ("SIGMA 16mm F1.4 DC DN Contemporary", "SIGMA 16mm F1.4 C"),
     ("SIGMA 16-28mm F2.8 DG DN Contemporary", "SIGMA 16-28mm F2.8 C"),
+    ("SIGMA 17mm F4 DG DN Contemporary", "SIGMA 17mm F4 C"),
+    ("SIGMA 17mm F4 DG Contemporary", "SIGMA 17mm F4 C"),
+    ("SIGMA 18-35mm F1.8 DC HSM Art", "SIGMA 18-35mm F1.8 Art"),
+    ("SIGMA 18-50mm F2.8 DC DN Contemporary", "SIGMA 18-50mm F2.8 C"),
     ("SIGMA 20-200mm F3.5-6.3 DG Contemporary", "SIGMA 20-200mm F3.5-6.3 C"),
     ("SIGMA 20-200mm F3.5-6.3 DG DN Contemporary", "SIGMA 20-200mm F3.5-6.3 C"),
+    ("SIGMA 20mm F1.4 DG DN Art", "SIGMA 20mm F1.4 Art"),
+    ("SIGMA 20mm F1.4 DG HSM Art", "SIGMA 20mm F1.4 Art"),
+    ("SIGMA 20mm F2 DG DN Contemporary", "SIGMA 20mm F2 C"),
+    ("SIGMA 20mm F2 DG Contemporary", "SIGMA 20mm F2 C"),
+    ("SIGMA 23mm F1.4 DC DN Contemporary", "SIGMA 23mm F1.4 C"),
+    ("SIGMA 24-35mm F2 DG HSM Art", "SIGMA 24-35mm F2 Art"),
     ("SIGMA 24-70mm F2.8 DG DN II Art", "SIGMA 24-70mm F2.8 Art II"),
     ("SIGMA 24-70mm F2.8 DG DN Art", "SIGMA 24-70mm F2.8 Art"),
+    ("SIGMA 24-70mm F2.8 DG OS HSM Art", "SIGMA 24-70mm F2.8 Art"),
+    ("SIGMA 24-105mm F4 DG OS HSM Art", "SIGMA 24-105mm F4 Art"),
+    ("SIGMA 24mm F1.4 DG DN Art", "SIGMA 24mm F1.4 Art"),
+    ("SIGMA 24mm F1.4 DG HSM Art", "SIGMA 24mm F1.4 Art"),
+    ("SIGMA 24mm F2 DG DN Contemporary", "SIGMA 24mm F2 C"),
+    ("SIGMA 24mm F2 DG Contemporary", "SIGMA 24mm F2 C"),
+    ("SIGMA 24mm F3.5 DG DN Contemporary", "SIGMA 24mm F3.5 C"),
+    ("SIGMA 24mm F3.5 DG Contemporary", "SIGMA 24mm F3.5 C"),
     ("SIGMA 28-45mm F1.8 DG DN Art", "SIGMA 28-45mm F1.8 Art"),
     ("SIGMA 28-70mm F2.8 DG DN Contemporary", "SIGMA 28-70mm F2.8 C"),
     ("SIGMA 28-105mm F2.8 DG DN Art", "SIGMA 28-105mm F2.8 Art"),
-    ("SIGMA 60-600mm F4.5-6.3 DG DN OS Sports", "SIGMA 60-600mm F4.5-6.3 Sports"),
-    ("SIGMA 70-200mm F2.8 DG DN OS Sports", "SIGMA 70-200mm F2.8 Sports"),
-    ("SIGMA 100-400mm F5-6.3 DG DN OS Contemporary", "SIGMA 100-400mm F5-6.3 C"),
-    ("SIGMA 150-600mm F5-6.3 DG DN OS Sports", "SIGMA 150-600mm F5-6.3 Sports"),
-    ("SIGMA 14mm F1.4 DG DN Art", "SIGMA 14mm F1.4 Art"),
-    ("SIGMA 14mm F1.8 DG HSM Art", "SIGMA 14mm F1.8 Art"),
-    ("SIGMA 15mm F1.4 DG DN Diagonal Fisheye Art", "SIGMA 15mm F1.4 Fisheye Art"),
-    ("SIGMA 17mm F4 DG DN Contemporary", "SIGMA 17mm F4 C"),
-    ("SIGMA 20mm F1.4 DG DN Art", "SIGMA 20mm F1.4 Art"),
-    ("SIGMA 20mm F2 DG DN Contemporary", "SIGMA 20mm F2 C"),
-    ("SIGMA 24mm F1.4 DG DN Art", "SIGMA 24mm F1.4 Art"),
-    ("SIGMA 24mm F2 DG DN Contemporary", "SIGMA 24mm F2 C"),
-    ("SIGMA 24mm F3.5 DG DN Contemporary", "SIGMA 24mm F3.5 C"),
     ("SIGMA 28mm F1.4 DG HSM Art", "SIGMA 28mm F1.4 Art"),
+    ("SIGMA 30mm F1.4 DC DN Contemporary", "SIGMA 30mm F1.4 C"),
     ("SIGMA 35mm F1.2 DG DN II Art", "SIGMA 35mm F1.2 Art II"),
     ("SIGMA 35mm F1.2 DG DN Art", "SIGMA 35mm F1.2 Art"),
     ("SIGMA 35mm F1.4 DG DN II Art", "SIGMA 35mm F1.4 Art II"),
     ("SIGMA 35mm F1.4 DG DN Art", "SIGMA 35mm F1.4 Art"),
+    ("SIGMA 35mm F1.4 DG HSM Art", "SIGMA 35mm F1.4 Art"),
     ("SIGMA 35mm F2 DG DN Contemporary", "SIGMA 35mm F2 C"),
+    ("SIGMA 35mm F2 DG Contemporary", "SIGMA 35mm F2 C"),
     ("SIGMA 40mm F1.4 DG HSM Art", "SIGMA 40mm F1.4 Art"),
     ("SIGMA 45mm F2.8 DG DN Contemporary", "SIGMA 45mm F2.8 C"),
+    ("SIGMA 45mm F2.8 DG Contemporary", "SIGMA 45mm F2.8 C"),
+    ("SIGMA 50-100mm F1.8 DC HSM Art", "SIGMA 50-100mm F1.8 Art"),
     ("SIGMA 50mm F1.2 DG DN Art", "SIGMA 50mm F1.2 Art"),
     ("SIGMA 50mm F1.4 DG DN Art", "SIGMA 50mm F1.4 Art"),
+    ("SIGMA 50mm F1.4 DG HSM Art", "SIGMA 50mm F1.4 Art"),
     ("SIGMA 50mm F2 DG DN Contemporary", "SIGMA 50mm F2 C"),
+    ("SIGMA 50mm F2 DG Contemporary", "SIGMA 50mm F2 C"),
+    ("SIGMA 56mm F1.4 DC DN Contemporary", "SIGMA 56mm F1.4 C"),
+    ("SIGMA 60-600mm F4.5-6.3 DG DN OS Sports", "SIGMA 60-600mm F4.5-6.3 Sports"),
+    ("SIGMA 60-600mm F4.5-6.3 DG OS HSM Sports", "SIGMA 60-600mm F4.5-6.3 Sports"),
     ("SIGMA 65mm F2 DG DN Contemporary", "SIGMA 65mm F2 C"),
+    ("SIGMA 65mm F2 DG Contemporary", "SIGMA 65mm F2 C"),
+    ("SIGMA 70-200mm F2.8 DG DN OS Sports", "SIGMA 70-200mm F2.8 Sports"),
+    ("SIGMA 70-200mm F2.8 DG OS HSM Sports", "SIGMA 70-200mm F2.8 Sports"),
     ("SIGMA 70mm F2.8 DG Macro Art", "SIGMA 70mm F2.8 Macro Art"),
     ("SIGMA 85mm F1.4 DG DN Art", "SIGMA 85mm F1.4 Art"),
+    ("SIGMA 85mm F1.4 DG HSM Art", "SIGMA 85mm F1.4 Art"),
     ("SIGMA 90mm F2.8 DG DN Contemporary", "SIGMA 90mm F2.8 C"),
+    ("SIGMA 90mm F2.8 DG Contemporary", "SIGMA 90mm F2.8 C"),
+    ("SIGMA 100-400mm F5-6.3 DG DN OS Contemporary", "SIGMA 100-400mm F5-6.3 C"),
+    ("SIGMA 100-400mm F5-6.3 DG OS HSM Contemporary", "SIGMA 100-400mm F5-6.3 C"),
     ("SIGMA 105mm F1.4 DG HSM Art", "SIGMA 105mm F1.4 Art"),
     ("SIGMA 105mm F2.8 DG DN Macro Art", "SIGMA 105mm F2.8 Macro Art"),
+    ("SIGMA 120-300mm F2.8 DG OS HSM Sports", "SIGMA 120-300mm F2.8 Sports"),
     ("SIGMA 135mm F1.4 DG Art", "SIGMA 135mm F1.4 Art"),
     ("SIGMA 135mm F1.8 DG HSM Art", "SIGMA 135mm F1.8 Art"),
+    ("SIGMA 150-600mm F5-6.3 DG DN OS Sports", "SIGMA 150-600mm F5-6.3 Sports"),
+    ("SIGMA 150-600mm F5-6.3 DG OS HSM Contemporary", "SIGMA 150-600mm F5-6.3 C"),
+    ("SIGMA 150-600mm F5-6.3 DG OS HSM Sports", "SIGMA 150-600mm F5-6.3 Sports"),
     ("SIGMA 200mm F2 DG OS Sports", "SIGMA 200mm F2 Sports"),
+    ("SIGMA 500mm F5.6 DG DN OS Sports", "SIGMA 500mm F5.6 Sports"),
+    ("SIGMA 500mm F4 DG OS HSM Sports", "SIGMA 500mm F4 Sports"),
     )),
     *_lens_aliases("tamron", (
     # Common TAMRON full-frame Sony E lenses
@@ -358,9 +397,36 @@ def _strip_sony_fe_prefix(value: str) -> str:
     return re.sub(r"^FE\s+", "", value).strip()
 
 
+def _format_sigma_lens_name(value: str, *, require_brand: bool = True) -> str | None:
+    if require_brand and "sigma" not in value.casefold():
+        return None
+
+    cleaned = value.replace("–", "-").replace("—", "-")
+    cleaned = cleaned.replace("|", " ")
+    cleaned = re.sub(r"\bSIGMA\b", "", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bLens\b", "", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bfor\s+\w+\s+mount\b", "", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bfor\s+Sony\s+E\b", "", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bE-mount\b", "", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bF\s*/\s*", "F", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bDiagonal\s+Fisheye\b", "Fisheye", cleaned, flags=re.I)
+    cleaned = re.sub(r"\bMACRO\b", "Macro", cleaned)
+    cleaned = re.sub(r"\bContemporary\b", "C", cleaned)
+    cleaned = re.sub(
+        r"\b(DG|DC|DN|HSM|OS|EX|APO|DL|UC|DN|ASP|Aspherical)\b",
+        "",
+        cleaned,
+    )
+    cleaned = re.sub(r"\bII\s+(Art|C|Sports)\b", r"\1 II", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" -")
+    return cleaned or None
+
+
 def _format_lens_display(alias: LensAlias) -> str:
     if alias.brand == "sony":
         return _strip_sony_fe_prefix(alias.display)
+    if alias.brand == "sigma":
+        return _format_sigma_lens_name(alias.display, require_brand=False) or alias.display
     if alias.brand == "tamron":
         return re.sub(r"^([0-9]+(?:-[0-9]+)?)\b", r"\1mm", alias.display)
     return alias.display
@@ -439,6 +505,10 @@ def _format_lens_name(value: Any) -> str:
     alias = _match_lens_alias(original)
     if alias:
         return _format_lens_display(alias)
+
+    sigma_lens = _format_sigma_lens_name(original)
+    if sigma_lens:
+        return sigma_lens
 
     cleaned = re.sub(r"\b(Sony|Lens|E-mount|for Sony E)\b", "", original, flags=re.I)
     cleaned = re.sub(r"\bOptical SteadyShot\b", "", cleaned, flags=re.I)
@@ -717,7 +787,9 @@ def _load_lens_badge(
             bounds = alpha.getbbox()
             if bounds:
                 badge = badge.crop(bounds)
-            badge.thumbnail((max_width, max_height), Image.Resampling.LANCZOS)
+            height_factor = LENS_BADGE_HEIGHT_FACTORS.get(badge_key, 1)
+            scaled_max_height = max(1, round(max_height * height_factor))
+            badge.thumbnail((max_width, scaled_max_height), Image.Resampling.LANCZOS)
             return badge
     except (UnidentifiedImageError, OSError):
         LOGGER.warning("Unable to load lens badge: %s", path)
