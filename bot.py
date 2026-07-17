@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from PIL import ExifTags, Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
+from pillow_heif import register_heif_opener
 from telegram import InputFile, Update
 from telegram.constants import ChatAction
 from telegram.ext import (
@@ -23,6 +24,8 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
+
+register_heif_opener()
 
 LOGGER = logging.getLogger(__name__)
 EXIF_IFD = 34665
@@ -229,6 +232,25 @@ LENS_NAME_ALIASES = (
     ("E 150-500mm F5-6.7 A057", "150-500 F5-6.7"),
     )),
 )
+APPLE_LENS_SPECS = (
+    (1.54, 2.4, "Ultra Wide"),
+    (1.55, 2.4, "Ultra Wide"),
+    (1.57, 1.8, "Ultra Wide"),
+    (2.22, 2.2, "Ultra Wide"),
+    (2.69, 1.9, "Front"),
+    (2.71, 1.9, "Front"),
+    (3.99, 1.8, "Wide"),
+    (4.2, 1.6, "Wide"),
+    (5.1, 1.6, "Wide"),
+    (5.7, 1.5, "Wide"),
+    (5.96, 1.6, "Wide"),
+    (6.0, 2.0, "Tele"),
+    (6.765, 1.78, "Main"),
+    (6.86, 1.78, "Main"),
+    (7.0, 1.6, "Wide"),
+    (9.0, 2.8, "Tele"),
+    (15.66, 2.8, "Tele"),
+)
 FONT_PATHS = (
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
@@ -344,6 +366,39 @@ def _format_lens_display(alias: LensAlias) -> str:
     return alias.display
 
 
+def _format_decimal(value: float) -> str:
+    return f"{value:.3f}".rstrip("0").rstrip(".")
+
+
+def _apple_lens_role(focal_mm: float, aperture: float, side: str) -> str:
+    for spec_focal, spec_aperture, role in APPLE_LENS_SPECS:
+        focal_matches = abs(focal_mm - spec_focal) <= 0.035
+        aperture_matches = abs(aperture - spec_aperture) <= 0.035
+        if focal_matches and aperture_matches:
+            return role
+    return "Front" if side.casefold() == "front" else "Back"
+
+
+def _format_apple_lens_name(value: str) -> str | None:
+    if "iphone" not in value.casefold():
+        return None
+
+    match = re.search(
+        r"\b(?P<side>front|back)\b.*?\bcamera\b.*?"
+        r"(?P<focal>[0-9]+(?:\.[0-9]+)?)\s*mm\s*"
+        r"f\s*/?\s*(?P<aperture>[0-9]+(?:\.[0-9]+)?)",
+        value,
+        flags=re.I,
+    )
+    if not match:
+        return None
+
+    focal_mm = float(match.group("focal"))
+    aperture = float(match.group("aperture"))
+    role = _apple_lens_role(focal_mm, aperture, match.group("side"))
+    return f"{role} {_format_decimal(focal_mm)}mm F{_format_decimal(aperture)}"
+
+
 def _match_lens_alias(value: Any) -> LensAlias | None:
     original = _clean_text(value)
     match_key = _lens_match_key(original)
@@ -376,6 +431,10 @@ def _format_lens_name(value: Any) -> str:
     original = _clean_text(value)
     if not original:
         return "UNKNOWN LENS"
+
+    apple_lens = _format_apple_lens_name(original)
+    if apple_lens:
+        return apple_lens
 
     alias = _match_lens_alias(original)
     if alias:
@@ -1005,7 +1064,12 @@ def main() -> None:
     )
     application.bot_data["settings"] = settings
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(MessageHandler(filters.Document.IMAGE, handle_image))
+    image_document_filter = (
+        filters.Document.IMAGE
+        | filters.Document.FileExtension("heic")
+        | filters.Document.FileExtension("heif")
+    )
+    application.add_handler(MessageHandler(image_document_filter, handle_image))
     application.add_handler(MessageHandler(filters.PHOTO, remind_file_upload))
     LOGGER.info("Starting Telegram bot")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
