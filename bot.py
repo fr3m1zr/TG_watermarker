@@ -826,6 +826,196 @@ def _load_signature(
     return None
 
 
+def _metadata_stats(metadata: PhotoMetadata) -> tuple[tuple[str, str], ...]:
+    return (
+        ("ISO", metadata.iso),
+        ("APERTURE", metadata.aperture),
+        ("SHUTTER", metadata.shutter_speed),
+        ("FOCAL", metadata.focal_length_35mm),
+    )
+
+
+def _draw_stat_row(
+    draw: ImageDraw.ImageDraw,
+    stats: tuple[tuple[str, str], ...],
+    left: int,
+    right: int,
+    label_y: int,
+    value_y: int,
+    label_font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+    value_font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+    gap: int,
+) -> None:
+    stat_width = max(1, (right - left) // len(stats))
+    for index, (label, value) in enumerate(stats):
+        x = left + stat_width * index
+        draw.text((x, label_y), label, font=label_font, fill=PANEL_MUTED)
+        fitted_value = _fit_text(draw, value, value_font, stat_width - gap)
+        draw.text((x, value_y), fitted_value, font=value_font, fill=PANEL_INK)
+
+
+def _add_portrait_metadata_panel(
+    photo: Image.Image,
+    metadata: PhotoMetadata,
+    signature_path: Path,
+) -> Image.Image:
+    width, height = photo.size
+    panel_height = max(PANEL_MIN_HEIGHT * 2, round(width * 0.17))
+    padding = max(20, round(width * 0.034))
+    label_font = _load_font(max(9, round(width * 0.0095)))
+    value_font = _load_font(max(15, round(width * 0.018)), bold=True)
+    detail_font = _load_font(max(11, round(width * 0.012)))
+    equipment_font = _load_font(max(13, round(width * 0.0145)), bold=True)
+
+    panel = Image.new("RGB", (width, panel_height), PANEL_BACKGROUND)
+    draw = ImageDraw.Draw(panel)
+    line_width = max(2, round(width * 0.002))
+    draw.line((0, 0, width, 0), fill=(226, 222, 214), width=line_width)
+    draw.line(
+        (padding, 0, padding + round(width * 0.14), 0),
+        fill=PANEL_ACCENT,
+        width=line_width * 2,
+    )
+
+    _draw_stat_row(
+        draw,
+        _metadata_stats(metadata),
+        padding,
+        width - padding,
+        round(panel_height * 0.11),
+        round(panel_height * 0.26),
+        label_font,
+        value_font,
+        round(width * 0.018),
+    )
+
+    captured_y = round(panel_height * 0.49)
+    draw.text(
+        (padding, captured_y),
+        "CAPTURED",
+        font=label_font,
+        fill=PANEL_ACCENT,
+    )
+    captured_x = padding + round(width * 0.15)
+    captured_width = max(1, width - captured_x - padding)
+    captured_text = _fit_text(
+        draw, metadata.captured_at, label_font, captured_width
+    )
+    draw.text(
+        (captured_x, captured_y),
+        captured_text,
+        font=label_font,
+        fill=PANEL_MUTED,
+    )
+
+    row_top = round(panel_height * 0.62)
+    row_bottom = round(panel_height * 0.90)
+    divider_color = (218, 214, 206)
+    signature_right = round(width * 0.33)
+    badge_left = round(width * 0.38)
+    badge_right = round(width * 0.58)
+    equipment_left = round(width * 0.64)
+    draw.line(
+        (round(width * 0.355), row_top, round(width * 0.355), row_bottom),
+        fill=divider_color,
+        width=max(1, line_width // 2),
+    )
+    draw.line(
+        (round(width * 0.61), row_top, round(width * 0.61), row_bottom),
+        fill=divider_color,
+        width=max(1, line_width // 2),
+    )
+
+    draw.text(
+        (padding, row_top),
+        "SHOT BY",
+        font=label_font,
+        fill=PANEL_MUTED,
+    )
+    signature = _load_signature(
+        signature_path,
+        max_width=max(1, signature_right - padding),
+        max_height=max(1, round(panel_height * 0.17)),
+    )
+    if signature:
+        signature_y = round(row_top + panel_height * 0.12)
+        panel.paste(signature, (padding, signature_y), signature)
+    else:
+        draw.text(
+            (padding, round(row_top + panel_height * 0.12)),
+            "SIGNATURE",
+            font=detail_font,
+            fill=PANEL_INK,
+        )
+
+    badge_area_width = max(1, badge_right - badge_left)
+    lens_badge = _load_lens_badge(
+        LENS_BADGE_DIR,
+        metadata.lens_badge_key,
+        max_width=badge_area_width,
+        max_height=max(1, round(panel_height * 0.12)),
+    )
+    brand_icon = _load_brand_icon(
+        BRAND_ICON_DIR,
+        metadata.camera_make,
+        metadata.camera_model,
+        max_width=max(1, round(badge_area_width * 0.94)),
+        max_height=max(
+            1,
+            round(panel_height * (0.11 if lens_badge else 0.16)),
+        ),
+    )
+    brand_center_y = round(panel_height * (0.69 if lens_badge else 0.76))
+    if brand_icon:
+        brand_x = round(badge_left + (badge_area_width - brand_icon.width) / 2)
+        brand_y = round(brand_center_y - brand_icon.height / 2)
+        panel.paste(brand_icon, (brand_x, brand_y), brand_icon)
+    else:
+        brand_key = _camera_brand_key(metadata.camera_make, metadata.camera_model)
+        brand_text = BRAND_NAMES.get(brand_key, metadata.camera_make).upper()
+        brand_text = _fit_text(draw, brand_text, value_font, badge_area_width)
+        brand_x = _centered_text_x(
+            draw, brand_text, value_font, badge_left, badge_right
+        )
+        brand_y = _centered_text_y(draw, brand_text, value_font, brand_center_y)
+        draw.text((brand_x, brand_y), brand_text, font=value_font, fill=PANEL_INK)
+    if lens_badge:
+        lens_badge_x = round(badge_left + (badge_area_width - lens_badge.width) / 2)
+        lens_badge_y = round(panel_height * 0.84 - lens_badge.height / 2)
+        panel.paste(lens_badge, (lens_badge_x, lens_badge_y), lens_badge)
+
+    equipment_right = width - padding
+    equipment_width = max(1, equipment_right - equipment_left)
+    camera_text = _fit_text(
+        draw, metadata.camera_model, equipment_font, equipment_width
+    )
+    camera_y = _centered_text_y(
+        draw, camera_text, equipment_font, round(panel_height * 0.70)
+    )
+    draw.text(
+        (equipment_left, camera_y),
+        camera_text,
+        font=equipment_font,
+        fill=PANEL_INK,
+    )
+
+    lens_text = _fit_text(draw, metadata.lens, equipment_font, equipment_width)
+    lens_y = _centered_text_y(
+        draw, lens_text, equipment_font, round(panel_height * 0.84)
+    )
+    draw.text(
+        (equipment_left, lens_y),
+        lens_text,
+        font=equipment_font,
+        fill=PANEL_INK,
+    )
+
+    result = Image.new("RGB", (width, height + panel_height), PANEL_BACKGROUND)
+    result.paste(photo, (0, 0))
+    result.paste(panel, (0, height))
+    return result
+
+
 def _add_metadata_panel(
     image: Image.Image,
     metadata: PhotoMetadata,
@@ -833,6 +1023,9 @@ def _add_metadata_panel(
 ) -> Image.Image:
     photo = image.convert("RGB")
     width, height = photo.size
+    if height > width:
+        return _add_portrait_metadata_panel(photo, metadata, signature_path)
+
     panel_height = max(PANEL_MIN_HEIGHT, round(width * PANEL_HEIGHT_RATIO))
     padding = max(20, round(width * 0.026))
     label_font = _load_font(max(9, round(width * 0.0088)))
@@ -869,22 +1062,17 @@ def _add_metadata_panel(
         width=max(1, line_width // 2),
     )
 
-    stats = (
-        ("ISO", metadata.iso),
-        ("APERTURE", metadata.aperture),
-        ("SHUTTER", metadata.shutter_speed),
-        ("FOCAL", metadata.focal_length_35mm),
+    _draw_stat_row(
+        draw,
+        _metadata_stats(metadata),
+        padding,
+        stats_right,
+        round(panel_height * 0.22),
+        round(panel_height * 0.42),
+        label_font,
+        value_font,
+        round(width * 0.012),
     )
-    stat_width = max(1, (stats_right - padding) // len(stats))
-    label_y = round(panel_height * 0.22)
-    value_y = round(panel_height * 0.42)
-    for index, (label, value) in enumerate(stats):
-        x = padding + stat_width * index
-        draw.text((x, label_y), label, font=label_font, fill=PANEL_MUTED)
-        fitted_value = _fit_text(
-            draw, value, value_font, stat_width - round(width * 0.012)
-        )
-        draw.text((x, value_y), fitted_value, font=value_font, fill=PANEL_INK)
 
     captured_y = round(panel_height * 0.76)
     draw.text(
