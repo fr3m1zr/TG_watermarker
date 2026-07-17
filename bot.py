@@ -939,12 +939,13 @@ def _add_portrait_metadata_panel(
     signature_path: Path,
 ) -> Image.Image:
     width, height = photo.size
-    panel_height = max(round(PANEL_MIN_HEIGHT * 1.45), round(width * 0.125))
-    padding = max(18, round(width * 0.03))
-    label_font = _load_font(max(8, round(width * 0.0082)))
-    value_font = _load_font(max(14, round(width * 0.0155)), bold=True)
-    detail_font = _load_font(max(10, round(width * 0.0105)))
+    panel_height = max(round(PANEL_MIN_HEIGHT * 1.35), round(width * 0.105))
+    padding = max(22, round(width * 0.032))
+    label_font = _load_font(max(9, round(width * 0.0084)))
+    value_font = _load_font(max(17, round(width * 0.0172)), bold=True)
+    detail_font = _load_font(max(10, round(width * 0.0102)))
     equipment_font = _load_font(max(12, round(width * 0.0128)), bold=True)
+    small_font = _load_font(max(10, round(width * 0.0094)))
 
     panel = Image.new("RGB", (width, panel_height), PANEL_BACKGROUND)
     draw = ImageDraw.Draw(panel)
@@ -956,82 +957,72 @@ def _add_portrait_metadata_panel(
         width=line_width * 2,
     )
 
+    divider_color = (218, 214, 206)
+    left_right = round(width * 0.61)
+    divider_x = left_right
+    draw.line(
+        (
+            divider_x,
+            round(panel_height * 0.18),
+            divider_x,
+            round(panel_height * 0.82),
+        ),
+        fill=divider_color,
+        width=max(1, line_width // 2),
+    )
+
+    left_section_right = divider_x - round(width * 0.028)
     _draw_stat_row(
         draw,
         _metadata_stats(metadata),
         padding,
-        width - padding,
-        round(panel_height * 0.14),
-        round(panel_height * 0.36),
+        left_section_right,
+        round(panel_height * 0.18),
+        round(panel_height * 0.42),
         label_font,
         value_font,
         round(width * 0.018),
     )
 
-    divider_color = (218, 214, 206)
-    row_top = round(panel_height * 0.58)
-    row_bottom = round(panel_height * 0.90)
-    section_divider_y = round(panel_height * 0.53)
-    draw.line(
-        (padding, section_divider_y, width - padding, section_divider_y),
-        fill=divider_color,
-        width=max(1, line_width // 2),
-    )
-
-    captured_y = round(panel_height * 0.70)
+    lower_y = round(panel_height * 0.78)
+    captured_right = left_section_right
     draw.text(
-        (padding, captured_y),
+        (padding, lower_y),
         "CAPTURED",
         font=label_font,
         fill=PANEL_ACCENT,
     )
-    captured_x = padding + round(width * 0.15)
-    captured_width = max(1, round(width * 0.31) - captured_x)
-    captured_text = _fit_text(
-        draw, metadata.captured_at, label_font, captured_width
-    )
+    captured_x = padding + round(width * 0.13)
+    captured_width = max(1, captured_right - captured_x)
+    captured_text = _fit_text(draw, metadata.captured_at, small_font, captured_width)
     draw.text(
-        (captured_x, captured_y),
+        (captured_x, lower_y),
         captured_text,
-        font=label_font,
+        font=small_font,
         fill=PANEL_MUTED,
     )
 
-    signature_right = round(width * 0.31)
-    badge_left = round(width * 0.35)
-    badge_right = round(width * 0.54)
-    equipment_left = round(width * 0.60)
-    draw.line(
-        (round(width * 0.325), row_top, round(width * 0.325), row_bottom),
-        fill=divider_color,
-        width=max(1, line_width // 2),
-    )
-    draw.line(
-        (round(width * 0.57), row_top, round(width * 0.57), row_bottom),
-        fill=divider_color,
-        width=max(1, line_width // 2),
-    )
-
-    draw.text(
-        (padding, row_top),
-        "SHOT BY",
-        font=label_font,
-        fill=PANEL_MUTED,
-    )
+    right_left = divider_x + round(width * 0.035)
+    right_right = width - padding
+    badge_left = right_left
+    badge_right = round(width * 0.74)
+    equipment_left = badge_right + round(width * 0.028)
+    equipment_right = right_right
     signature = _load_signature(
         signature_path,
-        max_width=max(1, signature_right - padding),
-        max_height=max(1, round(panel_height * 0.19)),
+        max_width=max(1, round((equipment_right - equipment_left) * 1.15)),
+        max_height=max(1, round(panel_height * 0.48)),
     )
     if signature:
-        signature_y = round(panel_height * 0.72)
-        panel.paste(signature, (padding, signature_y), signature)
-    else:
-        draw.text(
-            (padding, round(panel_height * 0.72)),
-            "SIGNATURE",
-            font=detail_font,
-            fill=PANEL_INK,
+        alpha = signature.getchannel("A").point(lambda value: round(value * 0.22))
+        faded_signature = signature.copy()
+        faded_signature.putalpha(alpha)
+        signature_x = equipment_right - faded_signature.width
+        signature_y = round(panel_height * 0.68 - faded_signature.height / 2)
+        panel.paste(
+            faded_signature,
+            (signature_x, signature_y),
+            faded_signature,
         )
 
     badge_area_width = max(1, badge_right - badge_left)
@@ -1039,7 +1030,7 @@ def _add_portrait_metadata_panel(
         LENS_BADGE_DIR,
         metadata.lens_badge_key,
         max_width=badge_area_width,
-        max_height=max(1, round(panel_height * 0.14)),
+        max_height=max(1, round(panel_height * 0.13)),
     )
     brand_icon = _load_brand_icon(
         BRAND_ICON_DIR,
@@ -1048,10 +1039,10 @@ def _add_portrait_metadata_panel(
         max_width=max(1, round(badge_area_width * 0.94)),
         max_height=max(
             1,
-            round(panel_height * (0.13 if lens_badge else 0.18)),
+            round(panel_height * (0.14 if lens_badge else 0.22)),
         ),
     )
-    brand_center_y = round(panel_height * (0.68 if lens_badge else 0.75))
+    brand_center_y = round(panel_height * (0.38 if lens_badge else 0.50))
     if brand_icon:
         brand_x = round(badge_left + (badge_area_width - brand_icon.width) / 2)
         brand_y = round(brand_center_y - brand_icon.height / 2)
@@ -1067,30 +1058,25 @@ def _add_portrait_metadata_panel(
         draw.text((brand_x, brand_y), brand_text, font=value_font, fill=PANEL_INK)
     if lens_badge:
         lens_badge_x = round(badge_left + (badge_area_width - lens_badge.width) / 2)
-        lens_badge_y = round(panel_height * 0.84 - lens_badge.height / 2)
+        lens_badge_y = round(panel_height * 0.62 - lens_badge.height / 2)
         panel.paste(lens_badge, (lens_badge_x, lens_badge_y), lens_badge)
 
-    equipment_right = width - padding
     equipment_width = max(1, equipment_right - equipment_left)
+    equipment_camera_y = round(panel_height * 0.30)
+    equipment_lens_y = round(panel_height * 0.50)
     camera_text = _fit_text(
         draw, metadata.camera_model, equipment_font, equipment_width
     )
-    camera_y = _centered_text_y(
-        draw, camera_text, equipment_font, round(panel_height * 0.68)
-    )
     draw.text(
-        (equipment_left, camera_y),
+        (equipment_left, equipment_camera_y),
         camera_text,
         font=equipment_font,
         fill=PANEL_INK,
     )
 
     lens_text = _fit_text(draw, metadata.lens, equipment_font, equipment_width)
-    lens_y = _centered_text_y(
-        draw, lens_text, equipment_font, round(panel_height * 0.83)
-    )
     draw.text(
-        (equipment_left, lens_y),
+        (equipment_left, equipment_lens_y),
         lens_text,
         font=equipment_font,
         fill=PANEL_INK,
