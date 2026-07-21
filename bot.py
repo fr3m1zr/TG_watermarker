@@ -6,6 +6,7 @@ import asyncio
 import logging
 import os
 import re
+import unicodedata
 from collections import deque
 from dataclasses import dataclass
 from fractions import Fraction
@@ -64,10 +65,12 @@ EXIFREAD_TAGS = {
     "Image Model": "Model",
     "Image DateTime": "DateTime",
     "EXIF DateTimeOriginal": "DateTimeOriginal",
+    "EXIF DateTimeDigitized": "DateTimeDigitized",
     "EXIF ExposureTime": "ExposureTime",
     "EXIF FNumber": "FNumber",
     "EXIF ISOSpeedRatings": "ISOSpeedRatings",
     "EXIF PhotographicSensitivity": "PhotographicSensitivity",
+    "EXIF FocalLength": "FocalLength",
     "EXIF FocalLengthIn35mmFilm": "FocalLengthIn35mmFilm",
     "EXIF LensModel": "LensModel",
 }
@@ -400,6 +403,21 @@ def _as_float(value: Any) -> float | None:
             return float(Fraction(value[0], value[1]))
         if hasattr(value, "num") and hasattr(value, "den"):
             return float(Fraction(value.num, value.den))
+        if isinstance(value, bytes) or isinstance(value, (list, tuple)):
+            value = _clean_text(value)
+        if isinstance(value, str):
+            text = value.strip()
+            fraction_match = re.search(
+                r"(?P<num>-?\d+(?:\.\d+)?)\s*/\s*(?P<den>-?\d+(?:\.\d+)?)",
+                text,
+            )
+            if fraction_match:
+                numerator = float(fraction_match.group("num"))
+                denominator = float(fraction_match.group("den"))
+                return numerator / denominator
+            number_match = re.search(r"-?\d+(?:\.\d+)?", text)
+            if number_match:
+                return float(number_match.group(0))
         return float(value)
     except (TypeError, ValueError, ZeroDivisionError):
         return None
@@ -456,11 +474,82 @@ def _read_raw_exif(image_source: bytes | Path) -> dict[str, Any]:
     }
 
 
+def _decode_text_bytes(value: bytes) -> str:
+    raw = value.strip()
+    if not raw:
+        return ""
+
+    encodings: list[str] = []
+    if raw.startswith((b"\xff\xfe", b"\xfe\xff")):
+        encodings.append("utf-16")
+    elif len(raw) > 1:
+        even_nuls = raw[::2].count(0)
+        odd_nuls = raw[1::2].count(0)
+        nul_threshold = max(2, len(raw) // 4)
+        if odd_nuls >= nul_threshold and odd_nuls > even_nuls:
+            encodings.append("utf-16le")
+        elif even_nuls >= nul_threshold and even_nuls > odd_nuls:
+            encodings.append("utf-16be")
+
+    try:
+        return value.decode("utf-8")
+    except UnicodeDecodeError:
+        pass
+
+    encodings.extend(
+        ("utf-16le", "utf-16be", "cp950", "gb18030", "shift_jis", "cp1252")
+    )
+    candidates: list[tuple[float, int, str]] = []
+    for encoding in dict.fromkeys(encodings):
+        try:
+            text = value.decode(encoding).replace("\ufeff", "")
+        except UnicodeDecodeError:
+            continue
+        candidates.append((_decoded_text_score(text), -len(candidates), text))
+    if candidates:
+        return max(candidates)[2]
+    return value.decode("utf-8", errors="replace")
+
+
+def _decoded_text_score(value: str) -> float:
+    score = 0.0
+    for char in value.replace("\x00", ""):
+        codepoint = ord(char)
+        category = unicodedata.category(char)
+        if char.isspace():
+            score += 0.2
+        elif category.startswith("C"):
+            score -= 8
+        elif 0xE000 <= codepoint <= 0xF8FF or 0xF900 <= codepoint <= 0xFAFF:
+            score -= 4
+        elif 0xFF00 <= codepoint <= 0xFFEF:
+            score -= 2
+        elif 0xAC00 <= codepoint <= 0xD7AF:
+            score -= 1.5
+        elif 0x0080 <= codepoint <= 0x024F:
+            score -= 2
+        elif 0x4E00 <= codepoint <= 0x9FFF:
+            score += 2
+        elif char.isascii() and (char.isalnum() or char in " -_./:+()[]#"):
+            score += 2
+        elif char.isprintable() and category[0] in {"L", "N", "P", "S"}:
+            score += 1
+        else:
+            score -= 1
+    return score
+
+
 def _clean_text(value: Any) -> str:
     if isinstance(value, list) and len(value) == 1:
         value = value[0]
+    if isinstance(value, (list, tuple)) and all(
+        isinstance(item, int) and 0 <= item <= 255 for item in value
+    ) and (
+        len(value) > 4 and (0 in value or any(item > 127 for item in value))
+    ):
+        value = bytes(value)
     if isinstance(value, bytes):
-        value = value.decode("utf-8", errors="replace")
+        value = _decode_text_bytes(value)
     return " ".join(str(value).replace("\x00", "").split())
 
 
@@ -624,9 +713,25 @@ def _format_capture_time(value: Any) -> str:
     if value is None:
         return "DATE UNKNOWN"
     text = _clean_text(value)
-    if len(text) >= 19 and text[4] == ":" and text[7] == ":":
-        return f"{text[:4]}.{text[5:7]}.{text[8:10]}  {text[11:16]}"
-    return text or "DATE UNKNOWN"
+    match = re.search(
+        r"\b(?P<year>\d{4})[:/-](?P<month>\d{2})[:/-](?P<day>\d{2})"
+        r"[ T]+(?P<hour>\d{2}):(?P<minute>\d{2})",
+        text,
+    )
+    if not match:
+        return "DATE UNKNOWN"
+    return (
+        f"{match.group('year')}.{match.group('month')}.{match.group('day')}  "
+        f"{match.group('hour')}:{match.group('minute')}"
+    )
+
+
+def _capture_time_from_exif(exif: dict[str, Any]) -> str:
+    for tag in ("DateTimeOriginal", "DateTimeDigitized", "DateTime"):
+        captured_at = _format_capture_time(exif.get(tag))
+        if captured_at != "DATE UNKNOWN":
+            return captured_at
+    return "DATE UNKNOWN"
 
 
 def _camera_brand_key(make: str, model: str) -> str | None:
@@ -662,15 +767,14 @@ def _format_metadata(exif: dict[str, Any]) -> PhotoMetadata:
     aperture = _as_float(exif.get("FNumber"))
     exposure = _format_exposure(exif.get("ExposureTime"))
     iso = exif.get("PhotographicSensitivity", exif.get("ISOSpeedRatings"))
-    captured_at = exif.get("DateTimeOriginal", exif.get("DateTime"))
-    focal_length_35mm = _as_float(exif.get("FocalLengthIn35mmFilm"))
+    focal_length = _as_float(exif.get("FocalLengthIn35mmFilm")) or _as_float(
+        exif.get("FocalLength")
+    )
 
     return PhotoMetadata(
         iso=_clean_text(iso) if iso else "—",
         aperture=f"F{aperture:g}" if aperture else "—",
-        focal_length_35mm=f"{focal_length_35mm:g}MM"
-        if focal_length_35mm
-        else "—",
+        focal_length_35mm=f"{focal_length:g}MM" if focal_length else "—",
         shutter_speed=exposure.upper() if exposure else "—",
         camera_make=make or "UNKNOWN",
         camera_model=_strip_camera_make(make, model, brand_key),
@@ -679,7 +783,7 @@ def _format_metadata(exif: dict[str, Any]) -> PhotoMetadata:
         else _format_lens_name(lens_model),
         lens_badge_key=_lens_badge_key_from_alias(lens_alias)
         or _lens_badge_key(lens_model),
-        captured_at=_format_capture_time(captured_at),
+        captured_at=_capture_time_from_exif(exif),
     )
 
 
