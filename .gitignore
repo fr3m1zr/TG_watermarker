@@ -1,5 +1,6 @@
 .env
 assets/signature.png
+.container-data/
 __pycache__/
 *.py[cod]
 .pytest_cache/

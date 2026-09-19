@@ -1,3 +1,5 @@
+# Linux/Docker compatibility path. macOS uses ./startup.sh and Apple
+# container CLI; this file is intentionally not part of that main workflow.
 services:
   telegram-bot-api:
     image: aiogram/telegram-bot-api:latest
@@ -19,6 +21,7 @@ services:
     restart: unless-stopped
     depends_on:
       - telegram-bot-api
+    # Match the local Telegram Bot API image's uid/gid for shared files.
     user: "101:101"
     environment:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN in .env}
