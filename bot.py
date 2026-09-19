@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import math
 import os
 import re
 import unicodedata
@@ -73,7 +74,14 @@ EXIFREAD_TAGS = {
     "EXIF FocalLength": "FocalLength",
     "EXIF FocalLengthIn35mmFilm": "FocalLengthIn35mmFilm",
     "EXIF LensModel": "LensModel",
+    "Image ImageWidth": "ImageWidth",
+    "Image ImageLength": "ImageLength",
+    "EXIF ExifImageWidth": "ExifImageWidth",
+    "EXIF ExifImageLength": "ExifImageHeight",
+    "EXIF PixelXDimension": "PixelXDimension",
+    "EXIF PixelYDimension": "PixelYDimension",
 }
+CROP_DETECTION_TOLERANCE = 0.01
 PANEL_BACKGROUND = (247, 245, 240)
 PANEL_INK = (28, 29, 31)
 PANEL_MUTED = (119, 116, 110)
@@ -423,6 +431,60 @@ def _as_float(value: Any) -> float | None:
         return None
 
 
+def _exif_dimension(exif: dict[str, Any], keys: tuple[str, ...]) -> int | None:
+    for key in keys:
+        value = _as_float(exif.get(key))
+        if value is None or not math.isfinite(value) or value < 1:
+            continue
+        return round(value)
+    return None
+
+
+def _exif_image_size(exif: dict[str, Any]) -> tuple[int, int] | None:
+    """Return the largest complete pixel dimension pair found in EXIF."""
+    candidates: list[tuple[int, int]] = []
+    dimension_pairs = (
+        ("ExifImageWidth", "ExifImageHeight"),
+        ("PixelXDimension", "PixelYDimension"),
+        ("ImageWidth", "ImageLength"),
+    )
+    for width_key, height_key in dimension_pairs:
+        width = _exif_dimension(exif, (width_key,))
+        height = _exif_dimension(exif, (height_key,))
+        if width and height:
+            candidates.append((width, height))
+    if not candidates:
+        return None
+    return max(candidates, key=lambda size: size[0] * size[1])
+
+
+def _crop_factor(
+    original_size: tuple[int, int] | None,
+    current_size: tuple[int, int] | None,
+) -> float:
+    """Estimate a post-capture crop factor from the two pixel dimensions."""
+    if not original_size or not current_size:
+        return 1.0
+
+    original_long, original_short = sorted(original_size, reverse=True)
+    current_long, current_short = sorted(current_size, reverse=True)
+    if original_short < 1 or current_short < 1:
+        return 1.0
+
+    # EXIF dimensions can describe the unrotated image, so compare the
+    # dimensions by their long and short sides instead of their orientation.
+    if (
+        current_long > original_long * (1 + CROP_DETECTION_TOLERANCE)
+        or current_short > original_short * (1 + CROP_DETECTION_TOLERANCE)
+    ):
+        return 1.0
+
+    factor = math.hypot(original_long, original_short) / math.hypot(
+        current_long, current_short
+    )
+    return factor if factor > 1 + CROP_DETECTION_TOLERANCE else 1.0
+
+
 def _read_exif(image: Image.Image) -> dict[str, Any]:
     exif = image.getexif()
     values = {
@@ -757,7 +819,10 @@ def _strip_camera_make(make: str, model: str, brand_key: str | None) -> str:
     return result or "UNKNOWN MODEL"
 
 
-def _format_metadata(exif: dict[str, Any]) -> PhotoMetadata:
+def _format_metadata(
+    exif: dict[str, Any],
+    current_image_size: tuple[int, int] | None = None,
+) -> PhotoMetadata:
     make = _clean_text(exif.get("Make", ""))
     model = _clean_text(exif.get("Model", ""))
     brand_key = _camera_brand_key(make, model)
@@ -770,6 +835,21 @@ def _format_metadata(exif: dict[str, Any]) -> PhotoMetadata:
     focal_length = _as_float(exif.get("FocalLengthIn35mmFilm")) or _as_float(
         exif.get("FocalLength")
     )
+    original_image_size = _exif_image_size(exif)
+    crop_factor = _crop_factor(original_image_size, current_image_size)
+    if focal_length and crop_factor > 1:
+        focal_length *= crop_factor
+        LOGGER.info(
+            "Detected post-capture crop for %s %s: %sx%s -> %sx%s "
+            "(crop factor %.3f)",
+            make or "UNKNOWN",
+            model or "UNKNOWN",
+            original_image_size[0] if original_image_size else "?",
+            original_image_size[1] if original_image_size else "?",
+            current_image_size[0] if current_image_size else "?",
+            current_image_size[1] if current_image_size else "?",
+            crop_factor,
+        )
 
     return PhotoMetadata(
         iso=_clean_text(iso) if iso else "—",
@@ -1434,7 +1514,7 @@ def process_image(
         exif_values = _read_raw_exif(image_source)
         image = _decode_raw_image(image_source)
         exif_bytes = b""
-        metadata = _format_metadata(exif_values)
+        metadata = _format_metadata(exif_values, image.size)
         result = _add_metadata_panel(image, metadata, signature_path)
     else:
         source_input = (
@@ -1445,7 +1525,7 @@ def process_image(
             exif_values = _read_exif(source)
             image = ImageOps.exif_transpose(source)
             exif_bytes = image.getexif().tobytes()
-            metadata = _format_metadata(exif_values)
+            metadata = _format_metadata(exif_values, image.size)
             result = _add_metadata_panel(image, metadata, signature_path)
 
     output = BytesIO()
