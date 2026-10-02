@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import os
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -46,3 +49,45 @@ class StartupConfigurationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DockerRuntimeTests(unittest.TestCase):
+    """Run startup.sh against a fake docker binary to check the Linux path."""
+
+    def _run(self, *args: str) -> tuple[subprocess.CompletedProcess, list[str]]:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            calls = tmp_path / "calls.log"
+            fake = tmp_path / "docker"
+            fake.write_text(f'#!/bin/sh\nprintf "%s\\n" "$*" >> "{calls}"\n')
+            fake.chmod(0o755)
+            env_file = tmp_path / ".env"
+            env_file.write_text("TELEGRAM_BOT_TOKEN=test\n")
+            env = {
+                "PATH": f"{tmp_path}:{os.environ['PATH']}",
+                "TG_WATERMARKER_RUNTIME": "docker",
+                "ENV_FILE": str(env_file),
+            }
+            result = subprocess.run(
+                ["sh", str(PROJECT_ROOT / "startup.sh"), *args],
+                env=env, capture_output=True, text=True, check=False,
+            )
+            lines = calls.read_text().splitlines() if calls.exists() else []
+            return result, lines
+
+    def test_start_runs_compose_up_detached(self) -> None:
+        result, calls = self._run("start")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(calls), 1)
+        self.assertTrue(calls[0].startswith("compose --project-directory "))
+        self.assertTrue(calls[0].endswith(" up -d"))
+
+    def test_logs_maps_service_aliases(self) -> None:
+        result, calls = self._run("logs", "api", "-f")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(calls[0].endswith("logs --tail 200 --follow telegram-bot-api"))
+
+    def test_supervisor_is_rejected_on_docker(self) -> None:
+        result, calls = self._run("supervisor", "status")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(calls, [])

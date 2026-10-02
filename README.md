@@ -153,20 +153,21 @@ the data under the ignored `.container-data/` directory by default. This still
 provides persistent volume-style storage while avoiding the runtime limitation.
 The Linux/Docker path below keeps the original named volume.
 
-## Linux / Docker compatibility
+## Linux / Docker
 
-`compose.yaml` remains as a documented fallback for Linux or an existing Docker
-environment. It retains the original two-service design, restart policy, and
-Compose service-name networking. It is not invoked by `startup.sh` and Docker
-Desktop is not a macOS prerequisite.
-
-For Linux/Docker:
+On Linux, `startup.sh` runs `compose.yaml` through Docker Compose. It keeps
+the original two-service design, restart policy, named volume, and Compose
+service-name networking. Docker Desktop is not a macOS prerequisite; set
+`TG_WATERMARKER_RUNTIME=docker` only to force this path elsewhere.
 
 ```sh
-docker compose --env-file .env up --build -d
-docker compose logs -f bot
-docker compose down
+./startup.sh            # docker compose up -d (builds the bot image if missing)
+./startup.sh update     # pull the API image, rebuild the bot, recreate
+./startup.sh logs bot -f
+./startup.sh stop
 ```
+
+`supervisor` is macOS-only; Docker's `restart: unless-stopped` covers it.
 
 ## Troubleshooting
 

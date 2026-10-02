@@ -1,5 +1,5 @@
-# Linux/Docker compatibility path. macOS uses ./startup.sh and Apple
-# container CLI; this file is intentionally not part of that main workflow.
+# Linux/Docker path. ./startup.sh runs this file through Docker Compose on
+# Linux; on macOS it uses the Apple container CLI instead.
 services:
   telegram-bot-api:
     image: aiogram/telegram-bot-api:latest

@@ -42,8 +42,10 @@ Commands:
 The default command is start. start does not pull when a matching local image
 already exists. It builds only when the image is missing or the Dockerfile
 build inputs changed. update is the explicit pull/rebuild operation.
-The script never uses Docker or Docker Compose. It never deletes the persistent
-data directory or images.
+On macOS the script uses Apple container and never uses Docker or Docker
+Compose. On Linux (or with TG_WATERMARKER_RUNTIME=docker) the same commands
+run compose.yaml through Docker Compose; supervisor is macOS-only there.
+It never deletes the persistent data directory, volumes, or images.
 EOF
 }
 
@@ -628,8 +630,101 @@ show_logs() {
     esac
 }
 
+detect_runtime() {
+    case "${TG_WATERMARKER_RUNTIME:-}" in
+        apple|docker)
+            printf '%s\n' "$TG_WATERMARKER_RUNTIME"
+            return
+            ;;
+        '')
+            ;;
+        *)
+            die "TG_WATERMARKER_RUNTIME must be apple or docker"
+            ;;
+    esac
+    if [ "$(uname -s)" = Darwin ]; then
+        printf '%s\n' apple
+    else
+        printf '%s\n' docker
+    fi
+}
+
+# Linux hosts run the same two services through compose.yaml. Docker's
+# depends_on and restart policies replace the macOS launchd supervisor.
+run_compose() {
+    require_command docker
+    [ -f "$ENV_FILE" ] || die "Missing $ENV_FILE; copy .env.example and fill it in"
+    docker compose --project-directory "$SCRIPT_DIR" \
+        -f "$SCRIPT_DIR/compose.yaml" --env-file "$ENV_FILE" "$@"
+}
+
+compose_service() {
+    case "$1" in
+        api) printf '%s\n' telegram-bot-api ;;
+        bot) printf '%s\n' bot ;;
+        *) die "Unknown service: $1 (use api or bot)" ;;
+    esac
+}
+
+compose_main() {
+    command=$1
+    shift
+    case "$command" in
+        start|up)
+            [ "$#" -eq 0 ] || die "$command does not accept extra arguments"
+            run_compose up -d
+            ;;
+        update)
+            [ "$#" -eq 0 ] || die "update does not accept extra arguments"
+            run_compose pull telegram-bot-api
+            run_compose build --pull bot
+            run_compose up -d
+            ;;
+        build)
+            [ "$#" -eq 0 ] || die "build does not accept extra arguments"
+            run_compose build bot
+            ;;
+        stop)
+            [ "$#" -eq 0 ] || die "stop does not accept extra arguments"
+            run_compose stop
+            ;;
+        status)
+            [ "$#" -eq 0 ] || die "status does not accept extra arguments"
+            run_compose ps --all
+            ;;
+        supervisor)
+            die "supervisor is macOS-only; Docker restart policies keep services running"
+            ;;
+        logs)
+            follow=
+            services=
+            for arg in "$@"; do
+                case "$arg" in
+                    -f|--follow) follow=--follow ;;
+                    all) ;;
+                    *) services="$services $(compose_service "$arg")" ;;
+                esac
+            done
+            # shellcheck disable=SC2086 # services is a list of fixed names
+            run_compose logs --tail 200 $follow $services
+            ;;
+        help|-h|--help)
+            usage
+            ;;
+        *)
+            usage >&2
+            die "Unknown command: $command"
+            ;;
+    esac
+}
+
 command=${1:-start}
 shift 2>/dev/null || true
+
+if [ "$(detect_runtime)" = docker ]; then
+    compose_main "$command" "$@"
+    exit 0
+fi
 
 case "$command" in
     start|up)
