@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 
 CONTAINER_CLI=${CONTAINER_CLI:-container}
 ENV_FILE=${ENV_FILE:-"$SCRIPT_DIR/.env"}
+# This remains the source used by the explicit supervisor control commands.
+# The enable path installs a TCC-safe runtime copy in the user's home folder.
+SUPERVISOR_SCRIPT="$SCRIPT_DIR/scripts/tg-watermarker-supervisor.sh"
 
 NETWORK_NAME=tg-watermarker-net
 DEFAULT_DATA_DIR=.container-data/telegram-bot-api
@@ -27,15 +30,20 @@ usage() {
 Usage: ./startup.sh <command>
 
 Commands:
-  start, up, update  Build the ARM64 image, then recreate and start both services
-  build             Build the bot image only (does not require .env)
+  start, up          Reuse a matching local ARM64 image, then start services
+  update             Explicitly pull/rebuild the ARM64 image, then reconcile services
+  build              Build the bot image with the local cache (does not require .env)
   stop              Stop only this project's bot and local Telegram API
   status            Show this project's resource and container status
+  supervisor <cmd>  Manage the project launchd supervisor (status|enable|disable)
   logs [api|bot]    Show logs; add -f/--follow for one service
   help              Show this help
 
-The default command is start. The script never uses Docker or Docker Compose.
-It never deletes the persistent data directory or images.
+The default command is start. start does not pull when a matching local image
+already exists. It builds only when the image is missing or the Dockerfile
+build inputs changed. update is the explicit pull/rebuild operation.
+The script never uses Docker or Docker Compose. It never deletes the persistent
+data directory or images.
 EOF
 }
 
@@ -45,8 +53,81 @@ require_command() {
 
 require_container_cli() {
     require_command "$CONTAINER_CLI"
+    container_cli_path=$(command -v "$CONTAINER_CLI" 2>/dev/null || true)
+    case "$container_cli_path" in
+        /*)
+            ;;
+        *)
+            die "Apple container CLI did not resolve to an absolute path: $CONTAINER_CLI"
+            ;;
+    esac
+    CONTAINER_CLI=$container_cli_path
     "$CONTAINER_CLI" --version >/dev/null 2>&1 \
         || die "Unable to execute the Apple container CLI: $CONTAINER_CLI"
+}
+
+supervisor_control() {
+    [ -x "$SUPERVISOR_SCRIPT" ] \
+        || die "Project supervisor script is missing or not executable: $SUPERVISOR_SCRIPT"
+
+    TG_WATERMARKER_PROJECT_DIR="$SCRIPT_DIR" \
+    TG_WATERMARKER_CONTAINER_CLI="$CONTAINER_CLI" \
+        "$SUPERVISOR_SCRIPT" "$@"
+}
+
+hash_file() {
+    if command -v shasum >/dev/null 2>&1; then
+        shasum -a 256 "$1" | awk '{ print $1; exit }'
+    elif command -v sha256sum >/dev/null 2>&1; then
+        sha256sum "$1" | awk '{ print $1; exit }'
+    else
+        die "A SHA-256 utility is required (shasum or sha256sum)"
+    fi
+}
+
+hash_stdin() {
+    if command -v shasum >/dev/null 2>&1; then
+        shasum -a 256 | awk '{ print $1; exit }'
+    elif command -v sha256sum >/dev/null 2>&1; then
+        sha256sum | awk '{ print $1; exit }'
+    else
+        die "A SHA-256 utility is required (shasum or sha256sum)"
+    fi
+}
+
+# These are the files consumed by Dockerfile COPY/RUN instructions. Hashing
+# only them keeps README, tests, and local metadata changes from triggering a
+# needless image rebuild, while a Dockerfile/context input change is visible.
+build_input_manifest() {
+    (
+        cd "$SCRIPT_DIR"
+        for relative_path in Dockerfile requirements.txt bot.py; do
+            [ -f "$relative_path" ] \
+                || die "Image build input is missing: $relative_path"
+            printf 'file\t%s\t%s\n' \
+                "$relative_path" \
+                "$(hash_file "$relative_path")"
+        done
+
+        if [ -f .dockerignore ]; then
+            printf 'file\t.dockerignore\t%s\n' "$(hash_file .dockerignore)"
+        fi
+
+        if [ -d assets ]; then
+            find assets -type f -print | LC_ALL=C sort \
+                | while IFS= read -r relative_path; do
+                    printf 'file\t%s\t%s\n' \
+                        "$relative_path" \
+                        "$(hash_file "$relative_path")"
+                done
+        fi
+    )
+}
+
+build_input_digest() {
+    manifest=$(build_input_manifest) \
+        || die "Unable to calculate the image build-input digest"
+    printf '%s\n' "$manifest" | hash_stdin
 }
 
 # Read one simple KEY=value entry without sourcing .env. This prevents an
@@ -183,6 +264,29 @@ container_ip() {
         }'
 }
 
+image_exists() {
+    "$CONTAINER_CLI" image inspect "$1" >/dev/null 2>&1
+}
+
+image_label() {
+    image=$1
+    label=$2
+    "$CONTAINER_CLI" image inspect "$image" 2>/dev/null \
+        | awk -F'"' -v label="$label" '$2 == label { print $4; exit }'
+}
+
+image_matches_build_inputs() {
+    image=$1
+    expected_digest=$2
+    actual_digest=$(image_label "$image" com.tg-watermarker.source-digest || true)
+    [ -n "$actual_digest" ] && [ "$actual_digest" = "$expected_digest" ]
+}
+
+project_services_running() {
+    [ "$(container_state "$API_CONTAINER" || true)" = running ] \
+        && [ "$(container_state "$BOT_CONTAINER" || true)" = running ]
+}
+
 stop_one() {
     name=$1
     if ! container_exists "$name"; then
@@ -217,13 +321,27 @@ replace_project_containers() {
 
 build_image() {
     image=$1
-    printf '%s\n' "Building image: $image"
-    "$CONTAINER_CLI" build \
-        --pull \
-        --platform linux/arm64 \
-        --file "$SCRIPT_DIR/Dockerfile" \
-        --tag "$image" \
-        "$SCRIPT_DIR"
+    source_digest=$2
+    pull=$3
+    if [ "$pull" = true ]; then
+        printf '%s\n' "Building image with --pull: $image"
+        "$CONTAINER_CLI" build \
+            --pull \
+            --no-cache \
+            --label "com.tg-watermarker.source-digest=$source_digest" \
+            --platform linux/arm64 \
+            --file "$SCRIPT_DIR/Dockerfile" \
+            --tag "$image" \
+            "$SCRIPT_DIR"
+    else
+        printf '%s\n' "Building image from the local cache: $image"
+        "$CONTAINER_CLI" build \
+            --label "com.tg-watermarker.source-digest=$source_digest" \
+            --platform linux/arm64 \
+            --file "$SCRIPT_DIR/Dockerfile" \
+            --tag "$image" \
+            "$SCRIPT_DIR"
+    fi
 }
 
 create_api_container() {
@@ -297,8 +415,10 @@ create_bot_container() {
     signature_file=$6
     jpeg_quality=$7
     max_file_size=$8
-    transfer_timeout=$9
-    log_level=${10}
+    max_image_pixels=$9
+    bot_memory_limit=${10}
+    transfer_timeout=${11}
+    log_level=${12}
     bot_api_url="http://$api_ip:$API_PORT/bot"
 
     printf '%s\n' "Creating container: $BOT_CONTAINER"
@@ -308,6 +428,7 @@ create_bot_container() {
         --label com.tg-watermarker.service=bot \
         --network "$NETWORK_NAME" \
         --init \
+        --memory "$bot_memory_limit" \
         --env TELEGRAM_BOT_TOKEN \
         --env "TELEGRAM_BOT_API_URL=$bot_api_url" \
         --env TELEGRAM_LOCAL_MODE=true \
@@ -315,6 +436,7 @@ create_bot_container() {
         --env "SIGNATURE_IMAGE_FILE=$signature_file" \
         --env "JPEG_QUALITY=$jpeg_quality" \
         --env "MAX_FILE_SIZE_MB=$max_file_size" \
+        --env "MAX_IMAGE_PIXELS=$max_image_pixels" \
         --env "FILE_TRANSFER_TIMEOUT_SECONDS=$transfer_timeout" \
         --env "LOG_LEVEL=$log_level" \
         --volume "$data_dir:/var/lib/telegram-bot-api:ro" \
@@ -323,11 +445,46 @@ create_bot_container() {
 }
 
 start_services() {
+    mode=$1
     require_env_values
     ensure_container_system
-    ensure_builder
 
     image=$(configured_image)
+    source_digest=$(build_input_digest)
+
+    if [ "$mode" = start ] \
+        && image_exists "$image" \
+        && image_matches_build_inputs "$image" "$source_digest" \
+        && project_services_running; then
+        supervisor_control enable
+        printf '%s\n' "TG_watermarker services are already running; no restart needed."
+        return 0
+    fi
+
+    # Pause the launchd loop before any rebuild/reconciliation. The marker is
+    # intentionally retained if a later step fails, preventing an old bot
+    # from being resurrected while the project is only partially started.
+    supervisor_control disable
+
+    image_was_built=false
+    if [ "$mode" = update ]; then
+        ensure_builder
+        build_image "$image" "$source_digest" true
+        image_was_built=true
+    elif image_exists "$image" \
+        && image_matches_build_inputs "$image" "$source_digest"; then
+        printf '%s\n' "Reusing local image: $image (build inputs unchanged)"
+    else
+        if image_exists "$image"; then
+            printf '%s\n' "Local image metadata is stale; rebuilding without --pull: $image"
+        else
+            printf '%s\n' "Local image is missing; building without --pull: $image"
+        fi
+        ensure_builder
+        build_image "$image" "$source_digest" false
+        image_was_built=true
+    fi
+
     api_id=$(env_value TELEGRAM_API_ID || true)
     api_hash=$(env_value TELEGRAM_API_HASH || true)
     bot_token=$(env_value TELEGRAM_BOT_TOKEN || true)
@@ -337,13 +494,13 @@ start_services() {
     signature_file=$(env_or_default SIGNATURE_IMAGE_FILE signature.png)
     jpeg_quality=$(env_or_default JPEG_QUALITY 95)
     max_file_size=$(env_or_default MAX_FILE_SIZE_MB 100)
+    max_image_pixels=$(env_or_default MAX_IMAGE_PIXELS 100000000)
+    bot_memory_limit=$(env_or_default BOT_MEMORY_LIMIT 2G)
     transfer_timeout=$(env_or_default FILE_TRANSFER_TIMEOUT_SECONDS 300)
     log_level=$(env_or_default LOG_LEVEL INFO)
 
-    # Build before stopping currently running project containers, so a failed
-    # build does not create avoidable downtime. --pull is intentional for the
-    # explicit `update`/repeatable start workflow.
-    build_image "$image"
+    # Build happens before stopping project containers, so a failed build does
+    # not create avoidable downtime. Only explicit `update` pulls the base.
     ensure_project_resources "$data_dir"
     replace_project_containers
 
@@ -363,15 +520,21 @@ start_services() {
         "$signature_file" \
         "$jpeg_quality" \
         "$max_file_size" \
+        "$max_image_pixels" \
+        "$bot_memory_limit" \
         "$transfer_timeout" \
         "$log_level"
     printf '%s\n' "Starting container: $BOT_CONTAINER"
     "$CONTAINER_CLI" start "$BOT_CONTAINER" >/dev/null
 
+    supervisor_control enable
     printf '%s\n' "Started TG_watermarker services. Use './startup.sh status' or './startup.sh logs bot -f'."
 }
 
 stop_services() {
+    # Write the marker before stopping either container so the launchd loop
+    # cannot turn an intentional stop into an automatic restart.
+    supervisor_control disable
     require_container_cli
     stop_one "$BOT_CONTAINER"
     stop_one "$API_CONTAINER"
@@ -402,6 +565,9 @@ show_status() {
             printf '  container: %-32s state=not-created\n' "$name"
         fi
     done
+
+    printf '%s\n' "  supervisor:"
+    supervisor_control status | sed 's/^/    /'
 }
 
 show_logs() {
@@ -466,17 +632,22 @@ command=${1:-start}
 shift 2>/dev/null || true
 
 case "$command" in
-    start|up|update)
+    start|up)
         [ "$#" -eq 0 ] || die "$command does not accept extra arguments"
         require_container_cli
-        start_services
+        start_services start
+        ;;
+    update)
+        [ "$#" -eq 0 ] || die "update does not accept extra arguments"
+        require_container_cli
+        start_services update
         ;;
     build)
         [ "$#" -eq 0 ] || die "build does not accept extra arguments"
         require_container_cli
         ensure_container_system
         ensure_builder
-        build_image "$(configured_image)"
+        build_image "$(configured_image)" "$(build_input_digest)" false
         ;;
     stop)
         [ "$#" -eq 0 ] || die "stop does not accept extra arguments"
@@ -485,6 +656,10 @@ case "$command" in
     status)
         [ "$#" -eq 0 ] || die "status does not accept extra arguments"
         show_status
+        ;;
+    supervisor)
+        [ "$#" -ge 1 ] || die "supervisor requires status, enable, or disable"
+        supervisor_control "$@"
         ;;
     logs)
         require_container_cli

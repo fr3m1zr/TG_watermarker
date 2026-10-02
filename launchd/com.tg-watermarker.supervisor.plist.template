@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.tg-watermarker.supervisor</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/sh</string>
+        <string>__RUNTIME_SCRIPT__</string>
+        <string>run</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__RUNTIME_DIR__</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>TG_WATERMARKER_PROJECT_DIR</key>
+        <string>__PROJECT_DIR__</string>
+        <key>TG_WATERMARKER_STATE_DIR</key>
+        <string>__STATE_DIR__</string>
+        <key>TG_WATERMARKER_CONTAINER_CLI</key>
+        <string>__CONTAINER_CLI__</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>StandardOutPath</key>
+    <string>__STATE_DIR__/supervisor.log</string>
+    <key>StandardErrorPath</key>
+    <string>__STATE_DIR__/supervisor.err.log</string>
+</dict>
+</plist>

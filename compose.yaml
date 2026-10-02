@@ -19,6 +19,8 @@ services:
     build:
       context: .
     restart: unless-stopped
+    # Runtime memory ceiling for the bot; this is separate from image limits.
+    mem_limit: ${BOT_MEMORY_LIMIT:-2G}
     depends_on:
       - telegram-bot-api
     # Match the local Telegram Bot API image's uid/gid for shared files.
@@ -31,6 +33,7 @@ services:
       SIGNATURE_IMAGE_FILE: ${SIGNATURE_IMAGE_FILE:-signature.png}
       JPEG_QUALITY: ${JPEG_QUALITY:-95}
       MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB:-100}
+      MAX_IMAGE_PIXELS: ${MAX_IMAGE_PIXELS:-100000000}
       FILE_TRANSFER_TIMEOUT_SECONDS: ${FILE_TRANSFER_TIMEOUT_SECONDS:-300}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     volumes:

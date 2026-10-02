@@ -1,7 +1,9 @@
-.env
-.git
-.gitignore
-__pycache__
-*.py[cod]
-tmp
-.container-data
+# Keep secrets, persistent local data, and unrelated project files out of the
+# image build context. The Dockerfile only needs the files explicitly allowed
+# below.
+*
+!Dockerfile
+!requirements.txt
+!bot.py
+!assets/
+!assets/**
