@@ -1,0 +1,2303 @@
+# Camera maximum still-image pixel dimensions or explicitly marked estimates;
+# these do not prove that a particular frame was captured at that size. Do not
+# infer a certain optical crop from a same-aspect smaller file: resizing, lower-res
+# capture modes, and pixel binning can produce the same dimensions.
+# Primary source: leavestylecode/CameraDatabase, data/camera_data.csv,
+# https://github.com/leavestylecode/CameraDatabase/blob/main/data/camera_data.csv
+# Source file commit: 374a630bac7847f851b3746e82aa528262ef0b5c
+# Original 2249 records: explicit `Max. image resolution` W x H values (2026-09-28); supplemental entries include two user-authorized iPhone 18 estimates.
+# `Also known as` provides aliases after removing parenthetical regions.
+# Copyright (c) 2025 leavestylecode. MIT License:
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# Apple iPhone 15 Pro Max full sensor 8064 x 6048:
+# https://github.com/CrateTools/CrateCamDB/blob/main/crate_cameras.json
+# Source file commit: 6f15205084de2ab2f0c5bef7b9ceced209178b67
+# CrateCamDB copyright CrateTools, CC BY 4.0:
+# https://github.com/CrateTools/CrateCamDB/blob/main/LICENSE
+# https://creativecommons.org/licenses/by/4.0/
+# Hasselblad manufacturer specifications (dimension facts, not copied prose):
+# X2D 100C: https://store-na.hasselblad.com/products/x2d-100c
+# X2D II 100C: https://cdn.hasselblad.com/f/77891/x/15b206e1b9/x2d_ii_100c_datasheet_multi_20260416.pdf
+# X1D II 50C: https://cdn.hasselblad.com/datasheets/X1D_II_50C_Datasheets/1.0/x1D-ii-50c-data-sheet-en.pdf
+# OM SYSTEM names are reclassified from CameraDatabase's Olympus rows; the
+# OM-1 Mark II 5184 x 3888 dimensions are also in its manufacturer spec:
+# https://explore.omsystem.com/ca/en/om-1-mark-ii
+# Apple legacy maximum BACK-camera still sizes: https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Cameras/Cameras.html
+# Sigma camera bodies are included because SIGMA fp is already handled by bot.py.
+# Sigma rows with `W x H x 3` are excluded: that notation counts Foveon sensor layers, not a concrete maximum output still-raster size.
+# Sigma SD1 Merrill uses manufacturer High still capture size 4704 x 3136 (the database 4800 x 3200 describes the sensor): https://www.sigma-global.com/en/cameras/sd1-merrill/
+brand,model,width,height,aliases,source
+apple,iPhone 15 Pro Max,8064,6048,,crate_camdb
+apple,iPhone 6,3264,2448,,apple_developer_archive
+apple,iPhone 6 Plus,3264,2448,,apple_developer_archive
+apple,iPhone 6s,4032,3024,,apple_developer_archive
+apple,iPhone 6s Plus,4032,3024,,apple_developer_archive
+apple,iPhone 7,4032,3024,,apple_developer_archive
+apple,iPhone 7 Plus,4032,3024,,apple_developer_archive
+apple,iPhone 8,4032,3024,,apple_developer_archive
+apple,iPhone 8 Plus,4032,3024,,apple_developer_archive
+apple,iPhone SE,4032,3024,,apple_developer_archive
+apple,iPhone X,4032,3024,,apple_developer_archive
+canon,Digital IXUS,1600,1200,PowerShot S100 DIGITAL ELPH|IXY DIGITAL,camera_database
+canon,Digital IXUS 100 IS,4000,3000,PowerShot SD780 IS|IXY DIGITAL 210 IS,camera_database
+canon,Digital IXUS 110 IS,4000,3000,PowerShot SD960 IS|IXY DIGITAL 510 IS,camera_database
+canon,Digital IXUS 200 IS,4000,3000,PowerShot SD980 IS|IXY DIGITAL 930 IS,camera_database
+canon,Digital IXUS 300,1600,1200,PowerShot S300 DIGITAL ELPH|IXY DIGITAL 300,camera_database
+canon,Digital IXUS 330,1600,1200,PowerShot S330 DIGITAL ELPH|IXY DIGITAL 300a,camera_database
+canon,Digital IXUS 40,2272,1704,PowerShot SD300|IXY DIGITAL 50,camera_database
+canon,Digital IXUS 400,2272,1704,PowerShot S400 DIGITAL ELPH|IXY DIGITAL 400,camera_database
+canon,Digital IXUS 430,2272,1704,PowerShot S410|IXY DIGITAL 450,camera_database
+canon,Digital IXUS 50,2592,1944,PowerShot SD400|IXY DIGITAL 55,camera_database
+canon,Digital IXUS 500,2592,1944,PowerShot S500|IXY DIGITAL 500,camera_database
+canon,Digital IXUS 60,2816,2112,PowerShot SD600|IXY DIGITAL 70,camera_database
+canon,Digital IXUS 65,2816,2112,PowerShot SD630|IXY DIGITAL 80,camera_database
+canon,Digital IXUS 80 IS,3264,2448,PowerShot SD1100 IS|IXY DIGITAL 20 IS,camera_database
+canon,Digital IXUS 800 IS,2816,2112,PowerShot SD700 IS|IXY DIGITAL 800 IS,camera_database
+canon,Digital IXUS 85 IS,3648,2736,PowerShot SD770 IS|IXY DIGITAL 25 IS,camera_database
+canon,Digital IXUS 850 IS,3072,2304,PowerShot SD800 IS|IXY DIGITAL 900 IS,camera_database
+canon,Digital IXUS 860 IS,3264,2448,PowerShot SD870 IS|IXY DIGITAL 910 IS,camera_database
+canon,Digital IXUS 870 IS,3648,2736,PowerShot SD880 IS|IXY DIGITAL 920 IS,camera_database
+canon,Digital IXUS 90 IS,3648,2736,PowerShot SD790 IS|IXY DIGITAL 95 IS,camera_database
+canon,Digital IXUS 900 Ti,3648,2736,PowerShot SD900|IXY DIGITAL 1000,camera_database
+canon,Digital IXUS 95 IS,3648,2736,PowerShot SD1200 IS|IXY DIGITAL 110 IS,camera_database
+canon,Digital IXUS 950 IS,3264,2448,PowerShot SD850 IS|IXY DIGITAL 810 IS,camera_database
+canon,Digital IXUS 960 IS,4000,3000,PowerShot SD950 IS|IXY DIGITAL 2000 IS,camera_database
+canon,Digital IXUS 970 IS,3648,2736,PowerShot SD890 IS|IXY DIGITAL 820 IS,camera_database
+canon,Digital IXUS 980 IS,4416,3312,PowerShot SD990 IS|IXY DIGITAL 3000 IS,camera_database
+canon,Digital IXUS 990 IS,4000,3000,PowerShot SD970 IS|IXY DIGITAL 830 IS,camera_database
+canon,Digital IXUS i,2272,1704,PowerShot SD10|IXY DIGITAL L,camera_database
+canon,Digital IXUS i Zoom,2592,1944,PowerShot SD30|IXY DIGITAL L3,camera_database
+canon,Digital IXUS i7,3072,2304,PowerShot SD40|IXY DIGITAL L4,camera_database
+canon,Digital IXUS II,2048,1536,PowerShot SD100|IXY DIGITAL 30,camera_database
+canon,Digital IXUS IIs,2048,1536,PowerShot SD110|IXY DIGITAL 30a,camera_database
+canon,Digital IXUS v,1600,1200,PowerShot S110 DIGITAL ELPH|IXY DIGITAL 200,camera_database
+canon,Digital IXUS v2,1600,1200,PowerShot S200 DIGITAL ELPH|IXY DIGITAL 200a,camera_database
+canon,Digital IXUS v3,2048,1536,PowerShot S230 DIGITAL ELPH|IXY DIGITAL 320,camera_database
+canon,EOS 1000D,3888,2592,EOS Digital Rebel XS|EOS Kiss F,camera_database
+canon,EOS 10D,3072,2048,,camera_database
+canon,EOS 1300D,5184,3456,EOS Rebel T6|EOS Kiss X80,camera_database
+canon,EOS 20D,3504,2336,,camera_database
+canon,EOS 20Da,3504,2336,,camera_database
+canon,EOS 250D,6000,4000,EOS Rebel SL3|EOS Kiss X10,camera_database
+canon,EOS 300D,3072,2048,EOS Digital Rebel|EOS Kiss Digital,camera_database
+canon,EOS 30D,3504,2336,,camera_database
+canon,EOS 350D,3456,2304,EOS Digital Rebel XT|EOS Kiss Digital N,camera_database
+canon,EOS 4000D,5184,3456,,camera_database
+canon,EOS 400D,3888,2592,EOS Digital Rebel XTi|EOS Kiss Digital X,camera_database
+canon,EOS 40D,3888,2592,,camera_database
+canon,EOS 450D,4272,2848,EOS Digital Rebel XSi|EOS Kiss X2,camera_database
+canon,EOS 500D,4752,3168,EOS Rebel T1i|EOS Kiss X3,camera_database
+canon,EOS 50D,4752,3168,,camera_database
+canon,EOS 5D,4368,2912,,camera_database
+canon,EOS 5D Mark II,5616,3744,,camera_database
+canon,EOS 5D Mark III,5760,3840,,camera_database
+canon,EOS 5D Mark IV,6720,4480,,camera_database
+canon,EOS 5DS,8688,5792,,camera_database
+canon,EOS 5DS R,8688,5792,,camera_database
+canon,EOS 60D,5184,3456,,camera_database
+canon,EOS 60Da,5184,3456,,camera_database
+canon,EOS 6D,5472,3648,,camera_database
+canon,EOS 6D Mark II,6240,4160,,camera_database
+canon,EOS 70D,5472,3648,,camera_database
+canon,EOS 77D,6000,4000,EOS 9000D,camera_database
+canon,EOS 7D,5184,3456,,camera_database
+canon,EOS 7D Mark II,5472,3648,,camera_database
+canon,EOS 80D,6000,4000,,camera_database
+canon,EOS 850D,6000,4000,EOS Rebel T8i|EOS Kiss X10i,camera_database
+canon,EOS 90D,6960,4640,,camera_database
+canon,EOS D30,2160,1440,,camera_database
+canon,EOS D60,3072,2048,,camera_database
+canon,EOS M,5184,3456,,camera_database
+canon,EOS M10,5184,3456,,camera_database
+canon,EOS M100,6000,4000,,camera_database
+canon,EOS M200,6000,4000,,camera_database
+canon,EOS M3,6000,4000,,camera_database
+canon,EOS M5,6000,4000,,camera_database
+canon,EOS M50,6000,4000,EOS Kiss M,camera_database
+canon,EOS M50 II,6000,4000,EOS Kiss M2,camera_database
+canon,EOS M6,6000,4000,,camera_database
+canon,EOS M6 Mark II,6960,4640,,camera_database
+canon,EOS R,6720,4480,,camera_database
+canon,EOS R1,6000,4000,,camera_database
+canon,EOS R10,6000,4000,,camera_database
+canon,EOS R100,6000,4000,,camera_database
+canon,EOS R3,6000,4000,,camera_database
+canon,EOS R5,8192,5464,,camera_database
+canon,EOS R5 C,8192,5464,,camera_database
+canon,EOS R5 Mark II,8192,5464,,camera_database
+canon,EOS R50,6000,4000,,camera_database
+canon,EOS R50 V,6000,4000,,camera_database
+canon,EOS R6,5472,3648,,camera_database
+canon,EOS R6 Mark II,6000,4000,,camera_database
+canon,EOS R6 Mark III,6960,4640,,camera_database
+canon,EOS R7,6960,4640,,camera_database
+canon,EOS R8,6000,4000,,camera_database
+canon,EOS Rebel SL1,5184,3456,EOS 100D|EOS Kiss X7,camera_database
+canon,EOS Rebel SL2,6000,4000,EOS 200D|EOS Kiss X9,camera_database
+canon,EOS Rebel T2i,5184,3456,EOS 550D|EOS Kiss X4,camera_database
+canon,EOS Rebel T3,4272,2848,EOS 1100D|EOS Kiss X50,camera_database
+canon,EOS Rebel T3i,5184,3456,EOS 600D|EOS Kiss X5,camera_database
+canon,EOS Rebel T4i,5184,3456,EOS 650D|EOS Kiss X6i,camera_database
+canon,EOS Rebel T5,5184,3456,EOS 1200D|EOS Kiss X70,camera_database
+canon,EOS Rebel T5i,5184,3456,EOS 700D|EOS Kiss X7i,camera_database
+canon,EOS Rebel T6i,6000,4000,EOS 750D|EOS Kiss X8i,camera_database
+canon,EOS Rebel T6s,6000,4000,EOS 760D|EOS 8000D,camera_database
+canon,EOS Rebel T7,6000,4000,EOS 2000D|EOS Kiss X90,camera_database
+canon,EOS Rebel T7i,6000,4000,EOS 800D|EOS Kiss X9i,camera_database
+canon,EOS RP,6240,4160,,camera_database
+canon,EOS-1D,2464,1648,,camera_database
+canon,EOS-1D C,5184,3456,,camera_database
+canon,EOS-1D Mark II,3504,2336,,camera_database
+canon,EOS-1D Mark II N,3504,2336,,camera_database
+canon,EOS-1D Mark III,3888,2592,,camera_database
+canon,EOS-1D Mark IV,4896,3264,,camera_database
+canon,EOS-1D X,5184,3456,,camera_database
+canon,EOS-1D X Mark II,5472,3648,,camera_database
+canon,EOS-1D X Mark III,5472,3648,,camera_database
+canon,EOS-1Ds,4064,2704,,camera_database
+canon,EOS-1Ds Mark II,4992,3328,,camera_database
+canon,EOS-1Ds Mark III,5616,3744,,camera_database
+canon,IXUS 105,4000,3000,PowerShot SD1300 IS|IXY 200F,camera_database
+canon,IXUS 1100 HS,4000,3000,PowerShot ELPH 510 HS|IXY 51S,camera_database
+canon,IXUS 130,4320,3240,PowerShot SD1400 IS|IXY 400F,camera_database
+canon,IXUS 165,5152,3864,IXY 160|PowerShot ELPH 165 IS,camera_database
+canon,IXUS 210,4320,3240,PowerShot SD3500 IS|IXY 10S,camera_database
+canon,IXUS 230 HS,4000,3000,PowerShot ELPH 310 HS|IXY 600F,camera_database
+canon,PowerShot 350,640,480,,camera_database
+canon,PowerShot 600,832,608,,camera_database
+canon,PowerShot A10,1280,960,,camera_database
+canon,PowerShot A100,1280,960,,camera_database
+canon,PowerShot A1000 IS,3648,2756,,camera_database
+canon,PowerShot A1100 IS,4000,3000,,camera_database
+canon,PowerShot A1200,4000,3000,,camera_database
+canon,PowerShot A1300,4608,3456,,camera_database
+canon,PowerShot A1400,4608,3456,,camera_database
+canon,PowerShot A20,1600,1200,,camera_database
+canon,PowerShot A200,1600,1200,,camera_database
+canon,PowerShot A2000 IS,3648,2756,,camera_database
+canon,PowerShot A2100 IS,4000,3000,,camera_database
+canon,PowerShot A2200,4320,3240,,camera_database
+canon,PowerShot A2300,4608,3456,,camera_database
+canon,PowerShot A2400 IS,4608,3456,,camera_database
+canon,PowerShot A2500,4608,3456,,camera_database
+canon,PowerShot A2600,4608,3456,,camera_database
+canon,PowerShot A30,1280,960,,camera_database
+canon,PowerShot A300,2048,1536,,camera_database
+canon,PowerShot A3000 IS,3648,2736,,camera_database
+canon,PowerShot A310,2048,1536,,camera_database
+canon,PowerShot A3100 IS,4000,3000,,camera_database
+canon,PowerShot A3200 IS,4320,3240,,camera_database
+canon,PowerShot A3300 IS,4608,3456,,camera_database
+canon,PowerShot A3400 IS,4608,3456,,camera_database
+canon,PowerShot A3500 IS,4608,3456,,camera_database
+canon,PowerShot A40,1600,1200,,camera_database
+canon,PowerShot A400,2048,1536,,camera_database
+canon,PowerShot A4000 IS,4608,3456,,camera_database
+canon,PowerShot A410,2048,1536,,camera_database
+canon,PowerShot A420,2272,1704,,camera_database
+canon,PowerShot A430,2272,1704,,camera_database
+canon,PowerShot A450,2592,1944,,camera_database
+canon,PowerShot A460,2592,1944,,camera_database
+canon,PowerShot A470,3072,2304,,camera_database
+canon,PowerShot A480,3648,2736,,camera_database
+canon,PowerShot A490,3648,2736,,camera_database
+canon,PowerShot A495,3648,2736,,camera_database
+canon,PowerShot A5,1024,768,,camera_database
+canon,PowerShot A5 Zoom,1024,768,,camera_database
+canon,PowerShot A50,1280,960,,camera_database
+canon,PowerShot A510,2048,1536,,camera_database
+canon,PowerShot A520,2272,1704,,camera_database
+canon,PowerShot A530,2592,1944,,camera_database
+canon,PowerShot A540,2816,2112,,camera_database
+canon,PowerShot A550,3072,2304,,camera_database
+canon,PowerShot A560,3072,2304,,camera_database
+canon,PowerShot A570 IS,3072,2304,,camera_database
+canon,PowerShot A580,3264,2448,,camera_database
+canon,PowerShot A590 IS,3264,2448,,camera_database
+canon,PowerShot A60,1600,1200,,camera_database
+canon,PowerShot A610,2592,1944,,camera_database
+canon,PowerShot A620,3072,2304,,camera_database
+canon,PowerShot A630,3264,2448,,camera_database
+canon,PowerShot A640,3648,2736,,camera_database
+canon,PowerShot A650 IS,4000,3000,,camera_database
+canon,PowerShot A70,2048,1536,,camera_database
+canon,PowerShot A700,2816,2112,,camera_database
+canon,PowerShot A710 IS,3072,2304,,camera_database
+canon,PowerShot A720 IS,3264,2448,,camera_database
+canon,PowerShot A75,2048,1536,,camera_database
+canon,PowerShot A80,2272,1704,,camera_database
+canon,PowerShot A800,3648,2736,,camera_database
+canon,PowerShot A810,4608,3456,,camera_database
+canon,PowerShot A85,2272,1704,,camera_database
+canon,PowerShot A95,2592,1944,,camera_database
+canon,PowerShot D10,4000,3000,,camera_database
+canon,PowerShot D20,4000,3000,,camera_database
+canon,PowerShot D30,4000,3000,,camera_database
+canon,PowerShot E1,3648,2756,,camera_database
+canon,PowerShot ELPH 100 HS,4000,3000,IXUS 115 HS|IXY 210F,camera_database
+canon,PowerShot ELPH 110 HS,4608,3456,IXUS 125 HS|IXY 220F,camera_database
+canon,PowerShot ELPH 115 IS,4608,3456,IXUS 132|IXY 90F,camera_database
+canon,PowerShot ELPH 120 IS,4608,3456,IXUS 135|IXY 100F,camera_database
+canon,PowerShot ELPH 130 IS,4608,3456,IXUS 140|IXY 110F,camera_database
+canon,PowerShot ELPH 135,4608,3456,IXUS 145|IXY 120,camera_database
+canon,PowerShot ELPH 140 IS,4608,3456,IXUS 150|IXY 130,camera_database
+canon,PowerShot ELPH 150 IS,5152,3864,IXUS 155|IXY 140,camera_database
+canon,PowerShot ELPH 160,5152,3864,IXUS 160|IXY 150,camera_database
+canon,PowerShot ELPH 170 IS,5152,3864,IXUS 170|IXY 170,camera_database
+canon,PowerShot ELPH 180,5152,3864,IXUS 175|IXY 180,camera_database
+canon,PowerShot ELPH 190 IS,5152,3864,IXUS 180|IXY 190,camera_database
+canon,PowerShot ELPH 300 HS,4000,3000,IXUS 220 HS|IXY 410F,camera_database
+canon,PowerShot ELPH 320 HS,4608,3456,IXUS 240 HS|IXY 420F,camera_database
+canon,PowerShot ELPH 330 HS,4000,3000,IXUS 255 HS|IXY 610F,camera_database
+canon,PowerShot ELPH 340 HS,4608,3456,IXUS 265 HS|IXY 630,camera_database
+canon,PowerShot ELPH 350 HS,5184,3888,IXUS 275 HS|IXY 640,camera_database
+canon,PowerShot ELPH 360 HS,5184,3888,IXUS 285 HS|IXY 650,camera_database
+canon,PowerShot ELPH 360 HS A,5184,3888,IXUS 285 HS A,camera_database
+canon,PowerShot ELPH 500 HS,4000,3000,IXUS 310 HS|IXY 31S,camera_database
+canon,PowerShot ELPH 520 HS,3648,2736,IXUS 500 HS|IXY 3,camera_database
+canon,PowerShot Elph 530 HS,3648,2736,IXUS 510 HS|IXY 1,camera_database
+canon,PowerShot G1,2048,1536,,camera_database
+canon,PowerShot G1 X,4352,3264,,camera_database
+canon,PowerShot G1 X Mark II,4160,3120,,camera_database
+canon,PowerShot G1 X Mark III,6000,4000,,camera_database
+canon,PowerShot G10,4416,3312,,camera_database
+canon,PowerShot G11,3648,2736,,camera_database
+canon,PowerShot G12,3648,2736,,camera_database
+canon,PowerShot G15,4000,3000,,camera_database
+canon,PowerShot G16,4000,3000,,camera_database
+canon,PowerShot G2,2272,1704,,camera_database
+canon,PowerShot G3,2272,1740,,camera_database
+canon,PowerShot G3 X,5472,3648,,camera_database
+canon,PowerShot G5,2592,1944,,camera_database
+canon,PowerShot G5 X,5472,3648,,camera_database
+canon,PowerShot G5 X Mark II,5472,3648,,camera_database
+canon,PowerShot G6,3072,2304,,camera_database
+canon,PowerShot G7,3648,2736,,camera_database
+canon,PowerShot G7 X,5472,3648,,camera_database
+canon,PowerShot G7 X Mark II,5472,3648,,camera_database
+canon,PowerShot G7 X Mark III,5472,3648,,camera_database
+canon,PowerShot G9,4000,3000,,camera_database
+canon,PowerShot G9 X,5472,3648,,camera_database
+canon,PowerShot G9 X Mark II,5472,3648,,camera_database
+canon,PowerShot N,4000,3000,,camera_database
+canon,PowerShot N100,4000,3000,,camera_database
+canon,PowerShot N2,4608,3456,,camera_database
+canon,PowerShot Pro1,3264,2448,,camera_database
+canon,PowerShot Pro70,1536,1024,,camera_database
+canon,PowerShot Pro90 IS,1856,1392,,camera_database
+canon,PowerShot S1 IS,2048,1536,,camera_database
+canon,PowerShot S10,1600,1200,,camera_database
+canon,PowerShot S100,4000,3000,,camera_database
+canon,PowerShot S110,4000,3000,,camera_database
+canon,PowerShot S120,4000,3000,,camera_database
+canon,PowerShot S2 IS,2592,1944,,camera_database
+canon,PowerShot S20,2048,1536,,camera_database
+canon,PowerShot S200,3648,2736,,camera_database
+canon,PowerShot S3 IS,2816,2112,,camera_database
+canon,PowerShot S30,2048,1536,,camera_database
+canon,PowerShot S40,2272,1740,,camera_database
+canon,PowerShot S45,2272,1740,,camera_database
+canon,PowerShot S5 IS,3264,2448,,camera_database
+canon,PowerShot S50,2592,1944,,camera_database
+canon,PowerShot S60,2592,1944,,camera_database
+canon,PowerShot S70,3072,2304,,camera_database
+canon,PowerShot S80,3264,2448,,camera_database
+canon,PowerShot S90,3648,2736,,camera_database
+canon,PowerShot S95,3648,2736,,camera_database
+canon,PowerShot SD1000,3072,2304,DIGITAL IXUS 70|IXY DIGITAL 10,camera_database
+canon,PowerShot SD20,2592,1944,DIGITAL IXUS i5|IXY DIGITAL L2,camera_database
+canon,PowerShot SD200,2048,1536,DIGITAL IXUS 30|IXY DIGITAL 40,camera_database
+canon,PowerShot SD4000 IS,3648,2736,IXUS 300 HS|IXY 30S,camera_database
+canon,PowerShot SD430 Wireless,2592,1944,DIGITAL IXUS WIRELESS|IXY DIGITAL WIRELESS,camera_database
+canon,PowerShot SD450,2592,1944,DIGITAL IXUS 55|IXY DIGITAL 60,camera_database
+canon,PowerShot SD4500 IS,3648,2736,IXUS 1000 HS|IXY 50S,camera_database
+canon,PowerShot SD500,3072,2304,DIGITAL IXUS 700|IXY DIGITAL 600,camera_database
+canon,PowerShot SD550,3072,2304,DIGITAL IXUS 750|IXY DIGITAL 700,camera_database
+canon,PowerShot SD750,3072,2304,DIGITAL IXUS 75|IXY DIGITAL 90,camera_database
+canon,PowerShot SD940 IS,4000,3000,Digital IXUS 120 IS|IXY DIGITAL 220 IS,camera_database
+canon,PowerShot SX1 IS,3648,2736,,camera_database
+canon,PowerShot SX10 IS,3648,2736,,camera_database
+canon,PowerShot SX100 IS,3264,2448,,camera_database
+canon,PowerShot SX110 IS,3456,2592,,camera_database
+canon,PowerShot SX120 IS,3648,2736,,camera_database
+canon,PowerShot SX130 IS,4000,3000,,camera_database
+canon,PowerShot SX150 IS,4320,3240,,camera_database
+canon,PowerShot SX160 IS,4608,3456,,camera_database
+canon,PowerShot SX170 IS,4608,3456,,camera_database
+canon,PowerShot SX20 IS,4000,3000,,camera_database
+canon,PowerShot SX200 IS,4000,3000,,camera_database
+canon,PowerShot SX210 IS,4320,3240,,camera_database
+canon,PowerShot SX220 HS,4000,3000,,camera_database
+canon,PowerShot SX230 HS,4000,3000,,camera_database
+canon,PowerShot SX240 HS,4000,3000,,camera_database
+canon,PowerShot SX260 HS,4000,3000,,camera_database
+canon,PowerShot SX270 HS,4000,3000,,camera_database
+canon,PowerShot SX280 HS,4000,3000,,camera_database
+canon,PowerShot SX30 IS,4320,3240,,camera_database
+canon,PowerShot SX40 HS,4000,3000,,camera_database
+canon,PowerShot SX400 IS,4608,3456,,camera_database
+canon,PowerShot SX410 IS,5152,3864,,camera_database
+canon,PowerShot SX420 IS,5152,3864,,camera_database
+canon,PowerShot SX50 HS,4000,3000,,camera_database
+canon,PowerShot SX500 IS,4608,3456,,camera_database
+canon,PowerShot SX510 HS,4000,3000,,camera_database
+canon,PowerShot SX520 HS,4608,3456,,camera_database
+canon,PowerShot SX530 HS,4608,3456,,camera_database
+canon,PowerShot SX540 HS,5184,3888,,camera_database
+canon,PowerShot SX60 HS,4608,3456,,camera_database
+canon,PowerShot SX600 HS,4608,3456,,camera_database
+canon,PowerShot SX610 HS,5184,3888,,camera_database
+canon,PowerShot SX620 HS,5184,3888,,camera_database
+canon,PowerShot SX70 HS,5184,3888,,camera_database
+canon,PowerShot SX700 HS,4608,3456,,camera_database
+canon,PowerShot SX710 HS,5184,3888,,camera_database
+canon,PowerShot SX720 HS,5184,3888,,camera_database
+canon,PowerShot SX730 HS,5184,3888,,camera_database
+canon,PowerShot SX740 HS,5184,3888,,camera_database
+canon,PowerShot TX1,3072,2304,,camera_database
+canon,PowerShot V1,5760,3840,,camera_database
+canon,PowerShot V10,5472,3648,,camera_database
+fujifilm,Bigjob HD-3W,2816,2112,,camera_database
+fujifilm,Bigjob HD1,2816,2120,,camera_database
+fujifilm,Digital Q1,1600,1200,,camera_database
+fujifilm,DS-260HD,1280,1024,,camera_database
+fujifilm,DS-300,1280,1000,,camera_database
+fujifilm,FinePix 1300,1280,960,,camera_database
+fujifilm,FinePix 1400z,1280,960,,camera_database
+fujifilm,FinePix 2300,1600,1200,,camera_database
+fujifilm,FinePix 2400 Zoom,1600,1200,,camera_database
+fujifilm,FinePix 2600 Zoom,1600,1200,,camera_database
+fujifilm,FinePix 2650,1600,1200,,camera_database
+fujifilm,FinePix 2800 Zoom,1600,1200,,camera_database
+fujifilm,FinePix 30i,1600,1200,,camera_database
+fujifilm,FinePix 3800,2048,1536,,camera_database
+fujifilm,FinePix 40i,2400,1800,,camera_database
+fujifilm,FinePix 4700 Zoom,2400,1800,,camera_database
+fujifilm,FinePix 4800 Zoom,2400,1800,,camera_database
+fujifilm,FinePix 4900 Zoom,2400,1800,,camera_database
+fujifilm,FinePix 50i,2400,1800,,camera_database
+fujifilm,FinePix 6800 Zoom,2832,2128,,camera_database
+fujifilm,FinePix 6900 Zoom,2832,2128,,camera_database
+fujifilm,FinePix A100,3648,2736,,camera_database
+fujifilm,FinePix A101,1280,960,,camera_database
+fujifilm,FinePix A120,2016,1512,,camera_database
+fujifilm,FinePix A150,3648,2736,,camera_database
+fujifilm,FinePix A160,3648,2736,,camera_database
+fujifilm,FinePix A170,3664,2748,,camera_database
+fujifilm,FinePix A175,3664,2748,,camera_database
+fujifilm,FinePix A180,3264,2448,,camera_database
+fujifilm,FinePix A200,1600,1200,,camera_database
+fujifilm,FinePix A201,1600,1200,,camera_database
+fujifilm,FinePix A202,1600,1200,,camera_database
+fujifilm,FinePix A203,1600,1200,,camera_database
+fujifilm,FinePix A204,1600,1200,,camera_database
+fujifilm,FinePix A205 Zoom,1600,1200,,camera_database
+fujifilm,FinePix A210 Zoom,2048,1536,,camera_database
+fujifilm,FinePix A220,4000,3000,,camera_database
+fujifilm,FinePix A225,4000,3000,,camera_database
+fujifilm,FinePix A235,4000,3000,,camera_database
+fujifilm,FinePix A303,2048,1536,,camera_database
+fujifilm,FinePix A310 Zoom,2816,2120,,camera_database
+fujifilm,FinePix A330,2016,1512,,camera_database
+fujifilm,FinePix A340,2272,1704,,camera_database
+fujifilm,FinePix A345 Zoom,2304,1728,,camera_database
+fujifilm,FinePix A350 Zoom,2592,1944,,camera_database
+fujifilm,FinePix A400 Zoom,2303,1728,,camera_database
+fujifilm,FinePix A500 Zoom,2592,1944,,camera_database
+fujifilm,FinePix A510,2592,1944,,camera_database
+fujifilm,FinePix A600 Zoom,2848,2136,,camera_database
+fujifilm,FinePix A610,2848,2136,,camera_database
+fujifilm,FinePix A700,3072,2304,,camera_database
+fujifilm,FinePix A800,3296,2472,,camera_database
+fujifilm,FinePix A820,3296,2472,,camera_database
+fujifilm,FinePix A825,3296,2472,,camera_database
+fujifilm,FinePix A850,3264,2448,,camera_database
+fujifilm,FinePix A900,3488,2616,,camera_database
+fujifilm,FinePix A920,3488,2616,,camera_database
+fujifilm,FinePix AV100,4000,3000,,camera_database
+fujifilm,FinePix AV105,4000,3000,,camera_database
+fujifilm,FinePix AV110,4000,3000,,camera_database
+fujifilm,FinePix AV130,4000,3000,,camera_database
+fujifilm,FinePix AV140,4000,3000,,camera_database
+fujifilm,FinePix AV150,4288,3216,,camera_database
+fujifilm,FinePix AV180,4288,3216,,camera_database
+fujifilm,FinePix AV200,4320,3240,,camera_database
+fujifilm,FinePix AV205,4320,3240,,camera_database
+fujifilm,FinePix AV250,4608,3440,,camera_database
+fujifilm,FinePix AV255,4608,3440,,camera_database
+fujifilm,FinePix AX200,4000,3000,,camera_database
+fujifilm,FinePix AX205,4000,3000,,camera_database
+fujifilm,FinePix AX230,4000,3000,,camera_database
+fujifilm,FinePix AX245w,4000,3000,,camera_database
+fujifilm,FinePix AX250,4288,3216,,camera_database
+fujifilm,FinePix AX280,4288,3216,,camera_database
+fujifilm,FinePix AX300,4288,3216,,camera_database
+fujifilm,FinePix AX305,4288,3216,,camera_database
+fujifilm,FinePix AX350,4608,3440,,camera_database
+fujifilm,FinePix AX355,4608,3440,,camera_database
+fujifilm,FinePix AX500,4288,3216,,camera_database
+fujifilm,FinePix AX550,4608,3440,,camera_database
+fujifilm,FinePix AX650,4608,3440,,camera_database
+fujifilm,FinePix E500 Zoom,2304,1728,,camera_database
+fujifilm,FinePix E510 Zoom,2592,1944,,camera_database
+fujifilm,FinePix E550 Zoom,4048,3040,,camera_database
+fujifilm,FinePix E900 Zoom,3488,2616,,camera_database
+fujifilm,FinePix EX-20,1600,1200,,camera_database
+fujifilm,FinePix F10 Zoom,2848,2136,,camera_database
+fujifilm,FinePix F100fd,4000,3000,,camera_database
+fujifilm,FinePix F11 Zoom,2848,2136,,camera_database
+fujifilm,FinePix F20 Zoom,2848,2136,,camera_database
+fujifilm,FinePix F200EXR,4000,3000,,camera_database
+fujifilm,FinePix F30 Zoom,2848,2136,,camera_database
+fujifilm,FinePix F300EXR,4000,3000,,camera_database
+fujifilm,FinePix F305EXR,4000,3000,,camera_database
+fujifilm,FinePix F31fd,2848,2136,,camera_database
+fujifilm,FinePix F401 Zoom,2304,1728,,camera_database
+fujifilm,FinePix F402,2304,1728,,camera_database
+fujifilm,FinePix F40fd,3296,2472,,camera_database
+fujifilm,FinePix F410 Zoom,2816,2120,,camera_database
+fujifilm,FinePix F420 Zoom,2816,2120,,camera_database
+fujifilm,FinePix F440 Zoom,2304,1728,,camera_database
+fujifilm,FinePix F450 Zoom,2592,1944,,camera_database
+fujifilm,FinePix F455 Zoom,2592,1944,,camera_database
+fujifilm,FinePix F45fd,3296,2472,,camera_database
+fujifilm,FinePix F460,2592,1944,,camera_database
+fujifilm,FinePix F470 Zoom,2816,2112,,camera_database
+fujifilm,FinePix F47fd,3488,2616,,camera_database
+fujifilm,FinePix F480 Zoom,3264,2448,,camera_database
+fujifilm,FinePix F500 EXR,4608,3456,,camera_database
+fujifilm,FinePix F50fd,4000,3000,,camera_database
+fujifilm,FinePix F550 EXR,4608,3456,,camera_database
+fujifilm,FinePix F600 EXR,4608,3456,,camera_database
+fujifilm,FinePix F601 Zoom,2832,2128,,camera_database
+fujifilm,FinePix F605EXR,4608,3456,,camera_database
+fujifilm,FinePix F60fd,4000,3000,,camera_database
+fujifilm,FinePix F610,4048,3040,,camera_database
+fujifilm,FinePix F650 Zoom,2816,2112,,camera_database
+fujifilm,FinePix F660EXR,4608,3456,,camera_database
+fujifilm,FinePix F700,2832,2128,,camera_database
+fujifilm,FinePix F70EXR,3616,2712,,camera_database
+fujifilm,FinePix F710,2832,2128,,camera_database
+fujifilm,FinePix F72EXR,3648,2736,,camera_database
+fujifilm,FinePix F750EXR,4608,3456,,camera_database
+fujifilm,FinePix F75EXR,3616,2712,,camera_database
+fujifilm,FinePix F770EXR,4608,3456,,camera_database
+fujifilm,FinePix F800EXR,4608,3456,,camera_database
+fujifilm,FinePix F80EXR,4000,3000,,camera_database
+fujifilm,FinePix F810 Zoom,4048,3040,,camera_database
+fujifilm,FinePix F850EXR,4608,3456,,camera_database
+fujifilm,FinePix F85EXR,4000,3000,,camera_database
+fujifilm,FinePix F900EXR,4608,3456,,camera_database
+fujifilm,FinePix HS10,3648,2736,,camera_database
+fujifilm,FinePix HS11,3648,2736,,camera_database
+fujifilm,FinePix HS20 EXR,4608,3456,,camera_database
+fujifilm,FinePix HS22 EXR,4608,3456,,camera_database
+fujifilm,FinePix HS25 EXR,4608,3456,,camera_database
+fujifilm,FinePix HS30 EXR,4608,3456,,camera_database
+fujifilm,FinePix HS35 EXR,4608,3456,,camera_database
+fujifilm,FinePix HS50 EXR,4608,3456,,camera_database
+fujifilm,FinePix IS Pro,4256,2848,,camera_database
+fujifilm,FinePix IS-1,3488,2616,,camera_database
+fujifilm,FinePix J10,3264,2448,,camera_database
+fujifilm,FinePix J100,3648,2736,,camera_database
+fujifilm,FinePix J110w,3648,2736,,camera_database
+fujifilm,FinePix J12,3264,2448,,camera_database
+fujifilm,FinePix J120,3648,2736,,camera_database
+fujifilm,FinePix J15,3264,2448,,camera_database
+fujifilm,FinePix J150w,3648,2736,,camera_database
+fujifilm,FinePix J20,3648,2736,,camera_database
+fujifilm,FinePix J210,3648,2736,,camera_database
+fujifilm,FinePix J22,3648,2736,,camera_database
+fujifilm,FinePix J25,3648,2736,,camera_database
+fujifilm,FinePix J250,3648,2736,,camera_database
+fujifilm,FinePix J26,3664,2748,,camera_database
+fujifilm,FinePix J27,3664,2748,,camera_database
+fujifilm,FinePix J28,3648,2736,,camera_database
+fujifilm,FinePix J29,3648,2736,,camera_database
+fujifilm,FinePix J30,4000,3000,,camera_database
+fujifilm,FinePix J32,4000,3000,,camera_database
+fujifilm,FinePix J35,4000,3000,,camera_database
+fujifilm,FinePix J37,4000,3000,,camera_database
+fujifilm,FinePix J38,4000,3000,,camera_database
+fujifilm,FinePix J50,3264,2448,,camera_database
+fujifilm,FinePix JV100,4000,3000,,camera_database
+fujifilm,FinePix JV105,4000,3000,,camera_database
+fujifilm,FinePix JV110,4000,3000,,camera_database
+fujifilm,FinePix JV150,4288,3216,,camera_database
+fujifilm,FinePix JV200,4288,3216,,camera_database
+fujifilm,FinePix JV205,4288,3216,,camera_database
+fujifilm,FinePix JV250,4608,3440,,camera_database
+fujifilm,FinePix JV255,4608,3440,,camera_database
+fujifilm,FinePix JX200,4000,3000,,camera_database
+fujifilm,FinePix JX205,4000,3000,,camera_database
+fujifilm,FinePix JX210,4000,3000,,camera_database
+fujifilm,FinePix JX250,4288,3216,,camera_database
+fujifilm,FinePix JX280,4288,3216,,camera_database
+fujifilm,FinePix JX300,4288,3216,,camera_database
+fujifilm,FinePix JX305,4288,3216,,camera_database
+fujifilm,FinePix JX350,4608,3440,,camera_database
+fujifilm,FinePix JX355,4608,3440,,camera_database
+fujifilm,FinePix JX370,4288,3216,,camera_database
+fujifilm,FinePix JX375,4288,3216,,camera_database
+fujifilm,FinePix JX400,4608,3440,,camera_database
+fujifilm,FinePix JX405,4608,3440,,camera_database
+fujifilm,FinePix JX420,4608,3440,,camera_database
+fujifilm,FinePix JX500,4288,3216,,camera_database
+fujifilm,FinePix JX520,4288,3216,,camera_database
+fujifilm,FinePix JX530,4288,3216,,camera_database
+fujifilm,FinePix JX550,4608,3216,,camera_database
+fujifilm,FinePix JX580,4608,3440,,camera_database
+fujifilm,FinePix JX700,4608,3440,,camera_database
+fujifilm,FinePix JZ100,4288,3216,,camera_database
+fujifilm,FinePix JZ200,4608,3216,,camera_database
+fujifilm,FinePix JZ250,4608,3456,,camera_database
+fujifilm,FinePix JZ300,4000,3000,,camera_database
+fujifilm,FinePix JZ305,4000,3000,,camera_database
+fujifilm,FinePix JZ310,4000,3000,,camera_database
+fujifilm,FinePix JZ500,4320,3240,,camera_database
+fujifilm,FinePix JZ505,4320,3240,,camera_database
+fujifilm,FinePix JZ510,4320,3240,,camera_database
+fujifilm,FinePix JZ700,4288,3216,,camera_database
+fujifilm,FinePix M603,2832,2128,,camera_database
+fujifilm,FinePix PR21,1800,1200,,camera_database
+fujifilm,FinePix Real 3D W1,3648,2736,,camera_database
+fujifilm,FinePix Real 3D W3,3648,2736,,camera_database
+fujifilm,FinePix S1,4608,3456,,camera_database
+fujifilm,FinePix S1 Pro,3040,2016,,camera_database
+fujifilm,FinePix S1000fd,3648,2736,,camera_database
+fujifilm,FinePix S100fs,3840,2880,,camera_database
+fujifilm,FinePix S1500,3648,2736,,camera_database
+fujifilm,FinePix S1600,4000,3000,,camera_database
+fujifilm,FinePix S1700,4000,3000,,camera_database
+fujifilm,FinePix S1730,4000,3000,,camera_database
+fujifilm,FinePix S1770,4000,3000,,camera_database
+fujifilm,FinePix S1800,4000,3000,,camera_database
+fujifilm,FinePix S1850,4000,3000,,camera_database
+fujifilm,FinePix S1880,4000,3000,,camera_database
+fujifilm,FinePix S1900,4000,3000,,camera_database
+fujifilm,FinePix S2 Pro,4256,2848,,camera_database
+fujifilm,FinePix S20 Pro,2832,2128,,camera_database
+fujifilm,FinePix S2000hd,3648,2736,,camera_database
+fujifilm,FinePix S200EXR,4000,3000,,camera_database
+fujifilm,FinePix S205EXR,4000,3000,,camera_database
+fujifilm,FinePix S2500hd,4000,3000,,camera_database
+fujifilm,FinePix S2550hd,4000,3000,,camera_database
+fujifilm,FinePix S2600hd,4000,3000,,camera_database
+fujifilm,FinePix S2800hd,4288,3216,,camera_database
+fujifilm,FinePix S2900hd,4288,3216,,camera_database
+fujifilm,FinePix S2950,4288,3216,,camera_database
+fujifilm,FinePix S2980,4288,3216,,camera_database
+fujifilm,FinePix S2990,4288,3216,,camera_database
+fujifilm,FinePix S3 Pro,4256,2848,,camera_database
+fujifilm,FinePix S3000 Z,2048,1536,,camera_database
+fujifilm,FinePix S304,2048,1536,,camera_database
+fujifilm,FinePix S3200,4288,3216,,camera_database
+fujifilm,FinePix S3250,4288,3216,,camera_database
+fujifilm,FinePix S3300,4288,3216,,camera_database
+fujifilm,FinePix S3350,4288,3216,,camera_database
+fujifilm,FinePix S3400,4288,3216,,camera_database
+fujifilm,FinePix S3450,4288,3216,,camera_database
+fujifilm,FinePix S3500 Zoom,2272,1704,,camera_database
+fujifilm,FinePix S4000,4288,3216,,camera_database
+fujifilm,FinePix S4050,4288,3216,,camera_database
+fujifilm,FinePix S4200,4288,3216,,camera_database
+fujifilm,FinePix S4300,4288,3216,,camera_database
+fujifilm,FinePix S4400,4288,3216,,camera_database
+fujifilm,FinePix S4500,4288,3216,,camera_database
+fujifilm,FinePix S4600,4608,3456,,camera_database
+fujifilm,FinePix S4700,4608,3456,,camera_database
+fujifilm,FinePix S4800,4608,3456,,camera_database
+fujifilm,FinePix S5 Pro,4256,2848,,camera_database
+fujifilm,FinePix S5000 Zoom,2816,2120,,camera_database
+fujifilm,FinePix S5100 Zoom,2272,1704,,camera_database
+fujifilm,FinePix S5200 Zoom,2592,1944,,camera_database
+fujifilm,FinePix S5500 Zoom,2272,1704,,camera_database
+fujifilm,FinePix S5600 Zoom,2592,1944,,camera_database
+fujifilm,FinePix S5700 Zoom,3072,2304,,camera_database
+fujifilm,FinePix S5800,3264,2448,,camera_database
+fujifilm,FinePix S6000fd,2848,2136,,camera_database
+fujifilm,FinePix S602 Zoom,2832,2128,,camera_database
+fujifilm,FinePix S602Z Pro,2832,2128,,camera_database
+fujifilm,FinePix S6500fd,2848,2136,,camera_database
+fujifilm,FinePix S6600,4608,3456,,camera_database
+fujifilm,FinePix S6700,4608,3456,,camera_database
+fujifilm,FinePix S6800,4608,3456,,camera_database
+fujifilm,FinePix S7000 Zoom,4048,3040,,camera_database
+fujifilm,FinePix S8000fd,3264,2448,,camera_database
+fujifilm,FinePix S8100fd,3648,2736,,camera_database
+fujifilm,FinePix S8200,4608,3456,,camera_database
+fujifilm,FinePix S8300,4608,3456,,camera_database
+fujifilm,FinePix S8400,4608,3456,,camera_database
+fujifilm,FinePix S8500,4608,3456,,camera_database
+fujifilm,FinePix S8600,4608,3456,,camera_database
+fujifilm,FinePix S9000 Zoom,3488,2616,,camera_database
+fujifilm,FinePix S9100,3488,2616,,camera_database
+fujifilm,FinePix S9200,4608,3456,,camera_database
+fujifilm,FinePix S9400W,4608,3456,,camera_database
+fujifilm,FinePix S9500,3696,2464,,camera_database
+fujifilm,FinePix S9600,3488,2616,,camera_database
+fujifilm,FinePix S9800,4608,3456,,camera_database
+fujifilm,FinePix S9900W,4608,3456,,camera_database
+fujifilm,FinePix SL1000,4608,3456,,camera_database
+fujifilm,FinePix SL240,4288,3216,,camera_database
+fujifilm,FinePix SL260,4288,3216,,camera_database
+fujifilm,FinePix SL280,4288,2428,,camera_database
+fujifilm,FinePix SL300,4288,3216,,camera_database
+fujifilm,FinePix T200,4288,3216,,camera_database
+fujifilm,FinePix T205,4288,3216,,camera_database
+fujifilm,FinePix T300,4288,3216,,camera_database
+fujifilm,FinePix T305,4288,3216,,camera_database
+fujifilm,FinePix T350,4288,3216,,camera_database
+fujifilm,FinePix T400,4608,3440,,camera_database
+fujifilm,FinePix T500,4608,3440,,camera_database
+fujifilm,FinePix T550,4608,3440,,camera_database
+fujifilm,FinePix V10 Zoom,2592,1944,,camera_database
+fujifilm,FinePix X100,4288,2848,,camera_database
+fujifilm,FinePix XP10,4000,3000,,camera_database
+fujifilm,FinePix XP100,4320,3240,,camera_database
+fujifilm,FinePix XP11,4000,3000,,camera_database
+fujifilm,FinePix XP120,4608,3456,,camera_database
+fujifilm,FinePix XP130,4608,3456,,camera_database
+fujifilm,FinePix XP140,4608,3456,,camera_database
+fujifilm,FinePix XP150,4320,3240,,camera_database
+fujifilm,FinePix XP170,4320,3240,,camera_database
+fujifilm,FinePix XP20,4320,3240,,camera_database
+fujifilm,FinePix XP200,4608,3456,,camera_database
+fujifilm,FinePix XP22,4320,3240,,camera_database
+fujifilm,FinePix XP30,4320,3240,,camera_database
+fujifilm,FinePix XP33,4320,3240,,camera_database
+fujifilm,FinePix XP50,4320,3240,,camera_database
+fujifilm,FinePix XP60,4608,3456,,camera_database
+fujifilm,FinePix XP70,4608,3456,,camera_database
+fujifilm,FinePix XP80,4608,3456,,camera_database
+fujifilm,FinePix Z1,2592,1944,,camera_database
+fujifilm,FinePix Z1000EXR,4608,3456,,camera_database
+fujifilm,FinePix Z100fd,3264,2448,,camera_database
+fujifilm,FinePix Z10fd,3072,2304,,camera_database
+fujifilm,FinePix Z110,4320,3240,,camera_database
+fujifilm,FinePix Z2,2592,1944,,camera_database
+fujifilm,FinePix Z200fd,3648,2736,,camera_database
+fujifilm,FinePix Z20fd,3648,2736,,camera_database
+fujifilm,FinePix Z3,2592,1944,,camera_database
+fujifilm,FinePix Z30,3648,2736,,camera_database
+fujifilm,FinePix Z300,3648,2736,,camera_database
+fujifilm,FinePix Z31,3648,2736,,camera_database
+fujifilm,FinePix Z33WP,3648,2736,,camera_database
+fujifilm,FinePix Z35,3648,2736,,camera_database
+fujifilm,FinePix Z37,3648,2736,,camera_database
+fujifilm,FinePix Z5fd,2848,2136,,camera_database
+fujifilm,FinePix Z70,4000,3000,,camera_database
+fujifilm,FinePix Z700EXR,4000,3000,,camera_database
+fujifilm,FinePix Z707EXR,4000,3000,,camera_database
+fujifilm,FinePix Z71,4000,3000,,camera_database
+fujifilm,FinePix Z80,4320,3240,,camera_database
+fujifilm,FinePix Z800EXR,4000,3000,,camera_database
+fujifilm,FinePix Z808EXR,4000,3000,,camera_database
+fujifilm,FinePix Z81,4320,3240,,camera_database
+fujifilm,FinePix Z90,4320,3240,,camera_database
+fujifilm,FinePix Z900EXR,4608,3456,,camera_database
+fujifilm,FinePix Z909EXR,4608,3456,,camera_database
+fujifilm,FinePix Z91,4320,3240,,camera_database
+fujifilm,FinePix Z950EXR,4608,3456,,camera_database
+fujifilm,MX-1200,1280,960,,camera_database
+fujifilm,MX-1400,1280,960,,camera_database
+fujifilm,MX-1500,1280,1024,,camera_database
+fujifilm,MX-1700,1280,1024,,camera_database
+fujifilm,MX-2700,1800,1200,,camera_database
+fujifilm,MX-2900 Zoom,1800,1200,,camera_database
+fujifilm,MX-500,1280,1024,,camera_database
+fujifilm,MX-600 Zoom,1280,1024,,camera_database
+fujifilm,MX-700,1280,1024,,camera_database
+fujifilm,X half,3648,4864,,camera_database
+fujifilm,X-A1,4896,3264,,camera_database
+fujifilm,X-A10,4896,3264,,camera_database
+fujifilm,X-A2,4896,3264,,camera_database
+fujifilm,X-A3,6000,4000,,camera_database
+fujifilm,X-A5,6000,4000,,camera_database
+fujifilm,X-A7,6000,4000,,camera_database
+fujifilm,X-E1,4896,3264,,camera_database
+fujifilm,X-E2,4896,3264,,camera_database
+fujifilm,X-E2S,4896,3264,,camera_database
+fujifilm,X-E3,6000,4000,,camera_database
+fujifilm,X-E4,6240,4160,,camera_database
+fujifilm,X-E5,7728,5152,,camera_database
+fujifilm,X-H1,6000,4000,,camera_database
+fujifilm,X-H2,7728,5152,,camera_database
+fujifilm,X-H2S,6240,4160,,camera_database
+fujifilm,X-M1,4896,3264,,camera_database
+fujifilm,X-M5,6240,4160,,camera_database
+fujifilm,X-Pro1,4896,3264,,camera_database
+fujifilm,X-Pro2,6000,4000,,camera_database
+fujifilm,X-Pro3,6240,4160,,camera_database
+fujifilm,X-S1,4000,3000,,camera_database
+fujifilm,X-S10,6240,4160,,camera_database
+fujifilm,X-S20,6240,4160,,camera_database
+fujifilm,X-T1,4896,3264,,camera_database
+fujifilm,X-T10,4896,3264,,camera_database
+fujifilm,X-T100,6000,4000,,camera_database
+fujifilm,X-T2,6000,4000,,camera_database
+fujifilm,X-T20,6000,4000,,camera_database
+fujifilm,X-T200,6000,4000,,camera_database
+fujifilm,X-T3,6240,4160,,camera_database
+fujifilm,X-T30,6240,4160,,camera_database
+fujifilm,X-T30 II,6240,4160,,camera_database
+fujifilm,X-T30 III,6240,4160,,camera_database
+fujifilm,X-T4,6240,4160,,camera_database
+fujifilm,X-T5,7728,5152,,camera_database
+fujifilm,X-T50,7728,5152,,camera_database
+fujifilm,X10,4000,3000,,camera_database
+fujifilm,X100F,6000,4000,,camera_database
+fujifilm,X100S,4896,3264,,camera_database
+fujifilm,X100T,4896,3264,,camera_database
+fujifilm,X100V,6240,4160,,camera_database
+fujifilm,X100VI,7728,5152,,camera_database
+fujifilm,X20,4000,3000,,camera_database
+fujifilm,X30,4000,3000,,camera_database
+fujifilm,X70,4896,3264,,camera_database
+fujifilm,XF1,4000,3000,,camera_database
+fujifilm,XF10,6000,4000,,camera_database
+fujifilm,XP90,4608,3456,,camera_database
+fujifilm,XQ1,4000,3000,,camera_database
+fujifilm,XQ2,4000,3000,,camera_database
+hasselblad,X1D II 50C,8272,6200,,hasselblad_x1d_ii
+hasselblad,X2D 100C,11656,8742,,hasselblad_x2d
+hasselblad,X2D II 100C,11656,8742,,hasselblad_x2d_ii
+leica,C (Typ112),4000,3000,,camera_database
+leica,C-LUX 1,2816,2112,,camera_database
+leica,C-LUX 2,3072,2304,,camera_database
+leica,C-LUX 3,3648,2736,,camera_database
+leica,CL,6016,4014,,camera_database
+leica,D-LUX,2048,1536,,camera_database
+leica,D-Lux (Typ 109),4112,3088,,camera_database
+leica,D-LUX 2,3840,2160,,camera_database
+leica,D-LUX 3,4224,2376,,camera_database
+leica,D-LUX 4,3648,2736,,camera_database
+leica,D-LUX 5,3648,2736,,camera_database
+leica,D-Lux 6,3648,2736,,camera_database
+leica,D-Lux 7,4736,3552,,camera_database
+leica,D-Lux 8,4736,3552,,camera_database
+leica,Digilux,1280,1024,,camera_database
+leica,Digilux 1,2240,1680,,camera_database
+leica,Digilux 2,2560,1920,,camera_database
+leica,Digilux 3,3136,2352,,camera_database
+leica,Digilux 4.3,2400,1800,,camera_database
+leica,Digilux Zoom,1280,1024,,camera_database
+leica,M (Typ 262),5976,3992,,camera_database
+leica,M Edition 60,5952,3976,,camera_database
+leica,M Monochrom (Typ 246),5976,3992,,camera_database
+leica,M Typ 240,5952,3976,,camera_database
+leica,M-E (Typ 240),5976,3992,,camera_database
+leica,M-E Typ 220,5212,3472,,camera_database
+leica,M-Monochrom,5212,3472,,camera_database
+leica,M-P,5952,3976,,camera_database
+leica,M10 (Typ 3656),5952,3968,,camera_database
+leica,M10-R,7864,5200,,camera_database
+leica,M11,9528,6328,,camera_database
+leica,M8,3936,2630,,camera_database
+leica,M8.2,3936,2630,,camera_database
+leica,M9,5212,3472,,camera_database
+leica,M9 Titanium,5212,3472,,camera_database
+leica,M9-P,5270,3516,,camera_database
+leica,Q (Typ 116),6000,4000,,camera_database
+leica,Q2,8368,5584,,camera_database
+leica,Q3,9520,6336,,camera_database
+leica,S (Type 007),7500,5000,,camera_database
+leica,S-E (Typ 006),7500,5000,,camera_database
+leica,S2,7500,5000,,camera_database
+leica,SL (Typ 601),6000,4000,,camera_database
+leica,SL2,8368,5584,,camera_database
+leica,SL2-S,6000,4000,,camera_database
+leica,SL3,9520,6336,,camera_database
+leica,SL3-S,6000,4000,,camera_database
+leica,T (Typ 701),4944,3278,,camera_database
+leica,TL,4944,3278,,camera_database
+leica,TL2,6016,4014,,camera_database
+leica,V-Lux (Typ 114),5472,3648,,camera_database
+leica,V-LUX 1,3648,2736,,camera_database
+leica,V-LUX 2,4320,3240,,camera_database
+leica,V-LUX 20,4000,3000,,camera_database
+leica,V-LUX 3,4000,3000,,camera_database
+leica,V-LUX 30,4320,3240,,camera_database
+leica,V-Lux 4,4000,3000,,camera_database
+leica,V-Lux 40,4320,3240,,camera_database
+leica,X (Typ 113),4928,3264,,camera_database
+leica,X Vario,4928,3264,,camera_database
+leica,X-E,4928,3264,,camera_database
+leica,X-U (Typ 113),4928,3264,,camera_database
+leica,X1,4272,2856,,camera_database
+leica,X2,4928,3264,,camera_database
+nikon,1 AW1,4608,3072,,camera_database
+nikon,1 J1,3872,2592,,camera_database
+nikon,1 J2,3872,2592,,camera_database
+nikon,1 J3,4608,3072,,camera_database
+nikon,1 J4,5232,3488,,camera_database
+nikon,1 J5,5568,3712,,camera_database
+nikon,1 S1,3872,2592,,camera_database
+nikon,1 S2,4592,3072,,camera_database
+nikon,1 V1,3872,2592,,camera_database
+nikon,1 V2,4608,3072,,camera_database
+nikon,1 V3,5232,3488,,camera_database
+nikon,Coolpix 100,512,480,,camera_database
+nikon,Coolpix 2000,1632,1224,,camera_database
+nikon,Coolpix 2100,1600,1200,,camera_database
+nikon,Coolpix 2200,1600,1200,,camera_database
+nikon,Coolpix 2500,1600,1200,,camera_database
+nikon,Coolpix 300,640,480,,camera_database
+nikon,Coolpix 3100,2048,1536,,camera_database
+nikon,Coolpix 3200,2048,1536,,camera_database
+nikon,Coolpix 3500,2048,1536,,camera_database
+nikon,Coolpix 3700,2048,1536,,camera_database
+nikon,Coolpix 4100,2288,1712,,camera_database
+nikon,Coolpix 4200,2272,1704,,camera_database
+nikon,Coolpix 4300,2272,1704,,camera_database
+nikon,Coolpix 4500,2272,1704,,camera_database
+nikon,Coolpix 4600,2288,1716,,camera_database
+nikon,Coolpix 4800,2288,1716,,camera_database
+nikon,Coolpix 5000,2560,1920,,camera_database
+nikon,Coolpix 5200,2592,1944,,camera_database
+nikon,Coolpix 5400,2592,1944,,camera_database
+nikon,Coolpix 5600,2592,1944,,camera_database
+nikon,Coolpix 5700,2560,1920,,camera_database
+nikon,Coolpix 5900,2592,1944,,camera_database
+nikon,Coolpix 600,1024,768,,camera_database
+nikon,Coolpix 700,1600,1200,,camera_database
+nikon,Coolpix 7600,3072,2304,,camera_database
+nikon,Coolpix 775,1600,1200,,camera_database
+nikon,Coolpix 7900,3072,2304,,camera_database
+nikon,Coolpix 800,1600,1200,,camera_database
+nikon,Coolpix 8400,3264,2448,,camera_database
+nikon,Coolpix 8700,3264,2448,,camera_database
+nikon,Coolpix 880,2048,1536,,camera_database
+nikon,Coolpix 8800,3264,2448,,camera_database
+nikon,Coolpix 885,2048,1536,,camera_database
+nikon,Coolpix 900,1280,960,,camera_database
+nikon,Coolpix 900s,1280,960,,camera_database
+nikon,Coolpix 910,1280,960,,camera_database
+nikon,Coolpix 950,1600,1200,,camera_database
+nikon,Coolpix 990,2048,1536,,camera_database
+nikon,Coolpix 995,2048,1536,,camera_database
+nikon,Coolpix A,4928,3264,,camera_database
+nikon,Coolpix A10,4608,3456,,camera_database
+nikon,Coolpix A100,5152,3864,,camera_database
+nikon,Coolpix A1000,4608,3456,,camera_database
+nikon,Coolpix A900,5184,3888,,camera_database
+nikon,Coolpix AW100,4608,3456,,camera_database
+nikon,Coolpix AW110,4608,3456,,camera_database
+nikon,Coolpix AW120,4608,3456,,camera_database
+nikon,Coolpix AW130,4608,3456,,camera_database
+nikon,Coolpix B500,4608,3456,,camera_database
+nikon,Coolpix B600,4608,3456,,camera_database
+nikon,Coolpix B700,5184,3888,,camera_database
+nikon,Coolpix L1,2816,2112,,camera_database
+nikon,Coolpix L10,2560,1920,,camera_database
+nikon,Coolpix L100,3648,2736,,camera_database
+nikon,Coolpix L101,2816,2112,,camera_database
+nikon,Coolpix L11,2816,2112,,camera_database
+nikon,Coolpix L110,4000,3000,,camera_database
+nikon,Coolpix L12,3072,2304,,camera_database
+nikon,Coolpix L120,4320,3240,,camera_database
+nikon,Coolpix L14,3072,2304,,camera_database
+nikon,Coolpix L15,3264,2448,,camera_database
+nikon,Coolpix L16,3072,2304,,camera_database
+nikon,Coolpix L18,3264,2448,,camera_database
+nikon,Coolpix L19,3264,2448,,camera_database
+nikon,Coolpix L20,3648,2736,,camera_database
+nikon,Coolpix L21,3648,2736,,camera_database
+nikon,Coolpix L22,4000,3000,,camera_database
+nikon,Coolpix L23,3648,2736,,camera_database
+nikon,Coolpix L24,4320,3240,,camera_database
+nikon,Coolpix L25,3648,2736,,camera_database
+nikon,Coolpix L26,4608,3456,,camera_database
+nikon,Coolpix L27,4608,3456,,camera_database
+nikon,Coolpix L28,5152,3864,,camera_database
+nikon,Coolpix L29,4608,3456,,camera_database
+nikon,Coolpix L30,5152,3864,,camera_database
+nikon,Coolpix L31,4608,3456,,camera_database
+nikon,Coolpix L310,4320,3240,,camera_database
+nikon,Coolpix L32,5152,3864,,camera_database
+nikon,Coolpix L320,4608,3456,,camera_database
+nikon,Coolpix L330,5152,3864,,camera_database
+nikon,Coolpix L5,3072,2304,,camera_database
+nikon,Coolpix L6,2816,2112,,camera_database
+nikon,Coolpix L610,4608,3456,,camera_database
+nikon,Coolpix L620,4896,3672,,camera_database
+nikon,Coolpix L810,4608,3456,,camera_database
+nikon,Coolpix L820,4608,3456,,camera_database
+nikon,Coolpix L830,4608,3456,,camera_database
+nikon,Coolpix L840,4608,3456,,camera_database
+nikon,Coolpix P1,3264,2448,,camera_database
+nikon,Coolpix P100,3648,2736,,camera_database
+nikon,Coolpix P1000,4608,3456,,camera_database
+nikon,Coolpix P1100,4608,3456,,camera_database
+nikon,Coolpix P2,2592,1944,,camera_database
+nikon,Coolpix P3,3264,2448,,camera_database
+nikon,Coolpix P300,4000,3000,,camera_database
+nikon,Coolpix P310,4608,3456,,camera_database
+nikon,Coolpix P330,4000,3000,,camera_database
+nikon,Coolpix P340,4000,3000,,camera_database
+nikon,Coolpix P4,3264,2448,,camera_database
+nikon,Coolpix P50,3264,2448,,camera_database
+nikon,Coolpix P500,4000,3000,,camera_database
+nikon,Coolpix P5000,3648,2736,,camera_database
+nikon,Coolpix P510,4608,3456,,camera_database
+nikon,Coolpix P5100,4000,3000,,camera_database
+nikon,Coolpix P520,4896,3672,,camera_database
+nikon,Coolpix P530,4608,3456,,camera_database
+nikon,Coolpix P60,3264,2448,,camera_database
+nikon,Coolpix P600,4608,3456,,camera_database
+nikon,Coolpix P6000,4224,3168,,camera_database
+nikon,Coolpix P610,4608,3456,,camera_database
+nikon,Coolpix P7000,3648,2736,,camera_database
+nikon,Coolpix P7100,3648,2736,,camera_database
+nikon,Coolpix P7700,4000,3000,,camera_database
+nikon,Coolpix P7800,4000,3000,,camera_database
+nikon,Coolpix P80,3648,2736,,camera_database
+nikon,Coolpix P90,4000,3000,,camera_database
+nikon,Coolpix P900,4608,3456,,camera_database
+nikon,Coolpix P950,4608,3456,,camera_database
+nikon,Coolpix S01,3648,2736,,camera_database
+nikon,Coolpix S02,4160,3120,,camera_database
+nikon,Coolpix S1,2592,1944,,camera_database
+nikon,Coolpix S10,2816,2112,,camera_database
+nikon,Coolpix S100,4608,3456,,camera_database
+nikon,Coolpix S1000pj,4000,3000,,camera_database
+nikon,Coolpix S1100pj,4320,3240,,camera_database
+nikon,Coolpix S1200pj,4320,3240,,camera_database
+nikon,Coolpix S2,2592,1944,,camera_database
+nikon,Coolpix S200,3072,2304,,camera_database
+nikon,Coolpix S210,3264,2448,,camera_database
+nikon,Coolpix S220,3648,2736,,camera_database
+nikon,Coolpix S225,3648,2736,,camera_database
+nikon,Coolpix S230,3648,2736,,camera_database
+nikon,Coolpix S2500,4000,3000,,camera_database
+nikon,Coolpix S2600,4320,3240,,camera_database
+nikon,Coolpix S2700,4608,3456,,camera_database
+nikon,Coolpix S2750,4608,3456,,camera_database
+nikon,Coolpix S2800,5152,3864,,camera_database
+nikon,Coolpix S2900,5152,3864,,camera_database
+nikon,Coolpix S3,2816,2112,,camera_database
+nikon,Coolpix S30,3648,2736,,camera_database
+nikon,Coolpix S3000,4000,3000,,camera_database
+nikon,Coolpix S31,3648,2736,,camera_database
+nikon,Coolpix S3100,4320,3240,,camera_database
+nikon,Coolpix S32,4160,3120,,camera_database
+nikon,Coolpix S3200,4608,3456,,camera_database
+nikon,Coolpix S33,4160,3120,,camera_database
+nikon,Coolpix S3300,4608,3456,,camera_database
+nikon,Coolpix S3400,5152,3864,,camera_database
+nikon,Coolpix S3500,5152,3864,,camera_database
+nikon,Coolpix S3600,5152,3864,,camera_database
+nikon,Coolpix S3700,5152,3864,,camera_database
+nikon,Coolpix S4,2816,2112,,camera_database
+nikon,Coolpix S4000,4000,3000,,camera_database
+nikon,Coolpix S4100,4320,3240,,camera_database
+nikon,Coolpix S4150,4320,3240,,camera_database
+nikon,Coolpix S4200,4608,3456,,camera_database
+nikon,Coolpix S4300,4608,3456,,camera_database
+nikon,Coolpix S4400,5152,3864,,camera_database
+nikon,Coolpix S5,2816,2112,,camera_database
+nikon,Coolpix S50,3072,2304,,camera_database
+nikon,Coolpix S500,3072,2304,,camera_database
+nikon,Coolpix S50c,3072,2304,,camera_database
+nikon,Coolpix S51,3264,2448,,camera_database
+nikon,Coolpix S510,3264,2448,,camera_database
+nikon,Coolpix S5100,4000,3000,,camera_database
+nikon,Coolpix S51c,3264,2448,,camera_database
+nikon,Coolpix S52,3456,2592,,camera_database
+nikon,Coolpix S520,3264,2448,,camera_database
+nikon,Coolpix S5200,4608,3456,,camera_database
+nikon,Coolpix S52c,3456,2592,,camera_database
+nikon,Coolpix S5300,4608,3456,,camera_database
+nikon,Coolpix S550,3648,2736,,camera_database
+nikon,Coolpix S560,3648,2736,,camera_database
+nikon,Coolpix S570,4000,3000,,camera_database
+nikon,Coolpix S6,2816,2112,,camera_database
+nikon,Coolpix S60,3648,2736,,camera_database
+nikon,Coolpix S600,3648,2736,,camera_database
+nikon,Coolpix S6000,4320,3240,,camera_database
+nikon,Coolpix S610,3648,2736,,camera_database
+nikon,Coolpix S6100,4608,3456,,camera_database
+nikon,Coolpix S610c,3648,2736,,camera_database
+nikon,Coolpix S6150,4608,3456,,camera_database
+nikon,Coolpix S620,4000,3000,,camera_database
+nikon,Coolpix S6200,4608,3456,,camera_database
+nikon,Coolpix S630,4000,3000,,camera_database
+nikon,Coolpix S6300,4608,3456,,camera_database
+nikon,Coolpix S640,4000,3000,,camera_database
+nikon,Coolpix S6400,4608,3456,,camera_database
+nikon,Coolpix S6500,4608,3456,,camera_database
+nikon,Coolpix S6600,4608,3456,,camera_database
+nikon,Coolpix S6700,5152,3864,,camera_database
+nikon,Coolpix S6800,4608,3456,,camera_database
+nikon,Coolpix S6900,4608,3456,,camera_database
+nikon,Coolpix S70,4000,3000,,camera_database
+nikon,Coolpix S700,4000,3000,,camera_database
+nikon,Coolpix S7000,4608,3456,,camera_database
+nikon,Coolpix S710,4352,3264,,camera_database
+nikon,Coolpix S7c,3072,2304,,camera_database
+nikon,Coolpix S80,4352,3264,,camera_database
+nikon,Coolpix S8000,4320,3240,,camera_database
+nikon,Coolpix S800c,4608,3456,,camera_database
+nikon,Coolpix S8100,4000,3000,,camera_database
+nikon,Coolpix S810c,4608,3456,,camera_database
+nikon,Coolpix S8200,4608,3456,,camera_database
+nikon,Coolpix S9,2816,2112,,camera_database
+nikon,Coolpix S9050,4000,3000,,camera_database
+nikon,Coolpix S9100,4000,3000,,camera_database
+nikon,Coolpix S9200,4608,3456,,camera_database
+nikon,Coolpix S9300,4608,3456,,camera_database
+nikon,Coolpix S9400,4896,3672,,camera_database
+nikon,Coolpix S9500,4896,3672,,camera_database
+nikon,Coolpix S9600,4608,3456,,camera_database
+nikon,Coolpix S9700,4608,3456,,camera_database
+nikon,Coolpix S9900,4608,3456,,camera_database
+nikon,Coolpix SQ,2016,1512,,camera_database
+nikon,Coolpix W100,4160,3120,,camera_database
+nikon,Coolpix W150,4160,3120,,camera_database
+nikon,Coolpix W300,4608,3456,,camera_database
+nikon,D1,2000,1312,,camera_database
+nikon,D100,3008,2000,,camera_database
+nikon,D1H,2000,1312,,camera_database
+nikon,D1X,3008,1960,,camera_database
+nikon,D200,3872,2592,,camera_database
+nikon,D2H,2464,1632,,camera_database
+nikon,D2Hs,2464,1632,,camera_database
+nikon,D2X,4288,2848,,camera_database
+nikon,D2xs,4288,2848,,camera_database
+nikon,D3,4256,2832,,camera_database
+nikon,D300,4288,2848,,camera_database
+nikon,D3000,3872,2592,,camera_database
+nikon,D300s,4288,2848,,camera_database
+nikon,D3100,4608,3072,,camera_database
+nikon,D3200,6016,4000,,camera_database
+nikon,D3300,6000,4000,,camera_database
+nikon,D3400,6000,4000,,camera_database
+nikon,D3500,6000,4000,,camera_database
+nikon,D3s,4256,2832,,camera_database
+nikon,D3X,6048,4032,,camera_database
+nikon,D4,4928,3280,,camera_database
+nikon,D40,3008,2000,,camera_database
+nikon,D40x,3872,2592,,camera_database
+nikon,D4s,4928,3280,,camera_database
+nikon,D5,5568,3712,,camera_database
+nikon,D50,3008,2000,,camera_database
+nikon,D500,5568,3712,,camera_database
+nikon,D5000,4288,2848,,camera_database
+nikon,D5100,4928,3264,,camera_database
+nikon,D5200,6000,4000,,camera_database
+nikon,D5300,6000,4000,,camera_database
+nikon,D5500,6000,4000,,camera_database
+nikon,D5600,6000,4000,,camera_database
+nikon,D6,5568,3712,,camera_database
+nikon,D60,3872,2592,,camera_database
+nikon,D600,6016,4016,,camera_database
+nikon,D610,6016,4016,,camera_database
+nikon,D70,3008,2000,,camera_database
+nikon,D700,4256,2832,,camera_database
+nikon,D7000,4928,3264,,camera_database
+nikon,D70s,3008,2000,,camera_database
+nikon,D7100,6000,4000,,camera_database
+nikon,D7200,6000,4000,,camera_database
+nikon,D750,6016,4016,,camera_database
+nikon,D7500,5568,3712,,camera_database
+nikon,D780,6048,4024,,camera_database
+nikon,D80,3872,2592,,camera_database
+nikon,D800,7360,4912,,camera_database
+nikon,D800E,7360,4912,,camera_database
+nikon,D810,7360,4912,,camera_database
+nikon,D850,8256,5504,,camera_database
+nikon,D90,4288,2848,,camera_database
+nikon,Df,4928,3280,,camera_database
+nikon,DL18-50,5584,3712,,camera_database
+nikon,DL24-500,5584,3712,,camera_database
+nikon,DL24-85,5584,3712,,camera_database
+nikon,E2n,1280,1000,,camera_database
+nikon,E2Ns,1280,1000,,camera_database
+nikon,E2s,1152,872,,camera_database
+nikon,E3,1280,1000,,camera_database
+nikon,E3s,1280,1000,,camera_database
+nikon,Z fc,5568,3712,,camera_database
+nikon,Z30,5568,3712,,camera_database
+nikon,Z5,6016,4016,,camera_database
+nikon,Z5 II,6048,4032,,camera_database
+nikon,Z50,5568,3712,,camera_database
+nikon,Z50 II,5568,3712,,camera_database
+nikon,Z6,6048,4024,,camera_database
+nikon,Z6 II,6048,4024,,camera_database
+nikon,Z6 III,6048,4032,,camera_database
+nikon,Z7,8256,5504,,camera_database
+nikon,Z7 II,8256,5504,,camera_database
+nikon,Z8,8256,5504,,camera_database
+nikon,Z9,8256,5504,,camera_database
+nikon,Zf,6048,4032,,camera_database
+nikon,ZR,6048,4032,,camera_database
+olympus,Air A01,4608,3456,,camera_database
+olympus,AZ-1,2048,1536,,camera_database
+olympus,AZ-1 Ferrari 2004,2048,1536,,camera_database
+olympus,AZ-2 Zoom,2288,1712,,camera_database
+olympus,C-1,1280,960,,camera_database
+olympus,C-1 Zoom,1280,960,,camera_database
+olympus,C-100,1280,960,,camera_database
+olympus,C-1000L,1024,768,,camera_database
+olympus,C-120,1600,1200,,camera_database
+olympus,C-1400L,1280,1024,,camera_database
+olympus,C-1400XL,1280,1024,,camera_database
+olympus,C-150,1600,1200,,camera_database
+olympus,C-160,2048,1536,,camera_database
+olympus,C-170,2288,1712,,camera_database
+olympus,C-180,2592,1944,,camera_database
+olympus,C-2,1600,1200,,camera_database
+olympus,C-200 Zoom,1600,1200,,camera_database
+olympus,C-2000 Zoom,1600,1200,,camera_database
+olympus,C-2020 Zoom,1600,1200,,camera_database
+olympus,C-2040 Zoom,1600,1200,,camera_database
+olympus,C-21,1600,1200,,camera_database
+olympus,C-2100 UZ,1600,1200,,camera_database
+olympus,C-220 Zoom,1600,1200,,camera_database
+olympus,C-2500 L,1712,1368,,camera_database
+olympus,C-300 Zoom,1984,1488,,camera_database
+olympus,C-3000 Zoom,2048,1536,,camera_database
+olympus,C-3020 Zoom,2048,1536,,camera_database
+olympus,C-3030 Zoom,2048,1536,,camera_database
+olympus,C-3040 Zoom,2048,1536,,camera_database
+olympus,C-310 Zoom,2048,1536,,camera_database
+olympus,C-315 Zoom,2592,1944,,camera_database
+olympus,C-350 Zoom,2048,1536,,camera_database
+olympus,C-360 Zoom,2048,1536,,camera_database
+olympus,C-370 Zoom,2048,1536,,camera_database
+olympus,C-40 Zoom,3200,2400,,camera_database
+olympus,C-4000 Zoom,2288,1712,,camera_database
+olympus,C-4040 Zoom,3200,2400,,camera_database
+olympus,C-450 Zoom,2288,1712,,camera_database
+olympus,C-460 Zoom del Sol,2272,1712,,camera_database
+olympus,C-470 Zoom,2272,1704,,camera_database
+olympus,C-480 Zoom,2288,1712,,camera_database
+olympus,C-50 Zoom,2560,1920,,camera_database
+olympus,C-5000 Zoom,2560,1920,,camera_database
+olympus,C-5050 Zoom,3200,2400,,camera_database
+olympus,C-5060 Wide Zoom,3264,2448,,camera_database
+olympus,C-55 Zoom,2592,1944,,camera_database
+olympus,C-5500 Sport Zoom,2592,1944,,camera_database
+olympus,C-60 Zoom,2816,2112,,camera_database
+olympus,C-70 Zoom,3072,2304,,camera_database
+olympus,C-700 UZ,1600,1200,,camera_database
+olympus,C-7000 Zoom,3072,2304,,camera_database
+olympus,C-7070 Wide Zoom,3072,2304,,camera_database
+olympus,C-720 UZ,1984,1488,,camera_database
+olympus,C-730 UZ,2048,1536,,camera_database
+olympus,C-740 UZ,3200,2400,,camera_database
+olympus,C-750 UZ,3200,2400,,camera_database
+olympus,C-760 UZ,3200,2400,,camera_database
+olympus,C-765 UZ,3200,2400,,camera_database
+olympus,C-770 UZ,2288,1712,,camera_database
+olympus,C-8080 Wide Zoom,3264,2448,,camera_database
+olympus,C-820L,1024,768,,camera_database
+olympus,C-840L,1280,960,,camera_database
+olympus,C-860L,1280,960,,camera_database
+olympus,C-900 Zoom,1280,960,,camera_database
+olympus,C-920 Zoom,1280,960,,camera_database
+olympus,C-960 Zoom,1280,960,,camera_database
+olympus,C-990 Zoom,1600,1200,,camera_database
+olympus,D-150Z,1280,960,,camera_database
+olympus,D-200L,640,480,,camera_database
+olympus,D-300L,1024,768,,camera_database
+olympus,D-340L,1280,960,,camera_database
+olympus,D-340R,1280,960,,camera_database
+olympus,D-360L,1280,960,,camera_database
+olympus,D-370,1280,960,,camera_database
+olympus,D-380,1600,1200,,camera_database
+olympus,D-390,1600,1200,,camera_database
+olympus,D-395,2048,1536,,camera_database
+olympus,D-40 Zoom,2272,1704,,camera_database
+olympus,D-400 Zoom,1280,960,,camera_database
+olympus,D-425,2288,1712,,camera_database
+olympus,D-435,2592,1944,,camera_database
+olympus,D-450 Zoom,1280,960,,camera_database
+olympus,D-460 Zoom,1280,960,,camera_database
+olympus,D-490 Zoom,1600,1200,,camera_database
+olympus,D-500L,1024,768,,camera_database
+olympus,D-510 Zoom,1600,1200,,camera_database
+olympus,D-520 Zoom,1600,1200,,camera_database
+olympus,D-535 Zoom,2048,1536,,camera_database
+olympus,D-540 Zoom,2048,1536,,camera_database
+olympus,D-545 Zoom,2288,1712,,camera_database
+olympus,D-560 Zoom,2048,1536,,camera_database
+olympus,D-580 Zoom,2288,1712,,camera_database
+olympus,D-595 Zoom,2560,1920,,camera_database
+olympus,D-600L,1280,1024,,camera_database
+olympus,D-620L,1280,1024,,camera_database
+olympus,D-630 Zoom,2560,1920,,camera_database
+olympus,E-1,2560,1920,,camera_database
+olympus,E-10,2240,1680,,camera_database
+olympus,E-100 RS,1368,1024,,camera_database
+olympus,E-20,2560,1920,,camera_database
+olympus,E-3,3648,2736,,camera_database
+olympus,E-30,4032,3024,,camera_database
+olympus,E-300 / EVOLT E-300,3264,2448,,camera_database
+olympus,E-400,3648,2736,,camera_database
+olympus,E-410 / EVOLT E-410,3648,2736,,camera_database
+olympus,E-420,3648,2736,,camera_database
+olympus,E-450,3648,2736,,camera_database
+olympus,E-5,4032,3024,,camera_database
+olympus,E-500 / EVOLT E-500,3264,2448,,camera_database
+olympus,E-510 / EVOLT E-510,3648,2736,,camera_database
+olympus,E-520,3648,2736,,camera_database
+olympus,E-600,4032,3024,,camera_database
+olympus,E-620,4032,3024,,camera_database
+olympus,FE-100,2272,1704,,camera_database
+olympus,FE-110,2560,1920,,camera_database
+olympus,FE-115,2560,1920,,camera_database
+olympus,FE-120,2816,2112,,camera_database
+olympus,FE-130,2592,1944,,camera_database
+olympus,FE-140,2816,2112,,camera_database
+olympus,FE-150,2560,1920,,camera_database
+olympus,FE-160,2816,2112,,camera_database
+olympus,FE-170,2816,2112,,camera_database
+olympus,FE-180,2816,2112,,camera_database
+olympus,FE-190,2816,2112,,camera_database
+olympus,FE-20,3264,2448,,camera_database
+olympus,FE-200,2816,2112,,camera_database
+olympus,FE-210,3072,2304,,camera_database
+olympus,FE-220,3072,2304,,camera_database
+olympus,FE-230,3072,2304,,camera_database
+olympus,FE-240,3072,2304,,camera_database
+olympus,FE-25,3648,2736,,camera_database
+olympus,FE-250,3264,2448,,camera_database
+olympus,FE-26,3968,2976,,camera_database
+olympus,FE-270,3072,2304,,camera_database
+olympus,FE-280,3264,2448,,camera_database
+olympus,FE-290,3072,2304,,camera_database
+olympus,FE-300,4000,3000,,camera_database
+olympus,FE-3000,3648,2736,,camera_database
+olympus,FE-3010,3968,2976,,camera_database
+olympus,FE-310,3264,2448,,camera_database
+olympus,FE-340,3264,2448,,camera_database
+olympus,FE-350,3264,2448,,camera_database
+olympus,FE-360,3264,2448,,camera_database
+olympus,FE-370,3264,2448,,camera_database
+olympus,FE-4000,3968,2976,,camera_database
+olympus,FE-4010,3968,2976,,camera_database
+olympus,FE-4020,4288,3216,,camera_database
+olympus,FE-4030,4288,3216,,camera_database
+olympus,FE-4040,4288,3216,,camera_database
+olympus,FE-4050,3968,2976,,camera_database
+olympus,FE-45,3648,2736,,camera_database
+olympus,FE-47,4288,3216,,camera_database
+olympus,FE-48,4000,3000,,camera_database
+olympus,FE-5000,3648,2736,,camera_database
+olympus,FE-5010,3968,2976,,camera_database
+olympus,FE-5020,3968,2976,,camera_database
+olympus,FE-5030,4288,3216,,camera_database
+olympus,FE-5035,4288,3216,,camera_database
+olympus,FE-5040,3968,2976,,camera_database
+olympus,FE-5050,4288,3216,,camera_database
+olympus,IR 500,2288,1712,,camera_database
+olympus,IR-300,2560,1920,,camera_database
+olympus,m:robe MR 500i,1280,960,,camera_database
+olympus,Mju 1060,3828,2794,,camera_database
+olympus,mju 400 Digital Ferrari,2272,1704,,camera_database
+olympus,Mju 5000,3968,2976,,camera_database
+olympus,Mju 7050,4288,3216,,camera_database
+olympus,mju 800 black,3264,2448,,camera_database
+olympus,mju mini Digital,2272,1704,,camera_database
+olympus,mju mini Digital S,2560,1920,,camera_database
+olympus,OM-D E-M1,4608,3456,,camera_database
+olympus,OM-D E-M1 Mark II,5184,3888,,camera_database
+olympus,OM-D E-M1 Mark III,5184,3888,,camera_database
+olympus,OM-D E-M10,4608,3456,,camera_database
+olympus,OM-D E-M10 II,4608,3456,,camera_database
+olympus,OM-D E-M10 III,4608,3456,,camera_database
+olympus,OM-D E-M10 Mark IV,5184,3888,,camera_database
+olympus,OM-D E-M1X,5184,3888,,camera_database
+olympus,OM-D E-M5,4608,3456,,camera_database
+olympus,OM-D E-M5 Mark II,4608,3456,,camera_database
+olympus,OM-D E-M5 Mark III,5184,3888,,camera_database
+olympus,PEN E-P1,4032,3024,,camera_database
+olympus,PEN E-P2,4032,3024,,camera_database
+olympus,PEN E-P3,4032,3024,,camera_database
+olympus,PEN E-P5,4608,3456,,camera_database
+olympus,PEN E-P7,5184,3888,,camera_database
+olympus,PEN E-PL1,4032,3024,,camera_database
+olympus,PEN E-PL10,4608,3456,,camera_database
+olympus,PEN E-PL1s,4032,3024,,camera_database
+olympus,PEN E-PL2,4032,3024,,camera_database
+olympus,PEN E-PL3,4032,3024,,camera_database
+olympus,PEN E-PL5,4608,3456,,camera_database
+olympus,PEN E-PL6,4608,3456,,camera_database
+olympus,PEN E-PL7,4608,3456,,camera_database
+olympus,PEN E-PL8,4608,3456,,camera_database
+olympus,PEN E-PL9,4608,3456,,camera_database
+olympus,PEN E-PM1,4032,3024,,camera_database
+olympus,PEN E-PM2,4608,3456,,camera_database
+olympus,PEN-F,5184,3888,,camera_database
+olympus,SH-21,4608,3456,,camera_database
+olympus,SH-25MR,4608,3456,,camera_database
+olympus,SH-50 iHS,4608,3456,,camera_database
+olympus,SP 310,3072,2304,,camera_database
+olympus,SP 320,3072,2304,,camera_database
+olympus,SP 350,3264,2448,,camera_database
+olympus,SP 500 UZ,2816,2112,,camera_database
+olympus,SP 510 UZ,3072,2304,,camera_database
+olympus,SP 550 UZ,3072,2304,,camera_database
+olympus,SP 560 UZ,3264,2448,,camera_database
+olympus,SP 570 UZ,3648,2736,,camera_database
+olympus,SP 590 UZ,3968,2976,,camera_database
+olympus,SP 600 UZ,3968,2976,,camera_database
+olympus,SP 700,2816,2112,,camera_database
+olympus,SP 800 UZ,4288,3216,,camera_database
+olympus,SP 810 UZ,4288,3216,,camera_database
+olympus,SP-100,4608,3456,,camera_database
+olympus,SP-565UZ,3648,2736,,camera_database
+olympus,SP-610UZ,4288,3216,,camera_database
+olympus,SP-620 UZ,4608,3456,,camera_database
+olympus,SP-720UZ,4288,3216,,camera_database
+olympus,Stylus 1,3968,2976,,camera_database
+olympus,Stylus 1000,3648,2736,,camera_database
+olympus,Stylus 1010,3648,2736,,camera_database
+olympus,Stylus 1020,3648,2736,,camera_database
+olympus,Stylus 1030 SW,3648,2736,,camera_database
+olympus,Stylus 1040,3648,2736,,camera_database
+olympus,Stylus 1050 SW,3648,2736,,camera_database
+olympus,Stylus 1200,4000,3000,,camera_database
+olympus,Stylus 1s,3968,2976,,camera_database
+olympus,Stylus 300,2048,1536,,camera_database
+olympus,Stylus 400,2272,1704,,camera_database
+olympus,Stylus 410,2272,1704,,camera_database
+olympus,Stylus 500,2560,1920,,camera_database
+olympus,Stylus 5010,4288,3216,,camera_database
+olympus,Stylus 550WP,3648,2736,,camera_database
+olympus,Stylus 600,2816,2112,,camera_database
+olympus,Stylus 700,3072,2304,,camera_database
+olympus,Stylus 7000,3968,2976,,camera_database
+olympus,Stylus 7010,3968,2976,,camera_database
+olympus,Stylus 7030,4288,3216,,camera_database
+olympus,Stylus 7040,4288,3216,,camera_database
+olympus,Stylus 720 SW,3072,2304,,camera_database
+olympus,Stylus 725 SW,3072,2304,,camera_database
+olympus,Stylus 730,3072,2304,,camera_database
+olympus,Stylus 740,3072,2304,,camera_database
+olympus,Stylus 750,3072,2304,,camera_database
+olympus,Stylus 760,3072,2304,,camera_database
+olympus,Stylus 770 SW,3072,2304,,camera_database
+olympus,Stylus 780,3072,2304,,camera_database
+olympus,Stylus 790 SW,3072,2304,,camera_database
+olympus,Stylus 800,3264,2448,,camera_database
+olympus,Stylus 810,3264,2488,,camera_database
+olympus,Stylus 820,3264,2488,,camera_database
+olympus,Stylus 830,3248,2436,,camera_database
+olympus,Stylus 840,3248,2436,,camera_database
+olympus,Stylus 850 SW,3248,2436,,camera_database
+olympus,Stylus 9000,3968,2976,,camera_database
+olympus,Stylus 9010,4288,3216,,camera_database
+olympus,Stylus SH-1,4608,3456,,camera_database
+olympus,Stylus SH-2,4608,3456,,camera_database
+olympus,Stylus SH-3,4608,3456,,camera_database
+olympus,Stylus SP-820UZ,4288,3216,,camera_database
+olympus,Stylus Tough 6000,3648,2736,,camera_database
+olympus,Stylus Tough 6010,3968,2976,,camera_database
+olympus,Stylus Tough 6020,4288,3216,,camera_database
+olympus,Stylus Tough 8000,3968,2976,,camera_database
+olympus,Stylus Tough 8010,4288,3216,,camera_database
+olympus,Stylus Tough TG-870,4608,3456,,camera_database
+olympus,Stylus Tough-3000,3968,2976,,camera_database
+olympus,Stylus Verve,2272,1704,,camera_database
+olympus,Stylus Verve  S,2560,1920,,camera_database
+olympus,Stylus XZ-10,3986,2976,,camera_database
+olympus,SZ-10,4288,3216,,camera_database
+olympus,SZ-11,4288,3216,,camera_database
+olympus,SZ-12,4288,3216,,camera_database
+olympus,SZ-14,4288,3216,,camera_database
+olympus,SZ-15,4608,3456,,camera_database
+olympus,SZ-16,4608,3456,,camera_database
+olympus,SZ-20,4608,3456,,camera_database
+olympus,SZ-30MR,4608,3456,,camera_database
+olympus,SZ-31MR iHS,4608,3456,,camera_database
+olympus,T-10,3648,2736,,camera_database
+olympus,T-100,3968,2976,,camera_database
+olympus,T-110,3968,2976,,camera_database
+olympus,TG-310,4288,3216,,camera_database
+olympus,TG-320,4288,3216,,camera_database
+olympus,TG-610,4288,3216,,camera_database
+olympus,TG-630 iHS,3968,2976,,camera_database
+olympus,TG-810,4288,3216,,camera_database
+olympus,TG-820 iHS,3968,2976,,camera_database
+olympus,TG-830 iHS,4608,3456,,camera_database
+olympus,TG-850 iHS,4608,3456,,camera_database
+olympus,Tough TG-1 iHS,3968,2976,,camera_database
+olympus,Tough TG-2 iHS,3968,2976,,camera_database
+olympus,Tough TG-3,4608,3456,,camera_database
+olympus,Tough TG-4,4608,3456,,camera_database
+olympus,Tough TG-5,4000,3000,,camera_database
+olympus,Tough TG-6,4000,3000,,camera_database
+olympus,Tough TG-620,3968,2976,,camera_database
+olympus,Tough TG-860,4608,3456,,camera_database
+olympus,VG-110,3968,2976,,camera_database
+olympus,VG-120,4288,3216,,camera_database
+olympus,VG-130,4288,3216,,camera_database
+olympus,VG-145,4288,3216,,camera_database
+olympus,VG-150,3968,2976,,camera_database
+olympus,VG-160,4288,3216,,camera_database
+olympus,VG-165,4288,3216,,camera_database
+olympus,VG-170,4288,3216,,camera_database
+olympus,VG-180,4608,3456,,camera_database
+olympus,VG-190,4608,3456,,camera_database
+olympus,VH-210,4288,3216,,camera_database
+olympus,VH-410,4608,3456,,camera_database
+olympus,VH-510,3968,2976,,camera_database
+olympus,VH-515,3986,2976,,camera_database
+olympus,VH-520,4288,3216,,camera_database
+olympus,VR-310,4288,3216,,camera_database
+olympus,VR-320,4288,3216,,camera_database
+olympus,VR-330,4288,3216,,camera_database
+olympus,VR-340,4608,3456,,camera_database
+olympus,VR-350,4608,3456,,camera_database
+olympus,VR-360,4608,3456,,camera_database
+olympus,VR-370,4608,3456,,camera_database
+olympus,X-15,3264,2448,,camera_database
+olympus,X-775,3072,2304,,camera_database
+olympus,X-785,3072,2304,,camera_database
+olympus,X-905,3648,2736,,camera_database
+olympus,X-920,4000,3000,,camera_database
+olympus,XZ-1,3648,2736,,camera_database
+olympus,XZ-2 iHS,3968,2976,,camera_database
+om digital,OM System OM-1 Mark II,5184,3888,OM-1 Mark II,camera_database
+om digital,OM Tough TG-7,4000,3000,,camera_database
+om digital,OM-1,5184,3888,,camera_database
+om digital,OM-3,5184,3888,,camera_database
+om digital,OM-5,5184,3888,,camera_database
+om digital,OM-5 II,5184,3888,,camera_database
+panasonic,D-snap SV-AS10,1600,1200,,camera_database
+panasonic,D-snap SV-AS3,2016,1512,,camera_database
+panasonic,D-snap SV-AS30,2016,1512,,camera_database
+panasonic,Lumix DC-BGH1,3680,2760,,camera_database
+panasonic,Lumix DC-BS1H,6000,4000,,camera_database
+panasonic,Lumix DC-FZ1000 II,5472,3648,,camera_database
+panasonic,Lumix DC-FZ80,4896,3672,Lumix DC-FZ82,camera_database
+panasonic,Lumix DC-FZ80D,4896,3672,Lumix DC-FZ82D|Lumix DC-FZ85D,camera_database
+panasonic,Lumix DC-G100,5184,3888,Lumix DC-G110,camera_database
+panasonic,Lumix DC-G9,5184,3888,,camera_database
+panasonic,Lumix DC-G9 II,5776,4336,,camera_database
+panasonic,Lumix DC-G95,5184,3888,Lumix DC-G90|Lumix DC-G91,camera_database
+panasonic,Lumix DC-G97,5184,3888,,camera_database
+panasonic,Lumix DC-GH5,5184,3888,,camera_database
+panasonic,Lumix DC-GH5 II,5184,3888,,camera_database
+panasonic,Lumix DC-GH5S,3680,2760,,camera_database
+panasonic,Lumix DC-GH6,5776,4336,,camera_database
+panasonic,Lumix DC-GH7,5776,4336,,camera_database
+panasonic,Lumix DC-GX850,4592,3448,Lumix DC-GX800|Lumix DC-GF9,camera_database
+panasonic,Lumix DC-GX9,5184,3888,,camera_database
+panasonic,Lumix DC-LX100 II,4736,3552,,camera_database
+panasonic,Lumix DC-S1,6000,4000,,camera_database
+panasonic,Lumix DC-S1H,6000,4000,,camera_database
+panasonic,Lumix DC-S1II,6000,4000,,camera_database
+panasonic,Lumix DC-S1IIE,6000,4000,,camera_database
+panasonic,Lumix DC-S1R,8368,5584,,camera_database
+panasonic,Lumix DC-S1RII,8144,5424,,camera_database
+panasonic,Lumix DC-S5,6000,4000,,camera_database
+panasonic,Lumix DC-S5 II,6000,4000,,camera_database
+panasonic,Lumix DC-S5 IIX,6000,4000,,camera_database
+panasonic,Lumix DC-TS7,5184,3888,Lumix DC-FT7,camera_database
+panasonic,Lumix DC-TZ95,5184,3888,Lumix DC-ZS80,camera_database
+panasonic,Lumix DC-TZ99,5184,3888,Lumix DC-ZS99,camera_database
+panasonic,Lumix DC-ZS200,5472,3648,Lumix DC-TZ200,camera_database
+panasonic,Lumix DC-ZS70,5184,3888,Lumix DC-TZ90,camera_database
+panasonic,Lumix DMC-3D1,4000,3000,,camera_database
+panasonic,Lumix DMC-F1,2048,1536,,camera_database
+panasonic,Lumix DMC-F5,4320,3240,,camera_database
+panasonic,Lumix DMC-F7,1600,1200,,camera_database
+panasonic,Lumix DMC-FH1,4000,3000,Lumix DMC-FS10,camera_database
+panasonic,Lumix DMC-FH10,4608,3456,,camera_database
+panasonic,Lumix DMC-FH20,4320,3240,Lumix DMC-FS30,camera_database
+panasonic,Lumix DMC-FH3,4320,3240,Lumix DMC-FS11,camera_database
+panasonic,Lumix DMC-FH4,4320,3240,,camera_database
+panasonic,Lumix DMC-FH6,4320,3240,,camera_database
+panasonic,Lumix DMC-FH8,4608,3456,,camera_database
+panasonic,Lumix DMC-FP1,4000,3000,,camera_database
+panasonic,Lumix DMC-FP2,4320,3240,,camera_database
+panasonic,Lumix DMC-FP3,2592,1944,,camera_database
+panasonic,Lumix DMC-FP5,4320,3240,,camera_database
+panasonic,Lumix DMC-FP7,4608,3456,,camera_database
+panasonic,Lumix DMC-FP8,4000,3000,,camera_database
+panasonic,Lumix DMC-FS12,4000,3000,,camera_database
+panasonic,Lumix DMC-FS15,4000,3000,,camera_database
+panasonic,Lumix DMC-FS16,4320,3240,Lumix DMC-FH2,camera_database
+panasonic,Lumix DMC-FS18,4608,3456,Lumix DMC-FH5,camera_database
+panasonic,Lumix DMC-FS2,3072,2304,,camera_database
+panasonic,Lumix DMC-FS20,3648,2736,,camera_database
+panasonic,Lumix DMC-FS22,4608,3456,Lumix DMC-FH7,camera_database
+panasonic,Lumix DMC-FS25,4000,3000,,camera_database
+panasonic,Lumix DMC-FS28,4320,3240,,camera_database
+panasonic,Lumix DMC-FS3,3264,2448,,camera_database
+panasonic,Lumix DMC-FS33,4320,3240,Lumix DMC-FH22,camera_database
+panasonic,Lumix DMC-FS35,4608,3456,Lumix DMC-FH25,camera_database
+panasonic,Lumix DMC-FS37,4608,3456,Lumix DMC-FH27,camera_database
+panasonic,Lumix DMC-FS40,4320,3240,,camera_database
+panasonic,Lumix DMC-FS42,3648,2736,,camera_database
+panasonic,Lumix DMC-FS45,4608,3456,,camera_database
+panasonic,Lumix DMC-FS5,3648,2736,,camera_database
+panasonic,Lumix DMC-FS6,3264,2448,,camera_database
+panasonic,Lumix DMC-FS62,3648,2736,,camera_database
+panasonic,Lumix DMC-FS7,3648,2736,,camera_database
+panasonic,Lumix DMC-FT1,4000,3000,Lumix DMC-TS1,camera_database
+panasonic,Lumix DMC-FT20,4608,3456,Lumix DMC-TS20,camera_database
+panasonic,Lumix DMC-FT3,4000,3000,Lumix DMC-TS3,camera_database
+panasonic,Lumix DMC-FT30,4608,3456,Lumix DMC-TS30,camera_database
+panasonic,Lumix DMC-FT4,4000,3000,Lumix DMC-TS4,camera_database
+panasonic,Lumix DMC-FX01,2816,2112,,camera_database
+panasonic,Lumix DMC-FX07,3072,2304,,camera_database
+panasonic,Lumix DMC-FX1,2048,1536,,camera_database
+panasonic,Lumix DMC-FX10,2816,2112,,camera_database
+panasonic,Lumix DMC-FX100,4000,3000,,camera_database
+panasonic,Lumix DMC-FX12,3072,2304,,camera_database
+panasonic,Lumix DMC-FX150,4416,3312,,camera_database
+panasonic,Lumix DMC-FX2,2304,1728,,camera_database
+panasonic,Lumix DMC-FX3,2816,2112,,camera_database
+panasonic,Lumix DMC-FX30,3072,2304,,camera_database
+panasonic,Lumix DMC-FX33,3264,2448,,camera_database
+panasonic,Lumix DMC-FX35,3648,2736,,camera_database
+panasonic,Lumix DMC-FX37,3648,2736,,camera_database
+panasonic,Lumix DMC-FX40,4000,3000,Lumix DMC-FX48,camera_database
+panasonic,Lumix DMC-FX5,2304,1728,,camera_database
+panasonic,Lumix DMC-FX50,3072,2304,,camera_database
+panasonic,Lumix DMC-FX500,3648,2736,,camera_database
+panasonic,Lumix DMC-FX55,3264,2448,,camera_database
+panasonic,Lumix DMC-FX550,4000,3000,Lumix DMC-FX580,camera_database
+panasonic,Lumix DMC-FX65,4000,3000,Lumix DMC-FX60,camera_database
+panasonic,Lumix DMC-FX68,4320,3240,Lumix DMC-FX66,camera_database
+panasonic,Lumix DMC-FX7,2560,1920,,camera_database
+panasonic,Lumix DMC-FX700,4320,3240,,camera_database
+panasonic,Lumix DMC-FX75,4320,3240,Lumix DMC-FX70,camera_database
+panasonic,Lumix DMC-FX77,4000,3000,Lumix DMC-FX78,camera_database
+panasonic,Lumix DMC-FX8,2560,1920,,camera_database
+panasonic,Lumix DMC-FX80,4000,3000,,camera_database
+panasonic,Lumix DMC-FX9,2816,2112,,camera_database
+panasonic,Lumix DMC-FX90,4000,3000,,camera_database
+panasonic,Lumix DMC-FZ1,1600,1200,,camera_database
+panasonic,Lumix DMC-FZ10,2304,1728,,camera_database
+panasonic,Lumix DMC-FZ100,4320,3240,,camera_database
+panasonic,Lumix DMC-FZ1000,5472,3648,,camera_database
+panasonic,Lumix DMC-FZ15,2304,1728,,camera_database
+panasonic,Lumix DMC-FZ150,4000,3000,,camera_database
+panasonic,Lumix DMC-FZ18,3264,2448,,camera_database
+panasonic,Lumix DMC-FZ2,1600,1200,,camera_database
+panasonic,Lumix DMC-FZ20,2560,1920,,camera_database
+panasonic,Lumix DMC-FZ200,4000,3000,,camera_database
+panasonic,Lumix DMC-FZ2500,5472,3648,Lumix DMC-FZ2000|Lumix DMC-FZH1,camera_database
+panasonic,Lumix DMC-FZ28,3648,2736,,camera_database
+panasonic,Lumix DMC-FZ3,2016,1512,,camera_database
+panasonic,Lumix DMC-FZ30,3264,2448,,camera_database
+panasonic,Lumix DMC-FZ300,4000,3000,,camera_database
+panasonic,Lumix DMC-FZ38,4000,3000,Lumix DMC-FZ35,camera_database
+panasonic,Lumix DMC-FZ4,2304,1728,,camera_database
+panasonic,Lumix DMC-FZ40,4320,3240,Lumix DMC-FZ45,camera_database
+panasonic,Lumix DMC-FZ47,4000,3000,Lumix DMC-FZ48,camera_database
+panasonic,Lumix DMC-FZ5,2560,1920,,camera_database
+panasonic,Lumix DMC-FZ50,3648,2736,,camera_database
+panasonic,Lumix DMC-FZ60,4608,3456,Lumix DMC-FZ62,camera_database
+panasonic,Lumix DMC-FZ7,2816,2112,,camera_database
+panasonic,Lumix DMC-FZ70,4608,3456,,camera_database
+panasonic,Lumix DMC-FZ8,3072,2304,,camera_database
+panasonic,Lumix DMC-G1,4000,3000,,camera_database
+panasonic,Lumix DMC-G10,4000,3000,,camera_database
+panasonic,Lumix DMC-G2,4000,3000,,camera_database
+panasonic,Lumix DMC-G3,4592,3448,,camera_database
+panasonic,Lumix DMC-G5,4608,3456,,camera_database
+panasonic,Lumix DMC-G6,4608,3456,,camera_database
+panasonic,Lumix DMC-G7,4592,3448,,camera_database
+panasonic,Lumix DMC-G85,4592,3448,Lumix DMC-G80|Lumix DMC-G81|Lumix DMC-G8,camera_database
+panasonic,Lumix DMC-GF1,4000,3000,,camera_database
+panasonic,Lumix DMC-GF2,4000,3000,,camera_database
+panasonic,Lumix DMC-GF3,4000,3000,,camera_database
+panasonic,Lumix DMC-GF5,4000,3000,,camera_database
+panasonic,Lumix DMC-GF6,4592,3448,,camera_database
+panasonic,Lumix DMC-GF7,4592,3448,,camera_database
+panasonic,Lumix DMC-GF8,4592,3448,,camera_database
+panasonic,Lumix DMC-GH1,4000,3000,,camera_database
+panasonic,Lumix DMC-GH2,4608,3456,,camera_database
+panasonic,Lumix DMC-GH3,4608,3456,,camera_database
+panasonic,Lumix DMC-GH4,4608,3456,,camera_database
+panasonic,Lumix DMC-GM1,4592,3448,,camera_database
+panasonic,Lumix DMC-GM5,4592,3448,,camera_database
+panasonic,Lumix DMC-GX1,4592,3448,,camera_database
+panasonic,Lumix DMC-GX7,4592,3448,,camera_database
+panasonic,Lumix DMC-GX8,5184,3888,,camera_database
+panasonic,Lumix DMC-GX85,4592,3448,Lumix DMC-GX80|Lumix DMC-GX7 Mark II,camera_database
+panasonic,Lumix DMC-L1,3136,2352,,camera_database
+panasonic,Lumix DMC-L10,3648,2736,,camera_database
+panasonic,Lumix DMC-LC1,2560,1920,,camera_database
+panasonic,Lumix DMC-LC20,1600,1200,,camera_database
+panasonic,Lumix DMC-LC33,2048,1536,,camera_database
+panasonic,Lumix DMC-LC40,2240,1680,,camera_database
+panasonic,Lumix DMC-LC43,2304,1728,,camera_database
+panasonic,Lumix DMC-LC5,2240,1680,,camera_database
+panasonic,Lumix DMC-LC50,2048,1536,,camera_database
+panasonic,Lumix DMC-LC70,2304,1728,,camera_database
+panasonic,Lumix DMC-LC80,2560,1920,,camera_database
+panasonic,Lumix DMC-LF1,4000,3000,,camera_database
+panasonic,Lumix DMC-LS1,2304,1728,,camera_database
+panasonic,Lumix DMC-LS2,2560,1920,,camera_database
+panasonic,Lumix DMC-LS3,2560,1920,,camera_database
+panasonic,Lumix DMC-LS5,4320,3240,,camera_database
+panasonic,Lumix DMC-LS6,4320,3240,,camera_database
+panasonic,Lumix DMC-LS60,2816,2112,,camera_database
+panasonic,Lumix DMC-LS75,3072,2304,,camera_database
+panasonic,Lumix DMC-LS80,3264,2448,,camera_database
+panasonic,Lumix DMC-LS85,3264,2448,,camera_database
+panasonic,Lumix DMC-LX1,3840,2160,,camera_database
+panasonic,Lumix DMC-LX10,5472,3648,Lumix DMC-LX15|Lumix DMC-LX9,camera_database
+panasonic,Lumix DMC-LX100,4112,3088,,camera_database
+panasonic,Lumix DMC-LX2,4224,2376,,camera_database
+panasonic,Lumix DMC-LX3,3648,2736,,camera_database
+panasonic,Lumix DMC-LX5,3648,2736,,camera_database
+panasonic,Lumix DMC-LX7,3648,2736,,camera_database
+panasonic,Lumix DMC-LZ1,2304,1728,,camera_database
+panasonic,Lumix DMC-LZ10,3648,2736,,camera_database
+panasonic,Lumix DMC-LZ2,2560,1920,,camera_database
+panasonic,Lumix DMC-LZ20,4608,3456,,camera_database
+panasonic,Lumix DMC-LZ3,2560,1920,,camera_database
+panasonic,Lumix DMC-LZ30,4608,3456,,camera_database
+panasonic,Lumix DMC-LZ40,5152,3864,,camera_database
+panasonic,Lumix DMC-LZ5,2816,2112,,camera_database
+panasonic,Lumix DMC-LZ6,3072,2304,,camera_database
+panasonic,Lumix DMC-LZ7,3072,2304,,camera_database
+panasonic,Lumix DMC-LZ8,3264,2448,,camera_database
+panasonic,Lumix DMC-S1,4000,3000,,camera_database
+panasonic,Lumix DMC-S2,4320,3240,,camera_database
+panasonic,Lumix DMC-S3,4320,3240,,camera_database
+panasonic,Lumix DMC-SZ1,4608,3456,,camera_database
+panasonic,Lumix DMC-SZ10,4608,3456,,camera_database
+panasonic,Lumix DMC-SZ3,4608,3456,,camera_database
+panasonic,Lumix DMC-SZ5,4320,3240,,camera_database
+panasonic,Lumix DMC-SZ7,4320,3240,,camera_database
+panasonic,Lumix DMC-SZ8,4608,3456,,camera_database
+panasonic,Lumix DMC-SZ9,4608,3456,,camera_database
+panasonic,Lumix DMC-TS10,4320,3240,Lumix DMC-FT10,camera_database
+panasonic,Lumix DMC-TS2,4320,3240,Lumix DMC-FT2,camera_database
+panasonic,Lumix DMC-TS25,4608,3456,Lumix DMC-FT25,camera_database
+panasonic,Lumix DMC-TS5,4608,3456,Lumix DMC-FT5,camera_database
+panasonic,Lumix DMC-TS6,4608,3456,Lumix DMC-FT6,camera_database
+panasonic,Lumix DMC-TZ1,2560,1920,,camera_database
+panasonic,Lumix DMC-TZ2,2816,2112,,camera_database
+panasonic,Lumix DMC-TZ22,4320,3240,,camera_database
+panasonic,Lumix DMC-TZ25,4000,3000,Lumix DMC-ZS15,camera_database
+panasonic,Lumix DMC-TZ3,3072,2304,,camera_database
+panasonic,Lumix DMC-TZ30,4320,3240,Lumix DMC-ZS20,camera_database
+panasonic,Lumix DMC-TZ31,4320,3240,,camera_database
+panasonic,Lumix DMC-TZ4,3264,2448,,camera_database
+panasonic,Lumix DMC-TZ5,3456,2592,,camera_database
+panasonic,Lumix DMC-TZ50,3456,2592,,camera_database
+panasonic,Lumix DMC-TZ57,4608,3456,Lumix DMC-ZS45,camera_database
+panasonic,Lumix DMC-TZ6,3648,2736,Lumix DMC-ZS1,camera_database
+panasonic,Lumix DMC-TZ7,3648,2736,Lumix DMC-ZS3,camera_database
+panasonic,Lumix DMC-TZ70,4000,3000,Lumix DMC-ZS50,camera_database
+panasonic,Lumix DMC-XS1,4608,3456,,camera_database
+panasonic,Lumix DMC-XS3,4320,3240,,camera_database
+panasonic,Lumix DMC-ZR1,4000,3000,Lumix DMC-ZX1,camera_database
+panasonic,Lumix DMC-ZR3,4320,3240,Lumix DMC-ZX3,camera_database
+panasonic,Lumix DMC-ZS10,4320,3240,Lumix DMC-TZ20,camera_database
+panasonic,Lumix DMC-ZS100,5472,3648,Lumix DMC-TZ100,camera_database
+panasonic,Lumix DMC-ZS25,4608,3456,Lumix DMC-TZ35,camera_database
+panasonic,Lumix DMC-ZS30,4896,3672,Lumix DMC-TZ40,camera_database
+panasonic,Lumix DMC-ZS35,4608,3456,Lumix DMC-TZ55,camera_database
+panasonic,Lumix DMC-ZS40,4896,3672,Lumix DMC-TZ60,camera_database
+panasonic,Lumix DMC-ZS5,4000,3000,Lumix DMC-TZ8,camera_database
+panasonic,Lumix DMC-ZS60,4896,3672,Lumix DMC-TZ80,camera_database
+panasonic,Lumix DMC-ZS7,4000,3000,Lumix DMC-TZ10,camera_database
+panasonic,Lumix DMC-ZS8,4320,3240,Lumix DMC-TZ18,camera_database
+panasonic,Lumix S9,6000,4000,,camera_database
+panasonic,PV DC3000,2048,1536,,camera_database
+pentax,*ist D,3008,2008,,camera_database
+pentax,*ist DL,3008,2008,,camera_database
+pentax,*ist DL2,3008,2008,,camera_database
+pentax,*ist DS,3008,2000,,camera_database
+pentax,*ist DS2,3008,2008,,camera_database
+pentax,645D,7264,5440,,camera_database
+pentax,645Z,8256,6192,,camera_database
+pentax,EI-100,1280,960,,camera_database
+pentax,EI-200,1600,1200,,camera_database
+pentax,EI-2000,1600,1200,,camera_database
+pentax,K-01,4928,3264,,camera_database
+pentax,K-1,7360,4912,,camera_database
+pentax,K-1 Mark II,7360,4912,,camera_database
+pentax,K-3,6016,4000,,camera_database
+pentax,K-3 II,6016,4000,,camera_database
+pentax,K-3 Mark III,6192,4128,,camera_database
+pentax,K-30,4928,3264,,camera_database
+pentax,K-5,4928,3264,,camera_database
+pentax,K-5 II,4928,3264,,camera_database
+pentax,K-50,4928,3264,,camera_database
+pentax,K-500,4928,3264,,camera_database
+pentax,K-7,4672,3104,,camera_database
+pentax,K-70,6000,4000,,camera_database
+pentax,K-m,3872,2592,,camera_database
+pentax,K-r,4288,2848,,camera_database
+pentax,K-S1,5472,3648,,camera_database
+pentax,K-S2,5472,3648,,camera_database
+pentax,K-x,4288,2428,,camera_database
+pentax,K100D,3008,2008,,camera_database
+pentax,K100D Super,3008,2008,,camera_database
+pentax,K10D,3872,2592,,camera_database
+pentax,K110D,3008,2008,,camera_database
+pentax,K200D,3872,2592,,camera_database
+pentax,K20D,4672,3120,,camera_database
+pentax,KF,6000,4000,,camera_database
+pentax,KP,6016,4000,,camera_database
+pentax,MX-1,4000,3000,,camera_database
+pentax,Optio 230,1600,1210,,camera_database
+pentax,Optio 30,2048,1536,,camera_database
+pentax,Optio 330,2048,1536,,camera_database
+pentax,Optio 330GS,2048,1536,,camera_database
+pentax,Optio 330RS,2048,1536,,camera_database
+pentax,Optio 33L,2048,1536,,camera_database
+pentax,Optio 33LF,2048,1536,,camera_database
+pentax,Optio 33WR,2048,1536,,camera_database
+pentax,Optio 430,2240,1680,,camera_database
+pentax,Optio 430RS,2304,1712,,camera_database
+pentax,Optio 43WR,2288,1712,,camera_database
+pentax,Optio 450,2288,1712,,camera_database
+pentax,Optio 50,2560,1920,,camera_database
+pentax,Optio 50L,2560,1920,,camera_database
+pentax,Optio 550,2592,1944,,camera_database
+pentax,Optio 555,2592,1944,,camera_database
+pentax,Optio 60,2848,2136,,camera_database
+pentax,Optio 750Z,3056,2296,,camera_database
+pentax,Optio A10,3264,2448,,camera_database
+pentax,Optio A20,3648,2736,,camera_database
+pentax,Optio A30,3648,2736,,camera_database
+pentax,Optio A40,4000,3000,,camera_database
+pentax,Optio E10,2816,2112,,camera_database
+pentax,Optio E20,2816,2112,,camera_database
+pentax,Optio E25,3072,2304,,camera_database
+pentax,Optio E30,3072,2304,,camera_database
+pentax,Optio E40,3264,2448,,camera_database
+pentax,Optio E50,3264,2448,,camera_database
+pentax,Optio E60,3648,2736,,camera_database
+pentax,Optio E70,3648,2736,,camera_database
+pentax,Optio E70L,3648,2736,,camera_database
+pentax,Optio E75,3648,2736,,camera_database
+pentax,Optio E80,3648,2736,,camera_database
+pentax,Optio E85,4000,3000,,camera_database
+pentax,Optio E90,3648,2736,,camera_database
+pentax,Optio H90,4000,3000,,camera_database
+pentax,Optio I-10,4000,3000,,camera_database
+pentax,Optio L20,3072,2304,,camera_database
+pentax,Optio L50,3264,2448,,camera_database
+pentax,Optio LS1000,4288,3216,,camera_database
+pentax,Optio LS1100,4288,3216,,camera_database
+pentax,Optio LS465,4928,3264,,camera_database
+pentax,Optio M10,2816,2112,,camera_database
+pentax,Optio M20,3072,2304,,camera_database
+pentax,Optio M30,3072,2304,,camera_database
+pentax,Optio M40,3264,2448,,camera_database
+pentax,Optio M50,3264,2448,,camera_database
+pentax,Optio M60,3648,2736,,camera_database
+pentax,Optio M85,4000,3000,,camera_database
+pentax,Optio M90,4000,3000,,camera_database
+pentax,Optio MX,2048,1536,,camera_database
+pentax,Optio MX4,2304,1728,,camera_database
+pentax,Optio P70,4000,3000,,camera_database
+pentax,Optio P80,4000,3000,,camera_database
+pentax,Optio RS1000,4288,3216,,camera_database
+pentax,Optio RS1500,4288,3216,,camera_database
+pentax,Optio RZ10,4288,3216,,camera_database
+pentax,Optio RZ18,4608,3456,,camera_database
+pentax,Optio S,2048,1536,,camera_database
+pentax,Optio S1,4288,3216,,camera_database
+pentax,Optio S10,3648,2736,,camera_database
+pentax,Optio S12,4000,3000,,camera_database
+pentax,Optio S30,2048,1536,,camera_database
+pentax,Optio S4,2304,1728,,camera_database
+pentax,Optio S40,2304,1728,,camera_database
+pentax,Optio S45,2304,1728,,camera_database
+pentax,Optio S4i,2304,1728,,camera_database
+pentax,Optio S50,2560,1920,,camera_database
+pentax,Optio S55,2560,1920,,camera_database
+pentax,Optio S5i,2560,1920,,camera_database
+pentax,Optio S5n,2560,1920,,camera_database
+pentax,Optio S5z,2560,1920,,camera_database
+pentax,Optio S6,2816,2112,,camera_database
+pentax,Optio S60,2816,2112,,camera_database
+pentax,Optio S7,3072,2304,,camera_database
+pentax,Optio SV,2560,1920,,camera_database
+pentax,Optio SVi,2560,1920,,camera_database
+pentax,Optio T10,2816,2112,,camera_database
+pentax,Optio T20,3072,2304,,camera_database
+pentax,Optio T30,3072,2304,,camera_database
+pentax,Optio V10,3264,2448,,camera_database
+pentax,Optio V20,3264,2448,,camera_database
+pentax,Optio VS20,4608,3456,,camera_database
+pentax,Optio W10,2816,2112,,camera_database
+pentax,Optio W20,3072,2304,,camera_database
+pentax,Optio W30,3072,2304,,camera_database
+pentax,Optio W60,3648,2736,,camera_database
+pentax,Optio W80,4000,3000,,camera_database
+pentax,Optio W90,4000,3000,,camera_database
+pentax,Optio WG-1,4288,3216,,camera_database
+pentax,Optio WG-1 GPS,4288,3216,,camera_database
+pentax,Optio WG-10,4288,3216,,camera_database
+pentax,Optio WG-2,4288,3216,,camera_database
+pentax,Optio WG-2 GPS,4288,3216,,camera_database
+pentax,Optio WG-3,4608,3456,,camera_database
+pentax,Optio WP,2560,1920,,camera_database
+pentax,Optio WPi,2816,2112,,camera_database
+pentax,Optio WS80,3648,2736,,camera_database
+pentax,Optio X,2560,1920,,camera_database
+pentax,Optio Z10,3264,2448,,camera_database
+pentax,Q,4000,3000,,camera_database
+pentax,Q-S1,4000,3000,,camera_database
+pentax,Q10,4000,3000,,camera_database
+pentax,Q7,4000,3000,,camera_database
+pentax,WG-8,5184,3888,,camera_database
+pentax,WG-90,4608,3456,,camera_database
+pentax,X-5,4608,3456,,camera_database
+pentax,X70,4000,3000,,camera_database
+pentax,X90,4000,3000,,camera_database
+pentax,XG-1,4608,3456,,camera_database
+ricoh,Caplio 400G Wide,2048,1536,,camera_database
+ricoh,Caplio 500G,3264,2448,,camera_database
+ricoh,Caplio 500G Wide,3264,2448,,camera_database
+ricoh,Caplio 500SE,3264,2448,,camera_database
+ricoh,Caplio G3,2048,1536,,camera_database
+ricoh,Caplio G3s,2048,1536,,camera_database
+ricoh,Caplio GX,2592,1944,,camera_database
+ricoh,Caplio GX100,3648,2736,,camera_database
+ricoh,Caplio GX200,4000,3000,,camera_database
+ricoh,Caplio GX8,3264,2448,,camera_database
+ricoh,Caplio R1,2304,1728,,camera_database
+ricoh,Caplio R1V,2560,1920,,camera_database
+ricoh,Caplio R2,2560,1920,,camera_database
+ricoh,Caplio R2S,2560,1920,,camera_database
+ricoh,Caplio R3,2592,1944,,camera_database
+ricoh,Caplio R30,2560,1920,,camera_database
+ricoh,Caplio R4,2816,2112,,camera_database
+ricoh,Caplio R40,2816,2112,,camera_database
+ricoh,Caplio R5,3072,2304,,camera_database
+ricoh,Caplio R6,3072,2304,,camera_database
+ricoh,Caplio R7,3264,2448,,camera_database
+ricoh,Caplio R8,3648,2736,,camera_database
+ricoh,Caplio RR1,2272,1704,,camera_database
+ricoh,Caplio RR10,1600,1200,,camera_database
+ricoh,Caplio RR120,1792,1200,,camera_database
+ricoh,Caplio RR230,1600,1200,,camera_database
+ricoh,Caplio RR30,2048,1536,,camera_database
+ricoh,Caplio RR330,2048,1536,,camera_database
+ricoh,Caplio RR530,2560,1920,,camera_database
+ricoh,Caplio RR630,2848,2136,,camera_database
+ricoh,Caplio RR660,2816,2112,,camera_database
+ricoh,Caplio RR750,3072,2304,,camera_database
+ricoh,Caplio RR770,3072,2304,,camera_database
+ricoh,Caplio RX,2048,1536,,camera_database
+ricoh,Caplio RZ1,2304,1728,,camera_database
+ricoh,CX1,3456,2592,,camera_database
+ricoh,CX2,3456,2592,,camera_database
+ricoh,CX3,3648,2736,,camera_database
+ricoh,CX4,3648,2736,,camera_database
+ricoh,CX5,3648,2736,,camera_database
+ricoh,CX6,3648,2736,,camera_database
+ricoh,G600,3648,2736,,camera_database
+ricoh,G700,4000,3000,,camera_database
+ricoh,G700SE,4000,3000,,camera_database
+ricoh,G800,4608,3456,,camera_database
+ricoh,G900,5184,3888,,camera_database
+ricoh,G900 II,5184,3888,,camera_database
+ricoh,GR,4928,3264,,camera_database
+ricoh,GR Digital,3264,2448,,camera_database
+ricoh,GR Digital 3,3648,2736,,camera_database
+ricoh,GR Digital 4,3648,2736,,camera_database
+ricoh,GR Digital II,3648,2736,,camera_database
+ricoh,GR II,4928,3264,,camera_database
+ricoh,GR III,6000,4000,,camera_database
+ricoh,GR IIIx,6000,4000,,camera_database
+ricoh,GR IV,6192,4128,,camera_database
+ricoh,GXR A12 50mm F2.5 Macro,4288,2848,,camera_database
+ricoh,GXR A16 24-85mm F3.5-5.5,4928,3264,,camera_database
+ricoh,GXR GR Lens A12 28mm F2.5,4288,2848,,camera_database
+ricoh,GXR Mount A12,4288,2848,,camera_database
+ricoh,GXR P10 28-300mm F3.5-5.6 VC,3648,2736,,camera_database
+ricoh,GXR S10 24-72mm F2.5-4.4 VC,3648,2736,,camera_database
+ricoh,HZ15,4608,3456,,camera_database
+ricoh,PX,4608,3456,,camera_database
+ricoh,R10,3648,2736,,camera_database
+ricoh,R50,3648,2736,,camera_database
+ricoh,R8,3648,2736,,camera_database
+ricoh,RDC-200G,1792,1200,,camera_database
+ricoh,RDC-4300,1280,960,,camera_database
+ricoh,RDC-5000,1792,1200,,camera_database
+ricoh,RDC-5300,1792,1200,,camera_database
+ricoh,RDC-6000,2000,1512,,camera_database
+ricoh,RDC-7,3072,2304,,camera_database
+ricoh,RDC-i500,2048,1536,,camera_database
+ricoh,RDC-i700,2048,1536,,camera_database
+ricoh,WG-20,4288,3216,,camera_database
+ricoh,WG-30,4608,3456,,camera_database
+ricoh,WG-4,4608,3456,,camera_database
+ricoh,WG-5 GPS,4608,3456,,camera_database
+ricoh,WG-50,4608,3456,,camera_database
+ricoh,WG-6,5184,3888,,camera_database
+ricoh,WG-70,4608,3456,,camera_database
+ricoh,WG-M1,4320,3240,,camera_database
+sigma,BF,6016,4014,,camera_database
+sigma,fp,6000,4000,,camera_database
+sigma,fp L,9520,6328,,camera_database
+sigma,SD1 Merrill,4704,3136,,sigma_sd1
+sigma,SD9,2268,1512,,camera_database
+sony,a1,8640,5760,,camera_database
+sony,a1 II,8640,5760,,camera_database
+sony,a6100,6000,4000,,camera_database
+sony,a6600,6000,4000,,camera_database
+sony,a6700,6192,4128,,camera_database
+sony,A7 IV,7008,4672,,camera_database
+sony,a7C,6000,4000,,camera_database
+sony,a7C II,7008,4672,,camera_database
+sony,a7CR,9504,6336,,camera_database
+sony,a7R IV,9504,6336,,camera_database
+sony,a7R V,9504,6336,,camera_database
+sony,a7S III,4240,2832,,camera_database
+sony,a9 III,6000,4000,,camera_database
+sony,Alpha 7,6000,4000,,camera_database
+sony,Alpha 7 II,6000,4000,,camera_database
+sony,Alpha 7R,7360,4912,,camera_database
+sony,Alpha 7R II,7952,5304,,camera_database
+sony,Alpha 7S,4240,2832,,camera_database
+sony,Alpha 7S II,4240,2832,,camera_database
+sony,Alpha a3000,5456,3632,,camera_database
+sony,Alpha a5000,5456,3632,,camera_database
+sony,Alpha a5100,6000,4000,,camera_database
+sony,Alpha a6000,6000,4000,,camera_database
+sony,Alpha a6300,6000,4000,,camera_database
+sony,Alpha a6400,6000,4000,,camera_database
+sony,Alpha a6500,6000,4000,,camera_database
+sony,Alpha A7 III,6000,4000,,camera_database
+sony,Alpha a7R III,7952,5304,,camera_database
+sony,Alpha a9,6000,4000,,camera_database
+sony,Alpha a9 II,6000,4000,,camera_database
+sony,Alpha A99 II,7952,5304,,camera_database
+sony,Alpha DSLR-A100,3872,2592,,camera_database
+sony,Alpha DSLR-A200,3872,2592,,camera_database
+sony,Alpha DSLR-A230,3872,2592,,camera_database
+sony,Alpha DSLR-A290,4592,3056,,camera_database
+sony,Alpha DSLR-A300,3872,2592,,camera_database
+sony,Alpha DSLR-A330,3872,2592,,camera_database
+sony,Alpha DSLR-A350,4592,3056,,camera_database
+sony,Alpha DSLR-A380,4592,3056,,camera_database
+sony,Alpha DSLR-A390,4592,3056,,camera_database
+sony,Alpha DSLR-A450,4592,3056,,camera_database
+sony,Alpha DSLR-A500,4272,2848,,camera_database
+sony,Alpha DSLR-A550,4592,3056,,camera_database
+sony,Alpha DSLR-A560,4592,3056,,camera_database
+sony,Alpha DSLR-A580,4912,3264,,camera_database
+sony,Alpha DSLR-A700,4272,2848,,camera_database
+sony,Alpha DSLR-A850,6048,4032,,camera_database
+sony,Alpha DSLR-A900,6048,4032,,camera_database
+sony,Alpha NEX-3,4592,3056,,camera_database
+sony,Alpha NEX-3N,4912,3264,,camera_database
+sony,Alpha NEX-5,4592,3056,,camera_database
+sony,Alpha NEX-5N,4912,3264,,camera_database
+sony,Alpha NEX-5R,4912,3264,,camera_database
+sony,Alpha NEX-5T,4912,3264,,camera_database
+sony,Alpha NEX-6,4912,3264,,camera_database
+sony,Alpha NEX-7,6000,4000,,camera_database
+sony,Alpha NEX-C3,4912,3264,,camera_database
+sony,Alpha NEX-F3,4912,3264,,camera_database
+sony,Alpha SLT-A33,4592,3056,,camera_database
+sony,Alpha SLT-A35,4912,3264,,camera_database
+sony,Alpha SLT-A37,4912,3264,,camera_database
+sony,Alpha SLT-A55,4912,3264,,camera_database
+sony,Alpha SLT-A57,4912,3264,,camera_database
+sony,Alpha SLT-A58,5456,3632,,camera_database
+sony,Alpha SLT-A65,6000,4000,,camera_database
+sony,Alpha SLT-A68,6000,4000,,camera_database
+sony,Alpha SLT-A77,6000,4000,,camera_database
+sony,Alpha SLT-A77 II,6000,4000,,camera_database
+sony,Alpha SLT-A99,6000,4000,,camera_database
+sony,Cyber-shot DSC-D700,1344,1024,,camera_database
+sony,Cyber-shot DSC-D770,1344,1024,,camera_database
+sony,Cyber-shot DSC-F505,1600,1200,,camera_database
+sony,Cyber-shot DSC-F505v,2240,1680,,camera_database
+sony,Cyber-shot DSC-F55,1600,1200,,camera_database
+sony,Cyber-shot DSC-F55v,2240,1680,,camera_database
+sony,Cyber-shot DSC-F707,2560,1920,,camera_database
+sony,Cyber-shot DSC-F717,2560,1920,,camera_database
+sony,Cyber-shot DSC-F77,2272,1704,,camera_database
+sony,Cyber-shot DSC-F828,3264,2448,,camera_database
+sony,Cyber-shot DSC-F88,2592,1944,,camera_database
+sony,Cyber-shot DSC-FX77,2272,1704,,camera_database
+sony,Cyber-shot DSC-G1,2816,2112,,camera_database
+sony,Cyber-shot DSC-G3,3648,2736,,camera_database
+sony,Cyber-shot DSC-H1,2592,1944,,camera_database
+sony,Cyber-shot DSC-H10,3264,2448,,camera_database
+sony,Cyber-shot DSC-H100,4608,3456,,camera_database
+sony,Cyber-shot DSC-H2,2592,1944,,camera_database
+sony,Cyber-shot DSC-H20,3648,2736,,camera_database
+sony,Cyber-shot DSC-H200,5184,3888,,camera_database
+sony,Cyber-shot DSC-H3,3264,2448,,camera_database
+sony,Cyber-shot DSC-H300,5152,3864,,camera_database
+sony,Cyber-shot DSC-H400,5152,3864,,camera_database
+sony,Cyber-shot DSC-H5,3072,2304,,camera_database
+sony,Cyber-shot DSC-H50,3456,2592,,camera_database
+sony,Cyber-shot DSC-H55,4320,3240,,camera_database
+sony,Cyber-shot DSC-H7,3264,2448,,camera_database
+sony,Cyber-shot DSC-H70,4608,3456,,camera_database
+sony,Cyber-shot DSC-H9,3264,2448,,camera_database
+sony,Cyber-shot DSC-H90,4608,3456,,camera_database
+sony,Cyber-shot DSC-HX1,3456,2592,,camera_database
+sony,Cyber-shot DSC-HX100V,4608,3456,,camera_database
+sony,Cyber-shot DSC-HX10V,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX200V,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX20V,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX300,5184,3888,,camera_database
+sony,Cyber-shot DSC-HX30V,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX350,5184,3456,,camera_database
+sony,Cyber-shot DSC-HX400,5184,3888,,camera_database
+sony,Cyber-shot DSC-HX5,3648,2736,,camera_database
+sony,Cyber-shot DSC-HX50,5184,3888,,camera_database
+sony,Cyber-shot DSC-HX60,5184,3888,,camera_database
+sony,Cyber-shot DSC-HX7V,4608,3456,,camera_database
+sony,Cyber-shot DSC-HX80,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX90V,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX95,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX99,4896,3672,,camera_database
+sony,Cyber-shot DSC-HX9V,4608,3456,,camera_database
+sony,Cyber-shot DSC-J10,4608,3456,,camera_database
+sony,Cyber-shot DSC-L1,2304,1728,,camera_database
+sony,Cyber-shot DSC-M1,2592,1944,,camera_database
+sony,Cyber-shot DSC-M2,2592,1944,,camera_database
+sony,Cyber-shot DSC-N1,3264,2448,,camera_database
+sony,Cyber-shot DSC-N2,3648,2736,,camera_database
+sony,Cyber-shot DSC-P1,2048,1536,,camera_database
+sony,Cyber-shot DSC-P10,2592,1944,,camera_database
+sony,Cyber-shot DSC-P100,2592,1944,,camera_database
+sony,Cyber-shot DSC-P12,2592,1944,,camera_database
+sony,Cyber-shot DSC-P120,2592,1944,,camera_database
+sony,Cyber-shot DSC-P150,3072,2304,,camera_database
+sony,Cyber-shot DSC-P2,1600,1200,,camera_database
+sony,Cyber-shot DSC-P20,1216,912,,camera_database
+sony,Cyber-shot DSC-P200,3072,2304,,camera_database
+sony,Cyber-shot DSC-P3,1920,1440,,camera_database
+sony,Cyber-shot DSC-P30,1280,960,,camera_database
+sony,Cyber-shot DSC-P31,1600,1200,,camera_database
+sony,Cyber-shot DSC-P32,2048,1536,,camera_database
+sony,Cyber-shot DSC-P41,2304,1728,,camera_database
+sony,Cyber-shot DSC-P43,2304,1728,,camera_database
+sony,Cyber-shot DSC-P5,2048,1536,,camera_database
+sony,Cyber-shot DSC-P50,1600,1200,,camera_database
+sony,Cyber-shot DSC-P51,1600,1200,,camera_database
+sony,Cyber-shot DSC-P52,2048,1536,,camera_database
+sony,Cyber-shot DSC-P7,2048,1536,,camera_database
+sony,Cyber-shot DSC-P71,2048,1536,,camera_database
+sony,Cyber-shot DSC-P72,2048,1536,,camera_database
+sony,Cyber-shot DSC-P73,2304,1728,,camera_database
+sony,Cyber-shot DSC-P8,2048,1536,,camera_database
+sony,Cyber-shot DSC-P9,2272,1704,,camera_database
+sony,Cyber-shot DSC-P92,2592,1944,,camera_database
+sony,Cyber-shot DSC-P93,2592,1944,,camera_database
+sony,Cyber-shot DSC-QX1,5456,3632,,camera_database
+sony,Cyber-shot DSC-QX10,4896,3672,,camera_database
+sony,Cyber-shot DSC-QX100,5472,3648,,camera_database
+sony,Cyber-shot DSC-QX30,5184,3888,,camera_database
+sony,Cyber-shot DSC-R1,3882,2592,,camera_database
+sony,Cyber-shot DSC-RX1,6000,4000,,camera_database
+sony,Cyber-shot DSC-RX10,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX10 II,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX10 III,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX10 IV,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 II,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 III,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 IV,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 V,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 VI,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX100 VII,5472,3648,,camera_database
+sony,Cyber-shot DSC-RX1R,6000,4000,,camera_database
+sony,Cyber-shot DSC-RX1R II,7952,5304,,camera_database
+sony,Cyber-shot DSC-S2000,3648,2736,,camera_database
+sony,Cyber-shot DSC-S2100,4000,3000,,camera_database
+sony,Cyber-shot DSC-S30,1472,1104,,camera_database
+sony,Cyber-shot DSC-S3000,3648,2736,,camera_database
+sony,Cyber-shot DSC-S40,2304,1728,,camera_database
+sony,Cyber-shot DSC-S45,2592,1944,,camera_database
+sony,Cyber-shot DSC-S50,1600,1200,,camera_database
+sony,Cyber-shot DSC-S5000,4320,3240,,camera_database
+sony,Cyber-shot DSC-S60,2304,1728,,camera_database
+sony,Cyber-shot DSC-S600,2816,2112,,camera_database
+sony,Cyber-shot DSC-S650,3072,2304,,camera_database
+sony,Cyber-shot DSC-S70,2048,1536,,camera_database
+sony,Cyber-shot DSC-S700,3072,2304,,camera_database
+sony,Cyber-shot DSC-S730,3072,2304,,camera_database
+sony,Cyber-shot DSC-S75,2048,1536,,camera_database
+sony,Cyber-shot DSC-S750,3072,2304,,camera_database
+sony,Cyber-shot DSC-S780,3264,2448,,camera_database
+sony,Cyber-shot DSC-S80,2304,1728,,camera_database
+sony,Cyber-shot DSC-S800,3264,2448,,camera_database
+sony,Cyber-shot DSC-S85,2272,1704,,camera_database
+sony,Cyber-shot DSC-S90,2304,1728,,camera_database
+sony,Cyber-shot DSC-S930,3648,2736,,camera_database
+sony,Cyber-shot DSC-S950,4000,3000,,camera_database
+sony,Cyber-shot DSC-S980,4000,3000,,camera_database
+sony,Cyber-shot DSC-T1,2592,1944,,camera_database
+sony,Cyber-shot DSC-T10,3072,2304,,camera_database
+sony,Cyber-shot DSC-T100,3264,2448,,camera_database
+sony,Cyber-shot DSC-T11,2592,1944,,camera_database
+sony,Cyber-shot DSC-T110,4608,3456,,camera_database
+sony,Cyber-shot DSC-T2,3264,2448,,camera_database
+sony,Cyber-shot DSC-T20,3264,2448,,camera_database
+sony,Cyber-shot DSC-T200,3264,2448,,camera_database
+sony,Cyber-shot DSC-T3,2592,1944,,camera_database
+sony,Cyber-shot DSC-T30,3072,2304,,camera_database
+sony,Cyber-shot DSC-T300,3648,2736,,camera_database
+sony,Cyber-shot DSC-T33,2592,1944,,camera_database
+sony,Cyber-shot DSC-T5,2592,1944,,camera_database
+sony,Cyber-shot DSC-T50,3072,2304,,camera_database
+sony,Cyber-shot DSC-T500,3648,2736,,camera_database
+sony,Cyber-shot DSC-T7,2592,1944,,camera_database
+sony,Cyber-shot DSC-T700,3648,2736,,camera_database
+sony,Cyber-shot DSC-T77,3648,2736,,camera_database
+sony,Cyber-shot DSC-T9,2816,2112,,camera_database
+sony,Cyber-shot DSC-T90,4000,3000,,camera_database
+sony,Cyber-shot DSC-T900,4000,3000,,camera_database
+sony,Cyber-shot DSC-T99,4320,3240,,camera_database
+sony,Cyber-shot DSC-TF1,4608,3456,,camera_database
+sony,Cyber-shot DSC-TX1,3648,2736,,camera_database
+sony,Cyber-shot DSC-TX10,4608,3456,,camera_database
+sony,Cyber-shot DSC-TX100V,4608,3456,,camera_database
+sony,Cyber-shot DSC-TX20,4608,3456,,camera_database
+sony,Cyber-shot DSC-TX200V,4896,3672,,camera_database
+sony,Cyber-shot DSC-TX30,4896,3672,,camera_database
+sony,Cyber-shot DSC-TX5,3648,2736,,camera_database
+sony,Cyber-shot DSC-TX55,4608,3456,,camera_database
+sony,Cyber-shot DSC-TX66,4896,3672,,camera_database
+sony,Cyber-shot DSC-TX7,3456,2592,,camera_database
+sony,Cyber-shot DSC-TX9,4000,3000,,camera_database
+sony,Cyber-shot DSC-U10,1280,960,,camera_database
+sony,Cyber-shot DSC-U20,1632,1224,,camera_database
+sony,Cyber-shot DSC-U30,1632,1224,,camera_database
+sony,Cyber-shot DSC-U40,1632,1224,,camera_database
+sony,Cyber-shot DSC-U50,1632,1224,,camera_database
+sony,Cyber-shot DSC-U60,1632,1224,,camera_database
+sony,Cyber-shot DSC-V1,2592,1944,,camera_database
+sony,Cyber-shot DSC-V3,3072,2304,,camera_database
+sony,Cyber-shot DSC-W1,2592,1944,,camera_database
+sony,Cyber-shot DSC-W100,3264,2448,,camera_database
+sony,Cyber-shot DSC-W110,3072,2304,,camera_database
+sony,Cyber-shot DSC-W115,3072,2304,,camera_database
+sony,Cyber-shot DSC-W12,2592,1944,,camera_database
+sony,Cyber-shot DSC-W120,3072,2304,,camera_database
+sony,Cyber-shot DSC-W125,3072,2304,,camera_database
+sony,Cyber-shot DSC-W130,3264,2448,,camera_database
+sony,Cyber-shot DSC-W150,3264,2448,,camera_database
+sony,Cyber-shot DSC-W17,3072,2304,,camera_database
+sony,Cyber-shot DSC-W170,3648,2736,,camera_database
+sony,Cyber-shot DSC-W200,4000,3000,,camera_database
+sony,Cyber-shot DSC-W215,4000,3000,,camera_database
+sony,Cyber-shot DSC-W220,4000,3000,,camera_database
+sony,Cyber-shot DSC-W230,4000,3000,,camera_database
+sony,Cyber-shot DSC-W270,4000,3000,,camera_database
+sony,Cyber-shot DSC-W275,4000,3000,,camera_database
+sony,Cyber-shot DSC-W290,4000,3000,,camera_database
+sony,Cyber-shot DSC-W30,2816,2112,,camera_database
+sony,Cyber-shot DSC-W300,4224,3168,,camera_database
+sony,Cyber-shot DSC-W310,4000,3000,,camera_database
+sony,Cyber-shot DSC-W320,4320,3240,,camera_database
+sony,Cyber-shot DSC-W330,4320,3240,,camera_database
+sony,Cyber-shot DSC-W35,3072,2304,,camera_database
+sony,Cyber-shot DSC-W350,4320,3240,,camera_database
+sony,Cyber-shot DSC-W360,4320,3240,,camera_database
+sony,Cyber-shot DSC-W370,4320,3240,,camera_database
+sony,Cyber-shot DSC-W380,4320,3240,,camera_database
+sony,Cyber-shot DSC-W40,2816,2112,,camera_database
+sony,Cyber-shot DSC-W5,2592,1944,,camera_database
+sony,Cyber-shot DSC-W50,2816,2112,,camera_database
+sony,Cyber-shot DSC-W510,4000,3000,,camera_database
+sony,Cyber-shot DSC-W530,4320,3240,,camera_database
+sony,Cyber-shot DSC-W55,3072,2304,,camera_database
+sony,Cyber-shot DSC-W550,4320,3240,,camera_database
+sony,Cyber-shot DSC-W560,4320,3240,,camera_database
+sony,Cyber-shot DSC-W570,4608,3456,,camera_database
+sony,Cyber-shot DSC-W580,4608,3456,,camera_database
+sony,Cyber-shot DSC-W610,4320,3240,,camera_database
+sony,Cyber-shot DSC-W620,4320,3240,,camera_database
+sony,Cyber-shot DSC-W650,4608,3456,,camera_database
+sony,Cyber-shot DSC-W670,4608,3456,,camera_database
+sony,Cyber-shot DSC-W690,4608,3456,,camera_database
+sony,Cyber-shot DSC-W7,3072,2304,,camera_database
+sony,Cyber-shot DSC-W70,3072,2304,,camera_database
+sony,Cyber-shot DSC-W710,4608,3456,,camera_database
+sony,Cyber-shot DSC-W730,4608,3456,,camera_database
+sony,Cyber-shot DSC-W80,3072,2304,,camera_database
+sony,Cyber-shot DSC-W800,5152,3864,,camera_database
+sony,Cyber-shot DSC-W810,5152,3864,,camera_database
+sony,Cyber-shot DSC-W830,5152,3864,,camera_database
+sony,Cyber-shot DSC-W85,3072,2304,,camera_database
+sony,Cyber-shot DSC-W90,3254,2448,,camera_database
+sony,Cyber-shot DSC-WX1,3648,2736,,camera_database
+sony,Cyber-shot DSC-WX10,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX150,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX200,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX220,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX30,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX300,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX350,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX5,4000,3000,,camera_database
+sony,Cyber-shot DSC-WX50,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX500,4896,3672,,camera_database
+sony,Cyber-shot DSC-WX60,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX7,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX70,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX80,4608,3456,,camera_database
+sony,Cyber-shot DSC-WX9,4608,3456,,camera_database
+sony,FX2,7008,4672,,camera_database
+sony,FX30,6192,4128,,camera_database
+sony,Mavica CD1000,1600,1200,,camera_database
+sony,Mavica CD200,1600,1200,,camera_database
+sony,Mavica CD250,1600,1200,,camera_database
+sony,Mavica CD300,2048,1536,,camera_database
+sony,Mavica CD350,2048,1536,,camera_database
+sony,Mavica CD400,2272,1704,,camera_database
+sony,Mavica CD500,2592,1944,,camera_database
+sony,Mavica FD-100,1280,960,,camera_database
+sony,Mavica FD-200,1600,1200,,camera_database
+sony,Mavica FD-71,640,480,,camera_database
+sony,Mavica FD-73,640,480,,camera_database
+sony,Mavica FD-75,640,480,,camera_database
+sony,Mavica FD-81,1024,768,,camera_database
+sony,Mavica FD-83,1024,768,,camera_database
+sony,Mavica FD-85,1280,960,,camera_database
+sony,Mavica FD-87,1280,960,,camera_database
+sony,Mavica FD-88,1280,960,,camera_database
+sony,Mavica FD-90,1280,960,,camera_database
+sony,Mavica FD-91,1024,768,,camera_database
+sony,Mavica FD-92,1472,1104,,camera_database
+sony,Mavica FD-95,1600,1200,,camera_database
+sony,Mavica FD-97,1600,1200,,camera_database
+sony,RX1R III,9504,6336,,camera_database
+sony,ZV-1,5472,3648,,camera_database
+sony,ZV-1 Mark II,5472,3648,,camera_database
+sony,ZV-1F,5472,3648,,camera_database
+sony,ZV-E1,4240,2832,,camera_database
+sony,ZV-E10,6000,4000,,camera_database
+sony,ZV-E10 II,6192,4128,,camera_database
+# iPhone 18 Pro and Pro Max 8064 x 6048 is a USER-AUTHORIZED ESTIMATE
+# using iPhone 17 Pro as proxy; these are not verified iPhone 18 dimensions.
+# Apple confirms the 17 Pro and both 18 Pro models have 48MP main, ultra-wide,
+# and telephoto cameras and 24/48MP still modes, but gives no exact raster here:
+# https://support.apple.com/en-us/125090
+# https://support.apple.com/en-us/148590
+# https://support.apple.com/en-us/148591
+# Empirical 17 Pro Max DNG tests report 8064 x 6048 at 0.5x, 1x, and 4x:
+# https://strait-mac.org/iphone-17-pro-max-resolutions-compared/
+apple,iPhone 18 Pro,8064,6048,,estimated_iphone17pro_proxy_not_verified
+apple,iPhone 18 Pro Max,8064,6048,,estimated_iphone17pro_proxy_not_verified
